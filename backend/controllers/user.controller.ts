@@ -23,15 +23,15 @@ export const createStudentUser = async (req: Request, res: Response) => {
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log(
-                        "There is a unique constraint violation, a new user cannot be created with this email"
-                    );
+                    res.status(400).json({
+                        message:
+                            "There is a unique constraint violation, a new user cannot be created with this email",
+                    })
                 }
             }
-            throw e;
+            // throw e;
         }
-    }
-    else{
+    } else {
         res.status(400).json(result.error);
     }
 };
@@ -54,15 +54,15 @@ export const createInstructorUser = async (req: Request, res: Response) => {
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log(
-                        "There is a unique constraint violation, a new user cannot be created with this email"
-                    );
+                    res.status(400).json({
+                        message:
+                            "There is a unique constraint violation, a new user cannot be created with this email",
+                    })
                 }
             }
             throw e;
         }
-    }
-    else{
+    } else {
         res.status(400).json(result.error);
     }
 };
@@ -85,13 +85,14 @@ export const studentLogin = async (req: Request, res: Response) => {
             user.password
         );
         if (!isPasswordValid) {
-            res.status(401).json({ message: "Your username or password might be wrong!!" });
+            res.status(401).json({
+                message: "Your username or password might be wrong!!",
+            });
             return;
         }
         req.session.username = username;
-        res.status(200).json({message : "login successful"})
-    }
-    else{
+        res.status(200).json({ message: "login successful" });
+    } else {
         res.status(400).json(result.error);
     }
 };
@@ -114,19 +115,20 @@ export const instructorLogin = async (req: Request, res: Response) => {
             user.password
         );
         if (!isPasswordValid) {
-            res.status(401).json({ message: "Your username or password might be wrong!!" });
+            res.status(401).json({
+                message: "Your username or password might be wrong!!",
+            });
             return;
         }
         req.session.username = username;
-        res.status(200).json({message : "login successful"})
-    }
-    else{
+        res.status(200).json({ message: "login successful" });
+    } else {
         res.status(400).json(result.error);
     }
 };
 
-export const logout = async(req :Request,res :Response)=>{
-    req.session.destroy(()=>{
-        res.status(200).json({message : "logout successful"})
+export const logout = async (req: Request, res: Response) => {
+    req.session.destroy(() => {
+        res.status(200).json({ message: "logout successful" });
     });
-}
+};

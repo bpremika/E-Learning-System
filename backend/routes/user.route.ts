@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createStudentUser ,createInstructorUser, studentLogin, instructorLogin, logout } from "../controller/user.controller";
+import { createStudentUser ,createInstructorUser, studentLogin, instructorLogin, logout } from "../controllers/user.controller";
 
 export const userRouter = Router();
 userRouter.post('/studentRegister',createStudentUser);
