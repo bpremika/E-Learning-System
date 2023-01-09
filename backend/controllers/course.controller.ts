@@ -116,4 +116,10 @@ const deleteCourse = async (req: Request, res: Response) => {
     res.status(204).send();
 };
 
-export { getOneCourse, getManyCourse, createCourse, deleteCourse };
+export {
+    getOneCourse,
+    getManyCourse,
+    createCourse,
+    updateCourse,
+    deleteCourse,
+};

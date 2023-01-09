@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.createCourse = exports.getManyCourse = exports.getOneCourse = void 0;
+exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getManyCourse = exports.getOneCourse = void 0;
 const prisma_1 = require("../common/prisma");
 const CourseValidator_1 = require("../common/CourseValidator");
 const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -96,6 +96,7 @@ const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     });
     res.status(200).json(course);
 });
+exports.updateCourse = updateCourse;
 const deleteCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     yield prisma_1.prisma.course.delete({
