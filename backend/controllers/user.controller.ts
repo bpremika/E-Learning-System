@@ -23,12 +23,13 @@ export const createStudentUser = async (req: Request, res: Response) => {
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log(
-                        "There is a unique constraint violation, a new user cannot be created with this email"
-                    );
+                    res.status(400).json({
+                        message:
+                            "There is a unique constraint violation, a new user cannot be created with this email",
+                    })
                 }
             }
-            throw e;
+            // throw e;
         }
     } else {
         res.status(400).json(result.error);
@@ -53,9 +54,10 @@ export const createInstructorUser = async (req: Request, res: Response) => {
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log(
-                        "There is a unique constraint violation, a new user cannot be created with this email"
-                    );
+                    res.status(400).json({
+                        message:
+                            "There is a unique constraint violation, a new user cannot be created with this email",
+                    })
                 }
             }
             throw e;

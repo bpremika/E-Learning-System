@@ -20,7 +20,7 @@ model StudentUser {
   phone_number String
   created_at   DateTime @default(now())
   modified_at  DateTime @default(now())
-  Course       Course[]
+  course       Course[]
 }
 
 model InstructorUser {
@@ -50,7 +50,7 @@ model Course {
   course_desc   String
   instructor    InstructorUser @relation(fields: [instructor_id], references: [id])
   instructor_id Int
-  StudentUser   StudentUser[]
+  studentUser   StudentUser[]
   courseVideo   CourseVideo[]
 }
 
