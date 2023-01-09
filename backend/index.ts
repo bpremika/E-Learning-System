@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import session, { Session, SessionData } from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./common/prisma";
+import { userRouter } from "./routes/user.route";
 
 declare module "express-session" {
     interface SessionData {
@@ -36,6 +37,8 @@ app.use(
     })
 );
 
-// app.use(userRouter);
-// app.use("/product", productRouter);
+app.use(userRouter);
+app.listen(port, () => {
+    console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+});
 dotenv.config();
