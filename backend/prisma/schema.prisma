@@ -18,6 +18,7 @@ model StudentUser {
   first_name   String
   last_name    String
   phone_number String
+  image_url    String
   created_at   DateTime @default(now())
   modified_at  DateTime @default(now())
   course       Course[]
@@ -31,6 +32,7 @@ model InstructorUser {
   first_name   String
   last_name    String
   phone_number String
+  image_url    String
   course       Course[]
   created_at   DateTime @default(now())
   modified_at  DateTime @default(now())
@@ -44,14 +46,17 @@ model Session {
 }
 
 model Course {
-  id            Int            @id @default(autoincrement())
-  name          String
-  category      String
-  course_desc   String
-  instructor    InstructorUser @relation(fields: [instructor_id], references: [id])
-  instructor_id Int
-  studentUser   StudentUser[]
-  courseVideo   CourseVideo[]
+  id               Int            @id @default(autoincrement())
+  name             String
+  category         String
+  course_desc      String
+  course_detail    String
+  course_cover_url String
+  guide_url        String
+  instructor       InstructorUser @relation(fields: [instructor_id], references: [id])
+  instructor_id    Int
+  studentUser      StudentUser[]
+  courseVideo      CourseVideo[]
 }
 
 model CourseVideo {

@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.courseRouter = void 0;
 const express_1 = require("express");
-const course_controller_1 = require("../controllers/course.controller");
+const courseHome_controller_1 = require("../controllers/courseHome.controller");
 exports.courseRouter = (0, express_1.Router)();
-exports.courseRouter.get("/", course_controller_1.getManyCourse);
-exports.courseRouter.get("/:id", course_controller_1.getOneCourse);
-exports.courseRouter.post("/", course_controller_1.createCourse);
-exports.courseRouter.patch("/:id", course_controller_1.updateCourse);
-exports.courseRouter.delete("/:id", course_controller_1.deleteCourse);
+exports.courseRouter.get("/:id", courseHome_controller_1.getOneCourse);
+exports.courseRouter.get("/:cat/category", courseHome_controller_1.getCategoryCourse);
+exports.courseRouter.get("/", courseHome_controller_1.getManyCourse);
+exports.courseRouter.post("/", courseHome_controller_1.createCourse);
+exports.courseRouter.patch("/:id", courseHome_controller_1.updateCourse);
+exports.courseRouter.delete("/:id", courseHome_controller_1.deleteCourse);

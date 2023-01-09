@@ -1,9 +1,7 @@
-export interface CourseDto {
-    id: number;
+export interface CourseHomeDto {
     name: string;
-    category: string;
     course_desc: string;
-    students?: StudentUserDto[];
+    course_cover_url: string;
 }
 
 export interface StudentUserDto {
@@ -14,7 +12,8 @@ export interface StudentUserDto {
     first_name: string;
     last_name: string;
     phone_number: string;
-    courses?: CourseDto[];
+    image_url: string;
+    courses?: CourseHomeDto[];
 }
 
 export interface InstructorUserDto {
@@ -25,5 +24,6 @@ export interface InstructorUserDto {
     first_name: string;
     last_name: string;
     phone_number: string;
-    courses?: CourseDto[];
+    image_url: string;
+    courses?: CourseHomeDto[];
 }

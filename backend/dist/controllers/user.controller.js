@@ -63,7 +63,7 @@ const createInstructorUser = (req, res) => __awaiter(void 0, void 0, void 0, fun
                     console.log("There is a unique constraint violation, a new user cannot be created with this email");
                 }
             }
-            throw e;
+            // throw e;
         }
     }
     else {

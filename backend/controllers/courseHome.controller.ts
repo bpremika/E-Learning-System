@@ -1,6 +1,6 @@
 import { prisma } from "../common/prisma";
 import { Request, Response } from "express";
-import { CourseDto } from "../dto/common.dto";
+import { CourseHomeDto } from "../dto/common.dto";
 import {
     CoursesDto,
     CreateCourseDto,
@@ -22,33 +22,39 @@ const getOneCourse = async (req: Request, res: Response) => {
         return;
     }
 
-    const courseDto: CourseDto = {
-        id: course.id,
+    const courseDto: CourseHomeDto = {
         name: course.name,
-        category: course.category,
         course_desc: course.course_desc,
-        students: course.studentUser.map(
-            (student: {
-                id: number;
-                username: string;
-                email: string;
-                password: string;
-                first_name: string;
-                last_name: string;
-                phone_number: string;
-            }) => ({
-                id: student.id,
-                username: student.username,
-                email: student.email,
-                password: student.password,
-                first_name: student.first_name,
-                last_name: student.last_name,
-                phone_number: student.phone_number,
-            })
-        ),
+        course_cover_url: course.course_cover_url,
     };
 
     res.status(200).json(courseDto);
+};
+
+const getCategoryCourse = async (req: Request, res: Response) => {
+    const category = req.params.cat;
+    const courses = await prisma.course.findMany({
+        where: { category },
+        include: {
+            studentUser: true,
+        },
+    });
+
+    if (courses === null) {
+        res.status(404).send({ message: "not found" });
+        return;
+    }
+
+    const coursesDto: CoursesDto = {
+        total: courses.length,
+        courses: courses.map((course) => ({
+            name: course.name,
+            course_desc: course.course_desc,
+            course_cover_url: course.course_cover_url,
+        })),
+    };
+
+    res.status(200).json(coursesDto);
 };
 
 const getManyCourse = async (req: Request, res: Response) => {
@@ -56,10 +62,9 @@ const getManyCourse = async (req: Request, res: Response) => {
     const coursesDto: CoursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
-            id: course.id,
             name: course.name,
-            category: course.category,
             course_desc: course.course_desc,
+            course_cover_url: course.course_cover_url,
         })),
     };
     res.status(200).json(coursesDto);
@@ -75,6 +80,9 @@ const createCourse = async (req: Request, res: Response) => {
                     name: course.name,
                     category: course.category,
                     course_desc: course.course_desc,
+                    course_detail: course.course_detail,
+                    course_cover_url: course.course_cover_url,
+                    guide_url: course.guide_url,
                     instructor_id: course.instructor_id,
                 },
             });
@@ -100,6 +108,9 @@ const updateCourse = async (req: Request, res: Response) => {
             name: newCourseDto.name,
             category: newCourseDto.category,
             course_desc: newCourseDto.course_desc,
+            course_detail: newCourseDto.course_detail,
+            course_cover_url: newCourseDto.course_cover_url,
+            guide_url: newCourseDto.guide_url,
             instructor_id: newCourseDto.instructor_id,
         },
     });
@@ -118,6 +129,7 @@ const deleteCourse = async (req: Request, res: Response) => {
 
 export {
     getOneCourse,
+    getCategoryCourse,
     getManyCourse,
     createCourse,
     updateCourse,

@@ -8,9 +8,10 @@ exports.userSchema = zod_1.z.object({
     password: zod_1.z.string().min(6),
     first_name: zod_1.z.string(),
     last_name: zod_1.z.string(),
-    phone_number: zod_1.z.string().length(10)
+    phone_number: zod_1.z.string().length(10),
+    image_url: zod_1.z.string(),
 });
 exports.loginSchema = zod_1.z.object({
     username: zod_1.z.string(),
-    password: zod_1.z.string().min(6)
+    password: zod_1.z.string().min(6),
 });

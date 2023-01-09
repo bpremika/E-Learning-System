@@ -6,5 +6,8 @@ exports.courseSchema = zod_1.z.object({
     name: zod_1.z.string(),
     category: zod_1.z.string(),
     course_desc: zod_1.z.string(),
+    course_detail: zod_1.z.string(),
+    course_cover_url: zod_1.z.string(),
+    guide_url: zod_1.z.string(),
     instructor_id: zod_1.z.number().int().positive(),
 });
