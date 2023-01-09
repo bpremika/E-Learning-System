@@ -33,7 +33,7 @@ const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.getOneCourse = getOneCourse;
 const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = req.params.cat;
+    const category = req.params.cat.toUpperCase();
     const courses = yield prisma_1.prisma.course.findMany({
         where: { category },
         include: {

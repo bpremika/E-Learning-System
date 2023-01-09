@@ -32,7 +32,7 @@ const getOneCourse = async (req: Request, res: Response) => {
 };
 
 const getCategoryCourse = async (req: Request, res: Response) => {
-    const category = req.params.cat;
+    const category = req.params.cat.toUpperCase();
     const courses = await prisma.course.findMany({
         where: { category },
         include: {
