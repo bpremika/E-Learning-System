@@ -1,0 +1,52 @@
+.card1 {
+    display: flex;
+    height: 117px;
+    width: 204px;
+    border-radius: 20px;
+    background-color: #2B788B;
+    color: white;
+    font-family: 
+    /* align-items: center; */
+}
+
+.text1_1 {
+    position: absolute;
+    left: 20px;
+    top: 7px;
+    font-size: 20px;
+}
+
+.text1_2 {
+    position: absolute;
+    left: 30px;
+    top: 40px;
+    font-size: 40px;
+}
+
+.card2 {
+    object-fit: cover;
+    display: flex;
+    height: 101px;
+    width: 136px;
+    border-radius: 10px;
+    background-color: #454545;
+    color: white;
+    font-family: 
+}
+
+.card2_1 {
+    display: flex;
+    height: 30px;
+    width: 136px;
+    position: absolute;
+    top: 71px;
+    background-color: #D9D9D9;
+    color: black;
+}
+
+.text2_1 {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    font-size: 12px;
+}
