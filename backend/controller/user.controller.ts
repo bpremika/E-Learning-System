@@ -30,8 +30,7 @@ export const createStudentUser = async (req: Request, res: Response) => {
             }
             throw e;
         }
-    }
-    else{
+    } else {
         res.status(400).json(result.error);
     }
 };
@@ -61,8 +60,7 @@ export const createInstructorUser = async (req: Request, res: Response) => {
             }
             throw e;
         }
-    }
-    else{
+    } else {
         res.status(400).json(result.error);
     }
 };
@@ -85,13 +83,14 @@ export const studentLogin = async (req: Request, res: Response) => {
             user.password
         );
         if (!isPasswordValid) {
-            res.status(401).json({ message: "Your username or password might be wrong!!" });
+            res.status(401).json({
+                message: "Your username or password might be wrong!!",
+            });
             return;
         }
         req.session.username = username;
-        res.status(200).json({message : "login successful"})
-    }
-    else{
+        res.status(200).json({ message: "login successful" });
+    } else {
         res.status(400).json(result.error);
     }
 };
@@ -114,19 +113,20 @@ export const instructorLogin = async (req: Request, res: Response) => {
             user.password
         );
         if (!isPasswordValid) {
-            res.status(401).json({ message: "Your username or password might be wrong!!" });
+            res.status(401).json({
+                message: "Your username or password might be wrong!!",
+            });
             return;
         }
         req.session.username = username;
-        res.status(200).json({message : "login successful"})
-    }
-    else{
+        res.status(200).json({ message: "login successful" });
+    } else {
         res.status(400).json(result.error);
     }
 };
 
-export const logout = async(req :Request,res :Response)=>{
-    req.session.destroy(()=>{
-        res.status(200).json({message : "logout successful"})
+export const logout = async (req: Request, res: Response) => {
+    req.session.destroy(() => {
+        res.status(200).json({ message: "logout successful" });
     });
-}
+};
