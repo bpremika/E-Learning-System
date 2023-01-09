@@ -6,6 +6,58 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model StudentUser {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  password     String
+  first_name   String
+  last_name    String
+  phone_number String
+  created_at   DateTime @default(now())
+  modified_at  DateTime @default(now())
+  Course       Course[]
+}
+
+model InstructorUser {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  password     String
+  first_name   String
+  last_name    String
+  phone_number String
+  course       Course[]
+  created_at   DateTime @default(now())
+  modified_at  DateTime @default(now())
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
+
+model Course {
+  id            Int            @id @default(autoincrement())
+  name          String
+  category      String
+  course_desc   String
+  instructor    InstructorUser @relation(fields: [instructor_id], references: [id])
+  instructor_id Int
+  StudentUser   StudentUser[]
+  courseVideo   CourseVideo[]
+}
+
+model CourseVideo {
+  id        Int    @id @default(autoincrement())
+  title     String
+  video_url String
+  course_id Int
+  course    Course @relation(fields: [course_id], references: [id])
 }
