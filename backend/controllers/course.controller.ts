@@ -29,13 +29,13 @@ const getOneCourse = async (req: Request, res: Response) => {
         course_desc: course.course_desc,
         students: course.students.map(
             (student: {
-                id: any;
-                username: any;
-                email: any;
-                password: any;
-                first_name: any;
-                last_name: any;
-                phone_number: any;
+                id: number;
+                username: string;
+                email: string;
+                password: string;
+                first_name: string;
+                last_name: string;
+                phone_number: string;
             }) => ({
                 id: student.id,
                 username: student.username,
@@ -57,18 +57,18 @@ const getManyCourse = async (req: Request, res: Response) => {
         total: courses.length,
         courses: courses.map(
             (course: {
-                id: any;
-                name: any;
-                category: any;
-                course_desc: any;
+                id: number;
+                name: string;
+                category: string;
+                course_desc: string;
                 students: {
-                    id: any;
-                    username: any;
-                    email: any;
-                    password: any;
-                    first_name: any;
-                    last_name: any;
-                    phone_number: any;
+                    id: number;
+                    username: string;
+                    email: string;
+                    password: string;
+                    first_name: string;
+                    last_name: string;
+                    phone_number: string;
                 }[];
             }) => ({
                 id: course.id,
@@ -77,13 +77,13 @@ const getManyCourse = async (req: Request, res: Response) => {
                 course_desc: course.course_desc,
                 students: course.students.map(
                     (student: {
-                        id: any;
-                        username: any;
-                        email: any;
-                        password: any;
-                        first_name: any;
-                        last_name: any;
-                        phone_number: any;
+                        id: number;
+                        username: string;
+                        email: string;
+                        password: string;
+                        first_name: string;
+                        last_name: string;
+                        phone_number: string;
                     }) => ({
                         id: student.id,
                         username: student.username,
