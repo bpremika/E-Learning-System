@@ -4,6 +4,7 @@ export interface CourseDto {
     category: string;
     course_desc: string;
     students?: StudentUserDto[];
+    instructor?: InstructorUserDto[];
 }
 
 export interface StudentUserDto {

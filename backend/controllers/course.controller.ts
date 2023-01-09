@@ -6,14 +6,14 @@ import {
     CreateCourseDto,
     UpdateCourseDto,
 } from "../dto/course.dto";
+import { courseSchema } from "../common/CourseValidator";
 
 const getOneCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const course = await prisma.course.findUnique({
         where: { id },
         include: {
-            instructor: true,
-            students: true,
+            studentUser: true,
         },
     });
 
@@ -27,7 +27,7 @@ const getOneCourse = async (req: Request, res: Response) => {
         name: course.name,
         category: course.category,
         course_desc: course.course_desc,
-        students: course.students.map(
+        students: course.studentUser.map(
             (student: {
                 id: number;
                 username: string;
@@ -55,77 +55,46 @@ const getManyCourse = async (req: Request, res: Response) => {
     const courses = await prisma.course.findMany();
     const coursesDto: CoursesDto = {
         total: courses.length,
-        courses: courses.map(
-            (course: {
-                id: number;
-                name: string;
-                category: string;
-                course_desc: string;
-                students: {
-                    id: number;
-                    username: string;
-                    email: string;
-                    password: string;
-                    first_name: string;
-                    last_name: string;
-                    phone_number: string;
-                }[];
-            }) => ({
-                id: course.id,
-                name: course.name,
-                category: course.category,
-                course_desc: course.course_desc,
-                students: course.students.map(
-                    (student: {
-                        id: number;
-                        username: string;
-                        email: string;
-                        password: string;
-                        first_name: string;
-                        last_name: string;
-                        phone_number: string;
-                    }) => ({
-                        id: student.id,
-                        username: student.username,
-                        email: student.email,
-                        password: student.password,
-                        first_name: student.first_name,
-                        last_name: student.last_name,
-                        phone_number: student.phone_number,
-                    })
-                ),
-            })
-        ),
+        courses: courses.map((course) => ({
+            id: course.id,
+            name: course.name,
+            category: course.category,
+            course_desc: course.course_desc,
+        })),
     };
     res.status(200).json(coursesDto);
 };
 
 const createCourse = async (req: Request, res: Response) => {
     const course: CreateCourseDto = req.body;
+    const check = courseSchema.safeParse(course);
+    if (check.success) {
+        try {
+            const result = await prisma.course.create({
+                data: {
+                    name: course.name,
+                    category: course.category,
+                    course_desc: course.course_desc,
+                    instructor_id: course.instructor_id,
+                },
+            });
 
-    const result = await prisma.course.create({
-        data: {
-            name: course.name,
-            category: course.category,
-            course_desc: course.course_desc,
-            instructor_id: course.instructor_id,
-        },
-    });
+            console.log(result);
 
-    const courseDto: CourseDto = {
-        id: result.id,
-        name: result.name,
-        category: result.category,
-        course_desc: result.course_desc,
-    };
-
-    res.status(201).json(courseDto);
+            res.status(201).json(result);
+        } catch (e) {
+            console.log("have error");
+            res.status(400).json({ message: "something wents wrong" });
+        }
+    } else {
+        res.status(400).json({ message: "something wents wrong" });
+    }
 };
 
 const updateCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const newCourseDto: UpdateCourseDto = req.body;
-    const bio = await prisma.studentBio.update({
+    const course = await prisma.course.update({
         where: { id },
         data: {
             name: newCourseDto.name,
@@ -134,7 +103,7 @@ const updateCourse = async (req: Request, res: Response) => {
             instructor_id: newCourseDto.instructor_id,
         },
     });
-    res.status(200).json(bio);
+    res.status(200).json(course);
 };
 
 const deleteCourse = async (req: Request, res: Response) => {

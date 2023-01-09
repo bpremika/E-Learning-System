@@ -26,8 +26,10 @@
   "dependencies": {
     "@quixo3/prisma-session-store": "^3.1.10",
     "@types/bcrypt": "^5.0.0",
+    "@types/concurrently": "^7.0.0",
     "@types/dotenv": "^8.2.0",
     "@types/express-session": "^1.17.5",
+    "concurrently": "^7.6.0",
     "express-session": "^1.17.3",
     "nodemon": "^2.0.20",
     "zod": "^3.20.2"
