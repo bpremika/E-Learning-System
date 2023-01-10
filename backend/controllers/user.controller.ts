@@ -2,7 +2,7 @@ import { prisma } from "../common/prisma";
 import { Request, Response } from "express";
 import { loginSchema, userSchema } from "../common/UserValidator";
 import bcrypt from "bcrypt";
-import { CreateUser } from "../dto/user.dto";
+import { CreateUser, SessionDTO } from "../dto/user.dto";
 import { Prisma } from "@prisma/client";
 
 export const createStudentUser = async (req: Request, res: Response) => {
@@ -23,12 +23,13 @@ export const createStudentUser = async (req: Request, res: Response) => {
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log(
-                        "There is a unique constraint violation, a new user cannot be created with this email"
-                    );
+                    res.status(400).json({
+                        message:
+                            "There is a unique constraint violation, a new user cannot be created with this email",
+                    });
                 }
             }
-            throw e;
+            // throw e;
         }
     } else {
         res.status(400).json(result.error);
@@ -53,9 +54,10 @@ export const createInstructorUser = async (req: Request, res: Response) => {
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log(
-                        "There is a unique constraint violation, a new user cannot be created with this email"
-                    );
+                    res.status(400).json({
+                        message:
+                            "There is a unique constraint violation, a new user cannot be created with this email",
+                    });
                 }
             }
             // throw e;
@@ -89,6 +91,7 @@ export const studentLogin = async (req: Request, res: Response) => {
             return;
         }
         req.session.username = username;
+        req.session.role = "student";
         res.status(200).json({ message: "login successful" });
     } else {
         res.status(400).json(result.error);
@@ -119,6 +122,7 @@ export const instructorLogin = async (req: Request, res: Response) => {
             return;
         }
         req.session.username = username;
+        req.session.role = "instructor";
         res.status(200).json({ message: "login successful" });
     } else {
         res.status(400).json(result.error);
@@ -129,4 +133,27 @@ export const logout = async (req: Request, res: Response) => {
     req.session.destroy(() => {
         res.status(200).json({ message: "logout successful" });
     });
+};
+
+export const getProfile = async (req: Request, res: Response) => {
+    const session = req.session;
+    if (session.username == undefined || session.role == undefined){
+        req.session.username = "";
+        req.session.role = "";
+        console.log("doesm't have session.")
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
+    }
+    else if (session.username === "") {
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
+
+    } 
+    else {
+        const userSession : SessionDTO = {
+            username : session.username,
+            role : session.role
+        }
+        res.status(200).json(req.session);
+    }
 };

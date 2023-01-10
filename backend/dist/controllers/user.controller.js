@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.instructorLogin = exports.studentLogin = exports.createInstructorUser = exports.createStudentUser = void 0;
+exports.getProfile = exports.logout = exports.instructorLogin = exports.studentLogin = exports.createInstructorUser = exports.createStudentUser = void 0;
 const prisma_1 = require("../common/prisma");
 const UserValidator_1 = require("../common/UserValidator");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -33,10 +33,12 @@ const createStudentUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
             if (e instanceof client_1.Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log("There is a unique constraint violation, a new user cannot be created with this email");
+                    res.status(400).json({
+                        message: "There is a unique constraint violation, a new user cannot be created with this email",
+                    });
                 }
             }
-            throw e;
+            // throw e;
         }
     }
     else {
@@ -60,10 +62,12 @@ const createInstructorUser = (req, res) => __awaiter(void 0, void 0, void 0, fun
             if (e instanceof client_1.Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
                 if (e.code === "P2002") {
-                    console.log("There is a unique constraint violation, a new user cannot be created with this email");
+                    res.status(400).json({
+                        message: "There is a unique constraint violation, a new user cannot be created with this email",
+                    });
                 }
             }
-            // throw e;
+            throw e;
         }
     }
     else {
@@ -92,6 +96,7 @@ const studentLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             return;
         }
         req.session.username = username;
+        req.session.role = "student";
         res.status(200).json({ message: "login successful" });
     }
     else {
@@ -120,6 +125,7 @@ const instructorLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
             return;
         }
         req.session.username = username;
+        req.session.role = "instructor";
         res.status(200).json({ message: "login successful" });
     }
     else {
@@ -133,3 +139,25 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.logout = logout;
+const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const session = req.session;
+    if (session.username == undefined || session.role == undefined) {
+        req.session.username = "";
+        req.session.role = "";
+        console.log("doesm't have session.");
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
+    }
+    else if (session.username === "") {
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
+    }
+    else {
+        const userSession = {
+            username: session.username,
+            role: session.role
+        };
+        res.status(200).json(req.session);
+    }
+});
+exports.getProfile = getProfile;
