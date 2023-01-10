@@ -1,11 +1,26 @@
 import Link from "next/link";
 import { UnstyledButton, Group, Avatar, Text } from "@mantine/core";
 import useMediaQuery from "../common/hook/mediaHook";
+import { useContext, useState } from "react";
+import { Burger, NavLink, Drawer } from "@mantine/core";
+import { useUser } from "../common/contexts/UserContext";
+
 const NavBar = () => {
-    const name: String = "H";
-    let fLetter: String;
-    fLetter = name.length !== 0 ? name.charAt(0) : "";
+    const { isAuth, user, logout } = useUser();
+    const name = user?.name;
+    let fLetter: String = "";
+    if (isAuth) {
+        fLetter = name!.length !== 0 ? name!.charAt(0) : "";
+    }
+
+    const handleOnSignOut = () => {
+        logout();
+    };
+
     const isBiggerThanMd = useMediaQuery("md");
+    const splitt: string[] = name?.split(" ", 2) ?? [];
+    const [opened, setOpened] = useState(false);
+    const title = opened ? "Close navigation" : "Open navigation";
     return isBiggerThanMd ? (
         <div
             className={`bg-offwhite h-[88px] flex flex-row gap-12 justify-start items-center`}
@@ -27,36 +42,92 @@ const NavBar = () => {
                     </Link>
                 </div>
             </div>
-            <div className="ml-auto mr-8 flex flex-row gap-10">
-                <UnstyledButton>
-                    <Group>
-                        <Avatar size={40} color="blue">
-                            {fLetter}
-                        </Avatar>
-                        <div>
-                            <Text>Bob Handsome</Text>
-                        </div>
-                    </Group>
-                </UnstyledButton>
-                <div className="self-center">
+            {isAuth ? (
+                <div className="ml-auto mr-8 flex flex-row gap-10">
+                    <UnstyledButton>
+                        <Group>
+                            <Avatar size={40} color="blue">
+                                {fLetter}
+                            </Avatar>
+                            <div>
+                                <Text>{name}</Text>
+                            </div>
+                        </Group>
+                    </UnstyledButton>
+                    <div className="self-center" onClick={handleOnSignOut}>
+                        <button className="font-bold">Sign Out ➜</button>
+                    </div>
+                </div>
+            ) : (
+                <div className="ml-auto mr-8 flex flex-row gap-10">
                     <Link href="/" className="font-bold">
-                        Sign Out ➜
+                        Login
                     </Link>
                 </div>
-            </div>
+            )}
         </div>
     ) : (
         <div>
-            <div className="flex flex-row justify-between h-[50px] items-center">
-                <div>Sign Out ➜</div>
-                <div className={`font-['Dela_Gothic_One'] justify-self-center`}>
+            <div className="flex flex-row justify-between h-[50px] items-center bg-offwhite">
+                <div className="ml-[20px]">
+                    <Burger
+                        opened={opened}
+                        onClick={() => setOpened((o) => !o)}
+                        title={title}
+                    />
+                    <Drawer
+                        opened={opened}
+                        onClose={() => setOpened(false)}
+                        padding="xl"
+                        size={230}
+                        position="top"
+                        overlayBlur={3}
+                        overlayOpacity={0.5}
+                    >
+                        <div className="flex flex-col  items-center h-[150px]">
+                            <div className="w-[100vw] h-[50px] flex hover:bg-offwhite items-center justify-center ">
+                                <Link className="hover:font-semibold" href="/">
+                                    Home
+                                </Link>
+                            </div>
+                            <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
+                                <Link className="hover:font-semibold" href="/">
+                                    Course
+                                </Link>
+                            </div>
+                            <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
+                                <Link className="hover:font-semibold" href="/">
+                                    Sign Out ➜
+                                </Link>
+                            </div>
+                        </div>
+                    </Drawer>
+                </div>
+                <div
+                    className={`font-['Dela_Gothic_One'] justify-self-center  ml-[24px]  `}
+                >
                     GlobalTalk
                 </div>
-                <div>
-                    <Link href="/" className="font-bold mr-3">
-                        Sign Out ➜
-                    </Link>
-                </div>
+                {isAuth ? (
+                    <div>
+                        <UnstyledButton>
+                            <Group spacing={10}>
+                                <Avatar size={40} color="blue">
+                                    {fLetter}
+                                </Avatar>
+                                <div className="mr-[10px] ">
+                                    <Text>{splitt[0]}</Text>
+                                </div>
+                            </Group>
+                        </UnstyledButton>
+                    </div>
+                ) : (
+                    <div className="mr-[20px] ">
+                        <Link href="/" className="font-bold">
+                            Login
+                        </Link>
+                    </div>
+                )}
             </div>
             <hr></hr>
         </div>

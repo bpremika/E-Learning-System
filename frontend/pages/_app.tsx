@@ -2,7 +2,9 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Header from "../components/Head";
 import { createEmotionCache, MantineProvider } from "@mantine/core";
-
+import NavBar from "../components/NavBar";
+import { createContext, useState, useEffect } from "react";
+import { UserContextProvider } from "../common/contexts/UserContext";
 const myCache = createEmotionCache({
     key: "mantine",
     prepend: false,
@@ -31,9 +33,12 @@ export default function App({ Component, pageProps }: AppProps) {
                     primaryShade: 7,
                 }}
             >
+                <UserContextProvider>
+                 <NavBar />
                 <Header />
                 <Component {...pageProps} />
                 <Header />
+                </UserContextProvider>
             </MantineProvider>
         </div>
     );
