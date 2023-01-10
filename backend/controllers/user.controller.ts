@@ -157,3 +157,44 @@ export const getProfile = async (req: Request, res: Response) => {
         res.status(200).json(req.session);
     }
 };
+
+export const exrollCourse = async (req: Request, res: Response) => {
+    const courseid = parseInt(req.params.id as string);
+    if (Number.isNaN(courseid)) {
+        res.status(400).json({ message: "Invalid ID" });
+        return;
+    }
+    try {
+        const session = req.session;
+        if (session == null || session == undefined) {
+            res.status(401).json({ message: "session error" });
+            return;
+        }
+        const party = await prisma.party.findUnique({
+            where: { id: partyid },
+            include: { user: true },
+        });
+        if (party == null) {
+            res.status(400).json({ message: "party not found" });
+            return;
+        }
+        if (party.user.find((v) => v.id == session.userID) !== undefined) {
+            res.status(400).json({ message: "user already in party" });
+            return;
+        }
+        if (party.current_member >= party.member) {
+            res.status(400).json({ message: "this party is already full" });
+            return;
+        }
+        const updateParty = await prisma.party.update({
+            where: { id: partyid },
+            data: {
+                current_member: { increment: 1 },
+                user: { connect: { id: session.userID } },
+            },
+        });
+        res.status(200).json({ message: "join party successful" });
+    } catch (error) {
+        res.status(400).json({ message: "something went wrong" });
+    } 
+}
