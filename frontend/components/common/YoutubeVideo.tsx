@@ -1,11 +1,16 @@
 import React from "react";
 
-export default function YoutubeVideo() {
+interface Props{
+    name? : string,
+    video_url? : string
+}
+export default function YoutubeVideo(prop:Props) {
     return (
-        <div className="">
+        <div className="p-5">
             <iframe
-                width="560"
-                height="315"
+                width="426"
+                height="240"
+                title=""
                 src="https://www.youtube.com/embed/1XqIWr_WqM4"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen

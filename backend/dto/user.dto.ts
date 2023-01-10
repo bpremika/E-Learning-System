@@ -2,6 +2,10 @@ export interface User {
     username: string;
     password: string;
 }
+
+export interface Session{
+    username:string;
+}
 export interface CreateUser {
     username: string;
     email: string;

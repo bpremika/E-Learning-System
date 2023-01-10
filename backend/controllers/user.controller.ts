@@ -5,6 +5,12 @@ import bcrypt from "bcrypt";
 import { CreateUser } from "../dto/user.dto";
 import { Prisma } from "@prisma/client";
 
+export const createSession = async(req: Request, res: Response) =>{
+    if (req.session === null){
+        req.session.username = "";
+        req
+    }
+}
 export const createStudentUser = async (req: Request, res: Response) => {
     const user: CreateUser = req.body;
     const result = userSchema.safeParse(user);
@@ -26,7 +32,7 @@ export const createStudentUser = async (req: Request, res: Response) => {
                     res.status(400).json({
                         message:
                             "There is a unique constraint violation, a new user cannot be created with this email",
-                    })
+                    });
                 }
             }
             // throw e;
@@ -57,7 +63,7 @@ export const createInstructorUser = async (req: Request, res: Response) => {
                     res.status(400).json({
                         message:
                             "There is a unique constraint violation, a new user cannot be created with this email",
-                    })
+                    });
                 }
             }
             throw e;
@@ -91,6 +97,7 @@ export const studentLogin = async (req: Request, res: Response) => {
             return;
         }
         req.session.username = username;
+        req.session.role = "student";
         res.status(200).json({ message: "login successful" });
     } else {
         res.status(400).json(result.error);
@@ -121,6 +128,7 @@ export const instructorLogin = async (req: Request, res: Response) => {
             return;
         }
         req.session.username = username;
+        req.session.role = "instructor";
         res.status(200).json({ message: "login successful" });
     } else {
         res.status(400).json(result.error);
@@ -131,4 +139,12 @@ export const logout = async (req: Request, res: Response) => {
     req.session.destroy(() => {
         res.status(200).json({ message: "logout successful" });
     });
+};
+
+export const getProfile = async (req: Request, res: Response) => {
+    if (req.session.username === "") {
+        res.status(403).json({ message: "user doesn't log in." });
+    } else {
+        res.status(200).json(req.session.username);
+    }
 };

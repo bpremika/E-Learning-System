@@ -4,6 +4,7 @@ exports.userRouter = void 0;
 const express_1 = require("express");
 const user_controller_1 = require("../controllers/user.controller");
 exports.userRouter = (0, express_1.Router)();
+exports.userRouter.get("/me", user_controller_1.getProfile);
 exports.userRouter.post("/studentRegister", user_controller_1.createStudentUser);
 exports.userRouter.post("/instructorRegister", user_controller_1.createInstructorUser);
 exports.userRouter.post("/studentLogin", user_controller_1.studentLogin);
