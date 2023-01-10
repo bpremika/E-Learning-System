@@ -1,20 +1,24 @@
 import Link from "next/link";
 import { UnstyledButton, Group, Avatar, Text } from "@mantine/core";
 import useMediaQuery from "../common/hook/mediaHook";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Burger, NavLink, Drawer } from "@mantine/core";
-interface props {
-    isLogin: boolean;
-    name: String;
-}
-const NavBar = ({ isLogin, name }: props) => {
+import { useUser } from "../common/contexts/UserContext";
+
+const NavBar = () => {
+    const { isAuth, user, logout } = useUser();
+    const name = user?.name;
     let fLetter: String = "";
-    if (isLogin) {
-        fLetter = name.length !== 0 ? name.charAt(0) : "";
+    if (isAuth) {
+        fLetter = name!.length !== 0 ? name!.charAt(0) : "";
     }
 
+    const handleOnSignOut = () => {
+        logout();
+    };
+
     const isBiggerThanMd = useMediaQuery("md");
-    const splitt: string[] = name.split(" ", 2);
+    const splitt: string[] = name?.split(" ", 2) ?? [];
     const [opened, setOpened] = useState(false);
     const title = opened ? "Close navigation" : "Open navigation";
     return isBiggerThanMd ? (
@@ -38,7 +42,7 @@ const NavBar = ({ isLogin, name }: props) => {
                     </Link>
                 </div>
             </div>
-            {isLogin ? (
+            {isAuth ? (
                 <div className="ml-auto mr-8 flex flex-row gap-10">
                     <UnstyledButton>
                         <Group>
@@ -50,10 +54,8 @@ const NavBar = ({ isLogin, name }: props) => {
                             </div>
                         </Group>
                     </UnstyledButton>
-                    <div className="self-center">
-                        <Link href="/" className="font-bold">
-                            Sign Out ➜
-                        </Link>
+                    <div className="self-center" onClick={handleOnSignOut}>
+                        <button className="font-bold">Sign Out ➜</button>
                     </div>
                 </div>
             ) : (
@@ -106,7 +108,7 @@ const NavBar = ({ isLogin, name }: props) => {
                 >
                     GlobalTalk
                 </div>
-                {isLogin ? (
+                {isAuth ? (
                     <div>
                         <UnstyledButton>
                             <Group spacing={10}>
