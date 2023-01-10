@@ -13,7 +13,7 @@ import { getDetailedCourse } from "../controllers/courseStudentInfo.controller";
 export const courseRouter = Router();
 courseRouter.get("/getOne/:id", getOneCourse);
 courseRouter.get("/category/:cat", getCategoryCourse);
-courseRouter.get("/getMany", getManyCourse);
+courseRouter.get("/getMany/:pages", getManyCourse);
 courseRouter.get("/enroll/:id", getCourse);
 courseRouter.get("/studentInfo/:id", getDetailedCourse);
 courseRouter.post("/createCourse", createCourse);

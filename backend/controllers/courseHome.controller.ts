@@ -10,6 +10,10 @@ import { courseSchema } from "../common/CourseValidator";
 
 const getOneCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        res.status(404).send({ message: "invalid ID" });
+        return;
+    }
     const course = await prisma.course.findUnique({
         where: { id },
         include: {
@@ -58,7 +62,17 @@ const getCategoryCourse = async (req: Request, res: Response) => {
 };
 
 const getManyCourse = async (req: Request, res: Response) => {
-    const courses = await prisma.course.findMany();
+    const pages = parseInt(req.params.pages);
+    const amountPerPage = 12;
+    if (isNaN(pages)) {
+        res.status(404).send({ message: "invalid Pages" });
+        return;
+    }
+
+    const courses = await prisma.course.findMany({
+        skip: (pages - 1) * amountPerPage,
+        take: amountPerPage,
+    });
     const coursesDto: CoursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({

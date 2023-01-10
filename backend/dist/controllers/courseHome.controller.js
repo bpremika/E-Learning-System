@@ -14,6 +14,10 @@ const prisma_1 = require("../common/prisma");
 const CourseValidator_1 = require("../common/CourseValidator");
 const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        res.status(404).send({ message: "invalid ID" });
+        return;
+    }
     const course = yield prisma_1.prisma.course.findUnique({
         where: { id },
         include: {
@@ -56,7 +60,16 @@ const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.getCategoryCourse = getCategoryCourse;
 const getManyCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const courses = yield prisma_1.prisma.course.findMany();
+    const pages = parseInt(req.params.pages);
+    const amountPerPage = 12;
+    if (isNaN(pages)) {
+        res.status(404).send({ message: "invalid Pages" });
+        return;
+    }
+    const courses = yield prisma_1.prisma.course.findMany({
+        skip: (pages - 1) * amountPerPage,
+        take: amountPerPage,
+    });
     const coursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
