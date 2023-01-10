@@ -8,6 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const express_session_1 = __importDefault(require("express-session"));
 const prisma_session_store_1 = require("@quixo3/prisma-session-store");
 const prisma_1 = require("./common/prisma");
+const course_route_1 = require("./routes/course.route");
 const user_route_1 = require("./routes/user.route");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -25,7 +26,8 @@ app.use((0, express_session_1.default)({
         dbRecordIdFunction: undefined,
     }),
 }));
-app.use(user_route_1.userRouter);
+app.use("/course", course_route_1.courseRouter);
+app.use("/user", user_route_1.userRouter);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
