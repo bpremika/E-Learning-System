@@ -60,7 +60,7 @@ export const createInstructorUser = async (req: Request, res: Response) => {
                     });
                 }
             }
-            throw e;
+            // throw e;
         }
     } else {
         res.status(400).json(result.error);
