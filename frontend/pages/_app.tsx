@@ -15,8 +15,8 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Header />
                 <Component {...pageProps} />
 
+                <Header />
             </MantineProvider>
-            <Header />
         </div>
     );
 }
