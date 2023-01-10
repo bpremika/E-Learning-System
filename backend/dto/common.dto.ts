@@ -45,3 +45,9 @@ export interface InstructorUserDto {
     image_url: string;
     courses?: CourseHomeDto[];
 }
+
+export interface InstructorDashboardDto {
+    total_course: number;
+    total_all_student: number;
+    total_student: number;
+}

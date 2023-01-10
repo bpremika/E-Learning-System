@@ -8,6 +8,8 @@ import {
 } from "../dto/course.dto";
 import { courseSchema } from "../common/CourseValidator";
 
+const amountPerPage = 12;
+
 const getOneCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
@@ -63,7 +65,6 @@ const getCategoryCourse = async (req: Request, res: Response) => {
 
 const getManyCourse = async (req: Request, res: Response) => {
     const pages = parseInt(req.params.pages);
-    const amountPerPage = 12;
     if (isNaN(pages)) {
         res.status(404).send({ message: "invalid Pages" });
         return;

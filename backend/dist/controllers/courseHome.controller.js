@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getManyCourse = exports.getCategoryCourse = exports.getOneCourse = void 0;
 const prisma_1 = require("../common/prisma");
 const CourseValidator_1 = require("../common/CourseValidator");
+const amountPerPage = 12;
 const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
@@ -61,7 +62,6 @@ const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.getCategoryCourse = getCategoryCourse;
 const getManyCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pages = parseInt(req.params.pages);
-    const amountPerPage = 12;
     if (isNaN(pages)) {
         res.status(404).send({ message: "invalid Pages" });
         return;
