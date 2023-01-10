@@ -8,7 +8,7 @@ import NavBar from "../components/NavBar";
 export default function Home() {
     return (
         <>
-            <NavBar />
+            <NavBar name={"Bruce nun"} isLogin={true} />
             {/* {Array.from({ length: 10 }, () => 0).map((_, i) => {
                 return <AdviceCard number={i} />;
             })} */}

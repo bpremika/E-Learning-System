@@ -111,7 +111,7 @@ const NavBar = ({ isLogin, name }: props) => {
                         <UnstyledButton>
                             <Group spacing={10}>
                                 <Avatar size={40} color="blue">
-                                    {}
+                                    {fLetter}
                                 </Avatar>
                                 <div className="mr-[10px] ">
                                     <Text>{splitt[0]}</Text>
