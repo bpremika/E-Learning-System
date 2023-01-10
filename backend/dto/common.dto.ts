@@ -1,10 +1,7 @@
-export interface CourseDto {
-    id: number;
+export interface CourseHomeDto {
     name: string;
-    category: string;
     course_desc: string;
-    students?: StudentUserDto[];
-    Instructor?: InstructorUserDto[];
+    course_cover_url: string;
 }
 
 export interface CourseEnrollDto {
