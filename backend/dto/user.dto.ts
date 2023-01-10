@@ -3,8 +3,9 @@ export interface User {
     password: string;
 }
 
-export interface Session{
+export interface SessionDTO{
     username:string;
+    role:string;
 }
 export interface CreateUser {
     username: string;

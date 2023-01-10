@@ -12,18 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProfile = exports.logout = exports.instructorLogin = exports.studentLogin = exports.createInstructorUser = exports.createStudentUser = exports.createSession = void 0;
+exports.getProfile = exports.logout = exports.instructorLogin = exports.studentLogin = exports.createInstructorUser = exports.createStudentUser = void 0;
 const prisma_1 = require("../common/prisma");
 const UserValidator_1 = require("../common/UserValidator");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const client_1 = require("@prisma/client");
-const createSession = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.session === null) {
-        req.session.username = "";
-        req;
-    }
-});
-exports.createSession = createSession;
 const createStudentUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.body;
     const result = UserValidator_1.userSchema.safeParse(user);
@@ -147,11 +140,24 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.logout = logout;
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.session.username === "") {
+    const session = req.session;
+    if (session.username == undefined || session.role == undefined) {
+        req.session.username = "";
+        req.session.role = "";
+        console.log("doesm't have session.");
         res.status(403).json({ message: "user doesn't log in." });
+        return;
+    }
+    else if (session.username === "") {
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
     }
     else {
-        res.status(200).json(req.session.username);
+        const userSession = {
+            username: session.username,
+            role: session.role
+        };
+        res.status(200).json(req.session);
     }
 });
 exports.getProfile = getProfile;

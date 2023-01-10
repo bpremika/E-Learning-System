@@ -2,15 +2,9 @@ import { prisma } from "../common/prisma";
 import { Request, Response } from "express";
 import { loginSchema, userSchema } from "../common/UserValidator";
 import bcrypt from "bcrypt";
-import { CreateUser } from "../dto/user.dto";
+import { CreateUser, SessionDTO } from "../dto/user.dto";
 import { Prisma } from "@prisma/client";
 
-export const createSession = async(req: Request, res: Response) =>{
-    if (req.session === null){
-        req.session.username = "";
-        req
-    }
-}
 export const createStudentUser = async (req: Request, res: Response) => {
     const user: CreateUser = req.body;
     const result = userSchema.safeParse(user);
@@ -142,9 +136,24 @@ export const logout = async (req: Request, res: Response) => {
 };
 
 export const getProfile = async (req: Request, res: Response) => {
-    if (req.session.username === "") {
+    const session = req.session;
+    if (session.username == undefined || session.role == undefined){
+        req.session.username = "";
+        req.session.role = "";
+        console.log("doesm't have session.")
         res.status(403).json({ message: "user doesn't log in." });
-    } else {
-        res.status(200).json(req.session.username);
+        return;
+    }
+    else if (session.username === "") {
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
+
+    } 
+    else {
+        const userSession : SessionDTO = {
+            username : session.username,
+            role : session.role
+        }
+        res.status(200).json(req.session);
     }
 };
