@@ -8,6 +8,7 @@ import { userRouter } from "./routes/user.route";
 declare module "express-session" {
     interface SessionData {
         username: string;
+        role:string;
     }
 }
 

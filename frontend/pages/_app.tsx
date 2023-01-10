@@ -13,13 +13,31 @@ const myCache = createEmotionCache({
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <div>
-            <MantineProvider emotionCache={myCache}>
+            <MantineProvider
+                emotionCache={myCache}
+                theme={{
+                    colors: {
+                        "GlobalTalk-Cyan-Dark": [
+                            "#ecf6f9",
+                            "#c5e5ed",
+                            "#9ed4e1",
+                            "#77c2d5",
+                            "#50b1c9",
+                            "#3697af",
+                            "#2a7688",
+                            "#1e5461",
+                            "#12323a",
+                            "#061113",
+                        ],
+                    },
+                    primaryShade: 7,
+                }}
+            >
                 <UserContextProvider>
-                    <NavBar />
-                    <Header />
-                    <Component {...pageProps} />
-
-                    <Header />
+                 <NavBar />
+                <Header />
+                <Component {...pageProps} />
+                <Header />
                 </UserContextProvider>
             </MantineProvider>
         </div>

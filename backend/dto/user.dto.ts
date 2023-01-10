@@ -2,6 +2,11 @@ export interface User {
     username: string;
     password: string;
 }
+
+export interface SessionDTO{
+    username:string;
+    role:string;
+}
 export interface CreateUser {
     username: string;
     email: string;
