@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Modal, Button, Group } from '@mantine/core';
-
+import MyTextInput from './MyTextInput';
 
 interface Element{
     id: number;
@@ -16,15 +16,21 @@ export default function EditText(Props: Element) {
 
   return (
     <>
-      <Modal
+      <Modal size="sm"
         opened={opened}
         onClose={() => setOpened(false)}
-        title="Introduce yourself!"
+        title="Edit"
       >
-        {/* Modal content */}
+        <MyTextInput title="Category Video" draft=''/>
+        <MyTextInput title="Name" draft=''/>
+        <MyTextInput title="Video URL" draft=''/>
+        <div className="w-full flex flex-row-reverse">
+        <Button style={{marginTop:"20px"}} onClick={() => setOpened(false)}>Apply</Button>
+        </div>
+
       </Modal>
 
-      <Group position="center" style={{position: 'relative', right: 45}}>
+      <Group position="center" style={{position: 'relative', right: 20}}>
         <Button onClick={() => setOpened(true)}>Edit</Button>
       </Group>
     </>

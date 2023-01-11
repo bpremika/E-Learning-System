@@ -10,23 +10,29 @@ interface Element{
     // edit: boolean
 }
 
-interface Props{
+interface Elements{
     elememts: Array<Element>
 
 }
 
-export default function VideoTable(data: Props) {
+export default function VideoTable(props: Elements) {
     const [isOnEdit, setOnEdit] = useState(false);
     useEffect(()=> {
         console.log("on edit")
     }, [isOnEdit]);
 
-    const rows = data.elememts.map((element: any) => (
+    const rows = props.elememts.map((element: any) => (
     <tr key={element.name}>
       <td>{element.id}</td>
-      <td>{element.categoryVideo}</td>
-      <td>{element.name}</td>
-      <td>{element.videoUrl}</td>
+      <td style={{textOverflow: 'ellipsis'}}>
+        <div style={{overflow: 'hidden', textOverflow: 'ellipsis', width:110}}>{element.categoryVideo}</div>
+      </td>
+      <td>
+        <div style={{overflow: 'hidden', textOverflow: 'ellipsis', width:120}}>{element.name}</div>  
+      </td>
+      <td>
+        <div style={{overflow: 'hidden', textOverflow: 'ellipsis', width:250}}>{element.videoUrl}</div>
+      </td>
       <td>
         <EditText 
         id={element.id}
@@ -39,7 +45,7 @@ export default function VideoTable(data: Props) {
 
   return (
     <div style={{width: 747, height:232, overflowX: 'hidden', overflowY: 'scroll'}}>
-    <Table>
+    <Table striped fontSize="md">
       <thead>
         <tr>
           <th>id</th>

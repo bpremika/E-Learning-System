@@ -1,21 +1,21 @@
 import styles from '../../styles/card.module.css'
 
 
-interface Props{
+interface Data{
     title: string;
     amount: number;
 }
 
-export default function DashboardTotalCard(data: Props) {
+export default function DashboardTotalCard(props: Data) {
     
     return (
         <>
         <div className={styles.card1}>
             <div className={styles.text1_1}>
-                {data.title}
+                {props.title}
             </div>
             <div className={styles.text1_2}>
-                {data.amount}
+                {props.amount}
             </div>
         </div>
         </>
