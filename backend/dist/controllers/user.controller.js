@@ -214,3 +214,45 @@ const getProfile = (req, res) =>
         }
     });
 exports.getProfile = getProfile;
+const enrollCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const courseid = parseInt(req.params.id);
+    if (Number.isNaN(courseid)) {
+        res.status(400).json({ message: "Invalid ID" });
+        return;
+    }
+    try {
+        const session = req.session;
+        if (session == null || session == undefined) {
+            res.status(401).json({ message: "session error" });
+            return;
+        }
+        const course = yield prisma_1.prisma.course.findUnique({
+            where: { id: courseid },
+            include: { studentUser: true },
+        });
+        if (course == null) {
+            res.status(400).json({ message: "course not found" });
+            return;
+        }
+        if (course.studentUser.find((v) => v.username == session.username) !== undefined) {
+            res.status(400).json({ message: "user already in course" });
+            return;
+        }
+        // if (course.current_member >= course.member) {
+        //     res.status(400).json({ message: "this course is already full" });
+        //     return;
+        // }
+        const updatecourse = yield prisma_1.prisma.course.update({
+            where: { id: courseid },
+            data: {
+                // current_member: { increment: 1 },
+                studentUser: { connect: { username: session.username } },
+            },
+        });
+        res.status(200).json({ message: "join course successful" });
+    }
+    catch (error) {
+        res.status(400).json({ message: "something went wrong" });
+    }
+});
+exports.enrollCourse = enrollCourse;
