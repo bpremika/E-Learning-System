@@ -1,5 +1,6 @@
 import styles from '../../styles/card.module.css'
 import Image from 'next/image';
+import mypic from "../../public/mdi_people-group.png";
 
 interface Props{
     subject: string;
@@ -14,8 +15,8 @@ export default function DashboardCourseCard(data: Props) {
         <div className={styles.card2}>
             <div className={styles.card2_1}>
                 <div className={styles.text2_2}>
-                    <image className={styles.img2}
-                        src="https://www.figma.com/file/fnpeXt3oezve6NkQuNoqZU/My-simple-LMS?node-id=31%3A533&t=peNbETa8aGcrMVkh-4"
+                    <Image className={styles.img2}
+                        src={mypic}
                         alt="student icon"
                         width={18}
                         height={19}
