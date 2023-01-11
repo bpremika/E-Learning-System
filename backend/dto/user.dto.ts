@@ -1,0 +1,18 @@
+export interface User {
+    username: string;
+    password: string;
+}
+
+export interface SessionDTO{
+    username:string;
+    role:string;
+}
+export interface CreateUser {
+    username: string;
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    image_url: string;
+}
