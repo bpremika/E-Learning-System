@@ -140,7 +140,7 @@ export const getProfile = async (req: Request, res: Response) => {
     if (session.username == undefined || session.role == undefined) {
         req.session.username = "";
         req.session.role = "";
-        console.log("doesm't have session.");
+        console.log("doesn't have session.");
         res.status(403).json({ message: "user doesn't log in." });
         return;
     } else if (session.username === "") {
