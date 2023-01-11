@@ -9,6 +9,7 @@ exports.userSchema = zod_1.z.object({
     first_name: zod_1.z.string(),
     last_name: zod_1.z.string(),
     phone_number: zod_1.z.string().length(10),
+    image_url: zod_1.z.string(),
 });
 exports.loginSchema = zod_1.z.object({
     username: zod_1.z.string(),

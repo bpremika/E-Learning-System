@@ -2,7 +2,7 @@ import { prisma } from "../common/prisma";
 import { Request, Response } from "express";
 import { loginSchema, userSchema } from "../common/UserValidator";
 import bcrypt from "bcrypt";
-import { CreateUser } from "../dto/user.dto";
+import { CreateUser, SessionDTO } from "../dto/user.dto";
 import { Prisma } from "@prisma/client";
 
 export const createStudentUser = async (req: Request, res: Response) => {
@@ -60,7 +60,7 @@ export const createInstructorUser = async (req: Request, res: Response) => {
                     });
                 }
             }
-            throw e;
+            // throw e;
         }
     } else {
         res.status(400).json(result.error);
@@ -91,6 +91,7 @@ export const studentLogin = async (req: Request, res: Response) => {
             return;
         }
         req.session.username = username;
+        req.session.role = "student";
         res.status(200).json({ message: "login successful" });
     } else {
         res.status(400).json(result.error);
@@ -121,6 +122,7 @@ export const instructorLogin = async (req: Request, res: Response) => {
             return;
         }
         req.session.username = username;
+        req.session.role = "instructor";
         res.status(200).json({ message: "login successful" });
     } else {
         res.status(400).json(result.error);
@@ -131,4 +133,68 @@ export const logout = async (req: Request, res: Response) => {
     req.session.destroy(() => {
         res.status(200).json({ message: "logout successful" });
     });
+};
+
+export const getProfile = async (req: Request, res: Response) => {
+    const session = req.session;
+    if (session.username == undefined || session.role == undefined) {
+        req.session.username = "";
+        req.session.role = "";
+        console.log("doesm't have session.");
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
+    } else if (session.username === "") {
+        res.status(403).json({ message: "user doesn't log in." });
+        return;
+    } else {
+        const userSession: SessionDTO = {
+            username: session.username,
+            role: session.role,
+        };
+        res.status(200).json(req.session);
+    }
+};
+
+export const enrollCourse = async (req: Request, res: Response) => {
+    const courseid = parseInt(req.params.id as string);
+    if (Number.isNaN(courseid)) {
+        res.status(400).json({ message: "Invalid ID" });
+        return;
+    }
+    try {
+        const session = req.session;
+        if (session == null || session == undefined) {
+            res.status(401).json({ message: "session error" });
+            return;
+        }
+        const course = await prisma.course.findUnique({
+            where: { id: courseid },
+            include: { studentUser: true },
+        });
+        if (course == null) {
+            res.status(400).json({ message: "course not found" });
+            return;
+        }
+        if (
+            course.studentUser.find((v) => v.username == session.username) !==
+            undefined
+        ) {
+            res.status(400).json({ message: "user already in course" });
+            return;
+        }
+        // if (course.current_member >= course.member) {
+        //     res.status(400).json({ message: "this course is already full" });
+        //     return;
+        // }
+        const updatecourse = await prisma.course.update({
+            where: { id: courseid },
+            data: {
+                // current_member: { increment: 1 },
+                studentUser: { connect: { username: session.username } },
+            },
+        });
+        res.status(200).json({ message: "join course successful" });
+    } catch (error) {
+        res.status(400).json({ message: "something went wrong" });
+    }
 };
