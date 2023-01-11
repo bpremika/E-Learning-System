@@ -158,6 +158,7 @@ const createCourse = async (req: Request, res: Response) => {
                     guide_url: course.guide_url,
                     instructor_id: course.instructor_id,
                     max_student: course.max_student,
+                    curr_student: course.curr_student,
                 },
             });
 
@@ -187,6 +188,7 @@ const updateCourse = async (req: Request, res: Response) => {
             guide_url: newCourseDto.guide_url,
             instructor_id: newCourseDto.instructor_id,
             max_student: newCourseDto.max_student,
+            curr_student: newCourseDto.curr_student,
         },
     });
     res.status(200).json(course);
