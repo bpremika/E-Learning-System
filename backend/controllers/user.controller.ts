@@ -158,7 +158,7 @@ export const getProfile = async (req: Request, res: Response) => {
     }
 };
 
-export const exrollCourse = async (req: Request, res: Response) => {
+export const enrollCourse = async (req: Request, res: Response) => {
     const courseid = parseInt(req.params.id as string);
     if (Number.isNaN(courseid)) {
         res.status(400).json({ message: "Invalid ID" });
@@ -170,30 +170,30 @@ export const exrollCourse = async (req: Request, res: Response) => {
             res.status(401).json({ message: "session error" });
             return;
         }
-        const party = await prisma.party.findUnique({
-            where: { id: partyid },
-            include: { user: true },
+        const course = await prisma.course.findUnique({
+            where: { id: courseid },
+            include: { studentUser: true },
         });
-        if (party == null) {
-            res.status(400).json({ message: "party not found" });
+        if (course == null) {
+            res.status(400).json({ message: "course not found" });
             return;
         }
-        if (party.user.find((v) => v.id == session.userID) !== undefined) {
-            res.status(400).json({ message: "user already in party" });
+        if (course.studentUser.find((v) => v.username == session.username) !== undefined) {
+            res.status(400).json({ message: "user already in course" });
             return;
         }
-        if (party.current_member >= party.member) {
-            res.status(400).json({ message: "this party is already full" });
-            return;
-        }
-        const updateParty = await prisma.party.update({
-            where: { id: partyid },
+        // if (course.current_member >= course.member) {
+        //     res.status(400).json({ message: "this course is already full" });
+        //     return;
+        // }
+        const updatecourse = await prisma.course.update({
+            where: { id: courseid },
             data: {
-                current_member: { increment: 1 },
-                user: { connect: { id: session.userID } },
+                // current_member: { increment: 1 },
+                studentUser: { connect: { username: session.username } },
             },
         });
-        res.status(200).json({ message: "join party successful" });
+        res.status(200).json({ message: "join course successful" });
     } catch (error) {
         res.status(400).json({ message: "something went wrong" });
     } 
