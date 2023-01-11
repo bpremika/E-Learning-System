@@ -5,11 +5,12 @@ import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./common/prisma";
 import { courseRouter } from "./routes/course.route";
 import { userRouter } from "./routes/user.route";
+import uploadFile from "./controllers/fileUpload.controller";
 
 declare module "express-session" {
     interface SessionData {
         username: string;
-        role:string;
+        role: string;
     }
 }
 
@@ -41,6 +42,7 @@ app.use(
 
 app.use("/course", courseRouter);
 app.use("/user", userRouter);
+app.use("/upload", uploadFile);
 
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

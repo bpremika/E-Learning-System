@@ -27,7 +27,7 @@ export default function CoursePreview(prop:Props) {
                     </Button>
                 </div>
             </div>
-            <YoutubeVideo />
+            <YoutubeVideo video_url="https://www.youtube.com/embed/lVLz_ASqAio" width="426" height="240"/>
         </div>
     );
 }
