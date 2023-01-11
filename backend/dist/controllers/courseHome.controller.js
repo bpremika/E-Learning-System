@@ -52,15 +52,18 @@ const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
     else {
+        var search_arr = search.split("+");
+        var new_search = search_arr.join(" & ");
         courses = yield prisma_1.prisma.course.findMany({
             where: {
                 name: {
-                    search,
+                    search: new_search,
                 },
             },
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
         });
+        console.log("search by: " + new_search);
     }
     if (courses === null) {
         res.status(404).send({ message: "not found" });

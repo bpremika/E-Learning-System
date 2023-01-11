@@ -54,15 +54,20 @@ const searchCourse = async (req: Request, res: Response) => {
             take: amountPerPage,
         });
     } else {
+        var search_arr = search.split("+");
+        var new_search = search_arr.join(" & ");
+
         courses = await prisma.course.findMany({
             where: {
                 name: {
-                    search,
+                    search: new_search,
                 },
             },
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
         });
+
+        console.log("search by: " + new_search);
     }
 
     if (courses === null) {
@@ -152,6 +157,7 @@ const createCourse = async (req: Request, res: Response) => {
                     course_cover_url: course.course_cover_url,
                     guide_url: course.guide_url,
                     instructor_id: course.instructor_id,
+                    max_student: course.max_student,
                 },
             });
 
@@ -180,6 +186,7 @@ const updateCourse = async (req: Request, res: Response) => {
             course_cover_url: newCourseDto.course_cover_url,
             guide_url: newCourseDto.guide_url,
             instructor_id: newCourseDto.instructor_id,
+            max_student: newCourseDto.max_student,
         },
     });
     res.status(200).json(course);

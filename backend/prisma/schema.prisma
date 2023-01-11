@@ -3,7 +3,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -47,20 +47,25 @@ model Session {
 }
 
 model Course {
-  id               Int            @id @default(autoincrement())
+  id               Int    @id @default(autoincrement())
   name             String
   category         String
   course_desc      String
   course_detail    String
   course_cover_url String
   guide_url        String
-  instructor       InstructorUser @relation(fields: [instructor_id], references: [id])
-  instructor_id    Int
-  // max_student      Int
-  studentUser      StudentUser[]
-  courseVideo      CourseVideo[]
 
-  // @@fulltext([name])
+  instructor    InstructorUser @relation(fields: [instructor_id], references: [id])
+  instructor_id Int
+  max_student   Int            @default(-1)
+  curr_student  Int            @default(0)
+
+  studentUser StudentUser[]
+  courseVideo CourseVideo[]
+  assignment  Assignment[]
+
+  created_at  DateTime @default(now())
+  modified_at DateTime @default(now())
 }
 
 model CourseVideo {
@@ -69,4 +74,27 @@ model CourseVideo {
   video_url String
   course_id Int
   course    Course @relation(fields: [course_id], references: [id])
+}
+
+model Assignment {
+  id             Int            @id @default(autoincrement())
+  name           String
+  description    String
+  aj_file_url    String
+  homework_files HomeworkFile[]
+  max_score      Int
+  get_score      Int
+  course_id      Int
+  course         Course         @relation(fields: [course_id], references: [id])
+  created_at     DateTime       @default(now())
+  modified_at    DateTime       @default(now())
+}
+
+model HomeworkFile {
+  id            Int        @id @default(autoincrement())
+  student_id    Int
+  assignment_id Int
+  assignment    Assignment @relation(fields: [assignment_id], references: [id])
+  created_at    DateTime   @default(now())
+  modified_at   DateTime   @default(now())
 }
