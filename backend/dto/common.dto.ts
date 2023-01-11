@@ -1,10 +1,7 @@
-export interface CourseDto {
-    id: number;
+export interface CourseHomeDto {
     name: string;
-    category: string;
     course_desc: string;
-    students?: StudentUserDto[];
-    Instructor?: InstructorUserDto[];
+    course_cover_url: string;
 }
 
 export interface CourseEnrollDto {
@@ -52,5 +49,12 @@ export interface InstructorUserDto {
 export interface InstructorDashboardDto {
     total_course: number;
     total_all_student: number;
-    total_student: number;
+    courses: CourseDashboardDto[];
+}
+
+export interface CourseDashboardDto {
+    name: string;
+    course_cover_url: string;
+    max_student: number;
+    curr_student: number;
 }

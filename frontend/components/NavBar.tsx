@@ -6,7 +6,7 @@ import { Burger, NavLink, Drawer } from "@mantine/core";
 import { useUser } from "../common/contexts/UserContext";
 
 const NavBar = () => {
-    const { isAuth, user, logout } = useUser();
+    const { isAuth, user, logout, login } = useUser();
     const name = user?.name;
     let fLetter: String = "";
     if (isAuth) {
@@ -16,56 +16,78 @@ const NavBar = () => {
     const handleOnSignOut = () => {
         logout();
     };
-
+    const handleOnSignIn = () => {
+        login();
+    };
     const isBiggerThanMd = useMediaQuery("md");
     const splitt: string[] = name?.split(" ", 2) ?? [];
     const [opened, setOpened] = useState(false);
     const title = opened ? "Close navigation" : "Open navigation";
     return isBiggerThanMd ? (
-        <div
-            className={`bg-offwhite h-[88px] flex flex-row gap-12 justify-start items-center`}
-        >
+        <>
             <div
-                className={`font-['Dela_Gothic_One']  text-[20px] p-[0px] pr-[30px] pl-[30px] border-r-2 border-greyry`}
+                className={`bg-offwhite h-[88px] flex flex-row  items-center justify-around`}
             >
-                GlobalTalk
-            </div>
-            <div className={`gap-8 flex flex-row`}>
-                <div>
-                    <Link className="hover:font-semibold" href="/">
-                        Home
-                    </Link>
-                </div>
-                <div>
-                    <Link className="hover:font-semibold" href="/">
-                        Course
-                    </Link>
-                </div>
-            </div>
-            {isAuth ? (
-                <div className="ml-auto mr-8 flex flex-row gap-10">
-                    <UnstyledButton>
-                        <Group>
-                            <Avatar size={40} color="blue">
-                                {fLetter}
-                            </Avatar>
-                            <div>
-                                <Text>{name}</Text>
-                            </div>
-                        </Group>
-                    </UnstyledButton>
-                    <div className="self-center" onClick={handleOnSignOut}>
-                        <button className="font-bold">Sign Out ➜</button>
+                <div className="flex flex-row">
+                    <div
+                        className={`font-['Dela_Gothic_One']  text-[20px] p-[0px] pr-[30px] pl-[30px] mr-[48px] border-r-2 border-greyry`}
+                    >
+                        GlobalTalk
+                    </div>
+                    <div className={`gap-6 flex flex-row items-center`}>
+                        <Link
+                            className="hover:font-semibold text-smoothgrey"
+                            href="/"
+                        >
+                            <div>Home</div>
+                        </Link>
+                        <Link
+                            className="hover:font-semibold text-smoothgrey"
+                            href="/"
+                        >
+                            <div>Course</div>
+                        </Link>
+                        <Link
+                            className="hover:font-semibold  text-smoothgrey"
+                            href="/"
+                        >
+                            <div>Mycourses</div>
+                        </Link>
                     </div>
                 </div>
-            ) : (
-                <div className="ml-auto mr-8 flex flex-row gap-10">
-                    <Link href="/" className="font-bold">
-                        Login
-                    </Link>
-                </div>
-            )}
-        </div>
+
+                {isAuth ? (
+                    <div className=" mr-8 flex flex-row gap-10">
+                        <UnstyledButton>
+                            <Group>
+                                <Avatar size={40} color="blue">
+                                    {fLetter.toUpperCase()}
+                                </Avatar>
+                                <div>
+                                    <span className="text-smoothgrey">
+                                        {name}
+                                    </span>
+                                </div>
+                            </Group>
+                        </UnstyledButton>
+                        <div className="self-center" onClick={handleOnSignOut}>
+                            <button className="font-bold">Sign Out ➜</button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className=" mr-8 flex flex-row gap-10">
+                        <Link
+                            href="/loginpage"
+                            className="font-bold"
+                            onClick={handleOnSignIn}
+                        >
+                            Sign in
+                        </Link>
+                    </div>
+                )}
+            </div>
+            <hr className="h-[2px] bg-greyry"></hr>
+        </>
     ) : (
         <div>
             <div className="flex flex-row justify-between h-[50px] items-center bg-offwhite">
@@ -85,21 +107,25 @@ const NavBar = () => {
                         overlayOpacity={0.5}
                     >
                         <div className="flex flex-col  items-center h-[150px]">
-                            <div className="w-[100vw] h-[50px] flex hover:bg-offwhite items-center justify-center ">
-                                <Link className="hover:font-semibold" href="/">
+                            <Link className="hover:font-semibold" href="/">
+                                <div className="w-[100vw] h-[50px] flex hover:bg-offwhite items-center justify-center ">
                                     Home
-                                </Link>
-                            </div>
-                            <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                <Link className="hover:font-semibold" href="/">
+                                </div>
+                            </Link>
+                            <Link className="hover:font-semibold" href="/">
+                                <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
                                     Course
-                                </Link>
-                            </div>
-                            <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                <Link className="hover:font-semibold" href="/">
+                                </div>
+                            </Link>
+                            <Link
+                                className="hover:font-semibold"
+                                href="/"
+                                onClick={handleOnSignOut}
+                            >
+                                <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
                                     Sign Out ➜
-                                </Link>
-                            </div>
+                                </div>
+                            </Link>
                         </div>
                     </Drawer>
                 </div>
@@ -116,20 +142,20 @@ const NavBar = () => {
                                     {fLetter}
                                 </Avatar>
                                 <div className="mr-[10px] ">
-                                    <Text>{splitt[0]}</Text>
+                                    <span className="text-smoothgrey">
+                                        {splitt[0]}
+                                    </span>
                                 </div>
                             </Group>
                         </UnstyledButton>
                     </div>
                 ) : (
-                    <div className="mr-[20px] ">
-                        <Link href="/" className="font-bold">
-                            Login
-                        </Link>
-                    </div>
+                    <Link href="/loginpage" className="font-bold">
+                        <div className="mr-[20px] ">Sign in</div>
+                    </Link>
                 )}
             </div>
-            <hr></hr>
+            <hr className="h-[2px] bg-greyry"></hr>
         </div>
     );
 };

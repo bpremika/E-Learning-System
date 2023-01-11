@@ -1,3 +1,3 @@
-export default function a() {
-    return <div>Hello</div>;
+export default function Test() {
+    return <></>;
 }

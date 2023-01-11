@@ -5,9 +5,9 @@ import { useState } from "react";
 
 export default function FileUpload() {
     const [value, setValue] = useState<File | null>(null);
-    const eventHandler = (event : any) =>{
-        event.preventDefault()
-        console.log(value!.name)
+    const eventHandler = (event: any) => {
+        event.preventDefault();
+        console.log(value!.name);
         upload(value);
     }
     async function upload(value : File | null){

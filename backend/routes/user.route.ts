@@ -16,6 +16,6 @@ userRouter.post("/instructorRegister", createInstructorUser);
 userRouter.post("/studentLogin", studentLogin);
 userRouter.post("/instructorLogin", instructorLogin);
 
-userRouter.post("/enrollCourse/:id",enrollCourse);
+userRouter.post("/enrollCourse/:id", enrollCourse);
 userRouter.get("/logout", logout);
 userRouter.get("/me", getProfile);
