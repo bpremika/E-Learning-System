@@ -67,7 +67,7 @@ const createInstructorUser = (req, res) => __awaiter(void 0, void 0, void 0, fun
                     });
                 }
             }
-            throw e;
+            // throw e;
         }
     }
     else {

@@ -37,13 +37,66 @@ const getOneCourse = async (req: Request, res: Response) => {
     res.status(200).json(courseDto);
 };
 
+const searchCourse = async (req: Request, res: Response) => {
+    const search = req.query.search as string | null;
+    const pages = parseInt(req.params.pages);
+
+    if (isNaN(pages)) {
+        res.status(404).send({ message: "invalid Pages" });
+        return;
+    }
+
+    let courses;
+
+    if (search === null) {
+        courses = await prisma.course.findMany({
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+    } else {
+        courses = await prisma.course.findMany({
+            where: {
+                name: {
+                    search,
+                },
+            },
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+    }
+
+    if (courses === null) {
+        res.status(404).send({ message: "not found" });
+        return;
+    }
+
+    const coursesDto: CoursesDto = {
+        total: courses.length,
+        courses: courses.map((course) => ({
+            name: course.name,
+            course_desc: course.course_desc,
+            course_cover_url: course.course_cover_url,
+        })),
+    };
+
+    res.status(200).json(coursesDto);
+};
+
 const getCategoryCourse = async (req: Request, res: Response) => {
+    const pages = parseInt(req.params.pages);
+    if (isNaN(pages)) {
+        res.status(404).send({ message: "invalid Pages" });
+        return;
+    }
+
     const category = req.params.cat.toUpperCase();
     const courses = await prisma.course.findMany({
         where: { category },
         include: {
             studentUser: true,
         },
+        skip: (pages - 1) * amountPerPage,
+        take: amountPerPage,
     });
 
     if (courses === null) {
@@ -106,11 +159,11 @@ const createCourse = async (req: Request, res: Response) => {
 
             res.status(201).json(result);
         } catch (e) {
-            console.log("have error");
+            console.log(e);
             res.status(400).json({ message: "something wents wrong" });
         }
     } else {
-        res.status(400).json({ message: "something wents wrong" });
+        res.status(400).json({ message: "something went wrong" });
     }
 };
 
@@ -144,6 +197,7 @@ const deleteCourse = async (req: Request, res: Response) => {
 
 export {
     getOneCourse,
+    searchCourse,
     getCategoryCourse,
     getManyCourse,
     createCourse,

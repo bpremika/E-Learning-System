@@ -59,6 +59,8 @@ model Course {
   // max_student      Int
   studentUser      StudentUser[]
   courseVideo      CourseVideo[]
+
+  // @@fulltext([name])
 }
 
 model CourseVideo {

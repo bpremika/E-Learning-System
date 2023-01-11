@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getManyCourse = exports.getCategoryCourse = exports.getOneCourse = void 0;
+exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getManyCourse = exports.getCategoryCourse = exports.searchCourse = exports.getOneCourse = void 0;
 const prisma_1 = require("../common/prisma");
 const CourseValidator_1 = require("../common/CourseValidator");
 const amountPerPage = 12;
@@ -37,13 +37,60 @@ const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.status(200).json(courseDto);
 });
 exports.getOneCourse = getOneCourse;
+const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const search = req.query.search;
+    const pages = parseInt(req.params.pages);
+    if (isNaN(pages)) {
+        res.status(404).send({ message: "invalid Pages" });
+        return;
+    }
+    let courses;
+    if (search === null) {
+        courses = yield prisma_1.prisma.course.findMany({
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+    }
+    else {
+        courses = yield prisma_1.prisma.course.findMany({
+            where: {
+                name: {
+                    search,
+                },
+            },
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+    }
+    if (courses === null) {
+        res.status(404).send({ message: "not found" });
+        return;
+    }
+    const coursesDto = {
+        total: courses.length,
+        courses: courses.map((course) => ({
+            name: course.name,
+            course_desc: course.course_desc,
+            course_cover_url: course.course_cover_url,
+        })),
+    };
+    res.status(200).json(coursesDto);
+});
+exports.searchCourse = searchCourse;
 const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const pages = parseInt(req.params.pages);
+    if (isNaN(pages)) {
+        res.status(404).send({ message: "invalid Pages" });
+        return;
+    }
     const category = req.params.cat.toUpperCase();
     const courses = yield prisma_1.prisma.course.findMany({
         where: { category },
         include: {
             studentUser: true,
         },
+        skip: (pages - 1) * amountPerPage,
+        take: amountPerPage,
     });
     if (courses === null) {
         res.status(404).send({ message: "not found" });
@@ -101,12 +148,12 @@ const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             res.status(201).json(result);
         }
         catch (e) {
-            console.log("have error");
+            console.log(e);
             res.status(400).json({ message: "something wents wrong" });
         }
     }
     else {
-        res.status(400).json({ message: "something wents wrong" });
+        res.status(400).json({ message: "something went wrong" });
     }
 });
 exports.createCourse = createCourse;

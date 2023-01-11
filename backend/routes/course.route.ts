@@ -4,6 +4,7 @@ import {
     deleteCourse,
     getManyCourse,
     getOneCourse,
+    searchCourse,
     getCategoryCourse,
     updateCourse,
 } from "../controllers/courseHome.controller";
@@ -12,10 +13,11 @@ import { getDetailedCourse } from "../controllers/courseStudentInfo.controller";
 
 export const courseRouter = Router();
 courseRouter.get("/getOne/:id", getOneCourse);
-courseRouter.get("/category/:cat", getCategoryCourse);
+courseRouter.get("/search/:pages", searchCourse);
+courseRouter.get("/category/:cat/:pages", getCategoryCourse);
 courseRouter.get("/getMany/:pages", getManyCourse);
 courseRouter.get("/enroll/:id", getCourse);
 courseRouter.get("/studentInfo/:id", getDetailedCourse);
-courseRouter.post("/createCourse", createCourse);
+courseRouter.post("/createCourse/", createCourse);
 courseRouter.patch("/:id", updateCourse);
 courseRouter.delete("/:id", deleteCourse);
