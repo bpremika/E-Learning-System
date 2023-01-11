@@ -1,41 +1,74 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+var __awaiter =
+    (this && this.__awaiter) ||
+    function (thisArg, _arguments, P, generator) {
+        function adopt(value) {
+            return value instanceof P
+                ? value
+                : new P(function (resolve) {
+                      resolve(value);
+                  });
+        }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) {
+                try {
+                    step(generator.next(value));
+                } catch (e) {
+                    reject(e);
+                }
+            }
+            function rejected(value) {
+                try {
+                    step(generator["throw"](value));
+                } catch (e) {
+                    reject(e);
+                }
+            }
+            function step(result) {
+                result.done
+                    ? resolve(result.value)
+                    : adopt(result.value).then(fulfilled, rejected);
+            }
+            step(
+                (generator = generator.apply(thisArg, _arguments || [])).next()
+            );
+        });
+    };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getManyCourse = exports.getCategoryCourse = exports.searchCourse = exports.getOneCourse = void 0;
+exports.deleteCourse =
+    exports.updateCourse =
+    exports.createCourse =
+    exports.getManyCourse =
+    exports.getCategoryCourse =
+    exports.getOneCourse =
+        void 0;
 const prisma_1 = require("../common/prisma");
 const CourseValidator_1 = require("../common/CourseValidator");
 const amountPerPage = 12;
-const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = parseInt(req.params.id);
-    if (isNaN(id)) {
-        res.status(404).send({ message: "invalid ID" });
-        return;
-    }
-    const course = yield prisma_1.prisma.course.findUnique({
-        where: { id },
-        include: {
-            studentUser: true,
-        },
+const getOneCourse = (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+        const id = parseInt(req.params.id);
+        if (isNaN(id)) {
+            res.status(404).send({ message: "invalid ID" });
+            return;
+        }
+        const course = yield prisma_1.prisma.course.findUnique({
+            where: { id },
+            include: {
+                studentUser: true,
+            },
+        });
+        if (course === null) {
+            res.status(404).send({ message: "not found" });
+            return;
+        }
+        const courseDto = {
+            name: course.name,
+            course_desc: course.course_desc,
+            course_cover_url: course.course_cover_url,
+        };
+        res.status(200).json(courseDto);
     });
-    if (course === null) {
-        res.status(404).send({ message: "not found" });
-        return;
-    }
-    const courseDto = {
-        name: course.name,
-        course_desc: course.course_desc,
-        course_cover_url: course.course_cover_url,
-    };
-    res.status(200).json(courseDto);
-});
 exports.getOneCourse = getOneCourse;
 const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const search = req.query.search;
@@ -95,41 +128,28 @@ const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
         skip: (pages - 1) * amountPerPage,
         take: amountPerPage,
     });
-    if (courses === null) {
-        res.status(404).send({ message: "not found" });
-        return;
-    }
-    const coursesDto = {
-        total: courses.length,
-        courses: courses.map((course) => ({
-            name: course.name,
-            course_desc: course.course_desc,
-            course_cover_url: course.course_cover_url,
-        })),
-    };
-    res.status(200).json(coursesDto);
-});
 exports.getCategoryCourse = getCategoryCourse;
-const getManyCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const pages = parseInt(req.params.pages);
-    if (isNaN(pages)) {
-        res.status(404).send({ message: "invalid Pages" });
-        return;
-    }
-    const courses = yield prisma_1.prisma.course.findMany({
-        skip: (pages - 1) * amountPerPage,
-        take: amountPerPage,
+const getManyCourse = (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+        const pages = parseInt(req.params.pages);
+        if (isNaN(pages)) {
+            res.status(404).send({ message: "invalid Pages" });
+            return;
+        }
+        const courses = yield prisma_1.prisma.course.findMany({
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+        const coursesDto = {
+            total: courses.length,
+            courses: courses.map((course) => ({
+                name: course.name,
+                course_desc: course.course_desc,
+                course_cover_url: course.course_cover_url,
+            })),
+        };
+        res.status(200).json(coursesDto);
     });
-    const coursesDto = {
-        total: courses.length,
-        courses: courses.map((course) => ({
-            name: course.name,
-            course_desc: course.course_desc,
-            course_cover_url: course.course_cover_url,
-        })),
-    };
-    res.status(200).json(coursesDto);
-});
 exports.getManyCourse = getManyCourse;
 const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const course = req.body;
@@ -160,31 +180,33 @@ const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.createCourse = createCourse;
-const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = parseInt(req.params.id);
-    const newCourseDto = req.body;
-    const course = yield prisma_1.prisma.course.update({
-        where: { id },
-        data: {
-            name: newCourseDto.name,
-            category: newCourseDto.category,
-            course_desc: newCourseDto.course_desc,
-            course_detail: newCourseDto.course_detail,
-            course_cover_url: newCourseDto.course_cover_url,
-            guide_url: newCourseDto.guide_url,
-            instructor_id: newCourseDto.instructor_id,
-        },
+const updateCourse = (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+        const id = parseInt(req.params.id);
+        const newCourseDto = req.body;
+        const course = yield prisma_1.prisma.course.update({
+            where: { id },
+            data: {
+                name: newCourseDto.name,
+                category: newCourseDto.category,
+                course_desc: newCourseDto.course_desc,
+                course_detail: newCourseDto.course_detail,
+                course_cover_url: newCourseDto.course_cover_url,
+                guide_url: newCourseDto.guide_url,
+                instructor_id: newCourseDto.instructor_id,
+            },
+        });
+        res.status(200).json(course);
     });
-    res.status(200).json(course);
-});
 exports.updateCourse = updateCourse;
-const deleteCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    yield prisma_1.prisma.course.delete({
-        where: {
-            id: parseInt(id),
-        },
+const deleteCourse = (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+        const id = req.params.id;
+        yield prisma_1.prisma.course.delete({
+            where: {
+                id: parseInt(id),
+            },
+        });
+        res.status(204).send();
     });
-    res.status(204).send();
-});
 exports.deleteCourse = deleteCourse;

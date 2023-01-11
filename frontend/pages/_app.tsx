@@ -34,10 +34,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 }}
             >
                 <UserContextProvider>
-                 <NavBar />
-                <Header />
-                <Component {...pageProps} />
-                <Header />
+                    <Header />
+                    <NavBar />
+                    <Component {...pageProps} />
                 </UserContextProvider>
             </MantineProvider>
         </div>
