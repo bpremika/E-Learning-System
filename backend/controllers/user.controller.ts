@@ -154,7 +154,7 @@ export const getProfile = async (req: Request, res: Response) => {
             username : session.username,
             role : session.role
         }
-        res.status(200).json(req.session);
+        res.status(200).json(userSession);
     }
 };
 

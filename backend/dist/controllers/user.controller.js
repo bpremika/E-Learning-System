@@ -157,7 +157,7 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             username: session.username,
             role: session.role
         };
-        res.status(200).json(req.session);
+        res.status(200).json(userSession);
     }
 });
 exports.getProfile = getProfile;
