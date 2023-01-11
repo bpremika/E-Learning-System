@@ -2,9 +2,8 @@ import fs from "fs";
 import aws from "aws-sdk";
 import { Request, Response } from "express";
 
-
 const multer = require("multer");
-const multerS3 = require("multer-s3"); 
+const multerS3 = require("multer-s3");
 const spacesEndpoint = new aws.Endpoint("sgp1.digitaloceanspaces.com");
 const s3 = new aws.S3({
     endpoint: spacesEndpoint,

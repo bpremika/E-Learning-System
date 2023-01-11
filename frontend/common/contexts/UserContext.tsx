@@ -38,17 +38,15 @@ export function UserContextProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [user, setUser] = useState<IUser | null>(null);
-    const [isAuth, setAuth] = useState(false);
+    const [user, setUser] = useState<IUser | null>({
+        name: "bruce",
+        imageUrl: "",
+    });
+    const [isAuth, setAuth] = useState(true);
     const [ready, setReady] = useState(false);
 
     const login = useCallback(async () => {
         //login
-        setUser({
-            name: "john",
-            imageUrl: "",
-        });
-        setAuth(true);
     }, []);
     const refresh = useCallback(async () => {}, []);
     const logout = useCallback(async () => {

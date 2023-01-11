@@ -1,12 +1,12 @@
 import React from "react";
 
-interface Props{
-    name? : string,
-    video_url : string,
-    width : string,
-    height : string
+interface Props {
+    name?: string;
+    video_url: string;
+    width: string;
+    height: string;
 }
-export default function YoutubeVideo(prop:Props) {
+export default function YoutubeVideo(prop: Props) {
     return (
         <div className="p-5">
             <iframe
@@ -20,6 +20,3 @@ export default function YoutubeVideo(prop:Props) {
         </div>
     );
 }
-
-
-
