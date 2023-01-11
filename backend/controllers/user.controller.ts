@@ -182,14 +182,14 @@ export const enrollCourse = async (req: Request, res: Response) => {
             res.status(400).json({ message: "user already in course" });
             return;
         }
-        // if (course.current_member >= course.member) {
-        //     res.status(400).json({ message: "this course is already full" });
-        //     return;
-        // }
+        if (course.curr_student >= course.max_student) {
+            res.status(400).json({ message: "this course is already full" });
+            return;
+        }
         const updatecourse = await prisma.course.update({
             where: { id: courseid },
             data: {
-                // current_member: { increment: 1 },
+                curr_student: { increment: 1 },
                 studentUser: { connect: { username: session.username } },
             },
         });

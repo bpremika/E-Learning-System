@@ -118,8 +118,7 @@ const createInstructorUser = (req, res) =>
                 }
                 throw e;
             }
-        } else {
-            res.status(400).json(result.error);
+            // throw e;
         }
     });
 exports.createInstructorUser = createInstructorUser;
