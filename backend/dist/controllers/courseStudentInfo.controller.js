@@ -28,15 +28,15 @@ const getDetailedCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
         return;
     }
     const instructor = course.instructor;
-    const courseDto = {
-        name: course.name,
-        course_desc: course.course_desc,
-        course_detail: course.course_detail,
-        first_name: instructor.first_name,
-        last_name: instructor.last_name,
-        email: instructor.email,
-        image_url: instructor.image_url,
-    };
-    res.status(200).json(courseDto);
+    // const courseDto: CourseStudentInfoDto = {
+    //     name: course.name,
+    //     course_desc: course.course_desc,
+    //     course_detail: course.course_detail,
+    //     first_name: instructor.first_name,
+    //     last_name: instructor.last_name,
+    //     email: instructor.email,
+    //     image_url: instructor.image_url,
+    // };
+    // res.status(200).json(courseDto);
 });
 exports.getDetailedCourse = getDetailedCourse;

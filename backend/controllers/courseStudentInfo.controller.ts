@@ -22,17 +22,17 @@ const getDetailedCourse = async (req: Request, res: Response) => {
 
     const instructor = course.instructor;
 
-    const courseDto: CourseStudentInfoDto = {
-        name: course.name,
-        course_desc: course.course_desc,
-        course_detail: course.course_detail,
-        first_name: instructor.first_name,
-        last_name: instructor.last_name,
-        email: instructor.email,
-        image_url: instructor.image_url,
-    };
+    // const courseDto: CourseStudentInfoDto = {
+    //     name: course.name,
+    //     course_desc: course.course_desc,
+    //     course_detail: course.course_detail,
+    //     first_name: instructor.first_name,
+    //     last_name: instructor.last_name,
+    //     email: instructor.email,
+    //     image_url: instructor.image_url,
+    // };
 
-    res.status(200).json(courseDto);
+    // res.status(200).json(courseDto);
 };
 
 export { getDetailedCourse };

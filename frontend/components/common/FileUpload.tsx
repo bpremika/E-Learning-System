@@ -12,7 +12,8 @@ export default function FileUpload() {
     }
     async function upload(value : File | null){
         try{
-            const res = await axios.post("http://159.89.201.188:8000/upload",value)
+            console.log("uploading")
+            const res = await axios.post("http://localhost:8000/upload",value)
             console.log(res)
         }
         catch{
@@ -20,9 +21,9 @@ export default function FileUpload() {
         }
     }
     return (
-        <>
+        <div className="w-1/6">
             <FileInput placeholder="browse" value={value} onChange={setValue} />
             <Button onClick={eventHandler}>upload</Button>
-        </>
+        </div>
     );
 }

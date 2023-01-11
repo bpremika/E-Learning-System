@@ -34,7 +34,7 @@ export interface StudentUserDto {
     last_name: string;
     phone_number: string;
     image_url: string;
-    courses?: CourseHomeDto[];
+    // courses?: CourseHomeDto[];
 }
 
 export interface InstructorUserDto {
@@ -46,7 +46,7 @@ export interface InstructorUserDto {
     last_name: string;
     phone_number: string;
     image_url: string;
-    courses?: CourseHomeDto[];
+    // courses?: CourseHomeDto[];
 }
 
 export interface InstructorDashboardDto {

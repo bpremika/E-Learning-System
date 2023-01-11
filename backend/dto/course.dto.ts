@@ -1,8 +1,8 @@
-import { CourseHomeDto } from "./common.dto";
+// import { CourseHomeDto } from "./common.dto";
 
 export interface CoursesDto {
     total: number;
-    courses: CourseHomeDto[];
+    // courses: CourseHomeDto[];
 }
 
 export interface CreateCourseDto {
