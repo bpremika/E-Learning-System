@@ -137,23 +137,20 @@ export const logout = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     const session = req.session;
-    if (session.username == undefined || session.role == undefined){
+    if (session.username == undefined || session.role == undefined) {
         req.session.username = "";
         req.session.role = "";
-        console.log("doesm't have session.")
+        console.log("doesm't have session.");
         res.status(403).json({ message: "user doesn't log in." });
         return;
-    }
-    else if (session.username === "") {
+    } else if (session.username === "") {
         res.status(403).json({ message: "user doesn't log in." });
         return;
-
-    } 
-    else {
-        const userSession : SessionDTO = {
-            username : session.username,
-            role : session.role
-        }
+    } else {
+        const userSession: SessionDTO = {
+            username: session.username,
+            role: session.role,
+        };
         res.status(200).json(req.session);
     }
 };
@@ -178,23 +175,26 @@ export const enrollCourse = async (req: Request, res: Response) => {
             res.status(400).json({ message: "course not found" });
             return;
         }
-        if (course.studentUser.find((v) => v.username == session.username) !== undefined) {
+        if (
+            course.studentUser.find((v) => v.username == session.username) !==
+            undefined
+        ) {
             res.status(400).json({ message: "user already in course" });
             return;
         }
-        // if (course.current_member >= course.member) {
-        //     res.status(400).json({ message: "this course is already full" });
-        //     return;
-        // }
+        if (course.curr_student >= course.max_student) {
+            res.status(400).json({ message: "this course is already full" });
+            return;
+        }
         const updatecourse = await prisma.course.update({
             where: { id: courseid },
             data: {
-                // current_member: { increment: 1 },
+                curr_student: { increment: 1 },
                 studentUser: { connect: { username: session.username } },
             },
         });
         res.status(200).json({ message: "join course successful" });
     } catch (error) {
         res.status(400).json({ message: "something went wrong" });
-    } 
-}
+    }
+};
