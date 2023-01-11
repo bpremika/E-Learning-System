@@ -15,11 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <div>
             <MantineProvider emotionCache={myCache}>
                 <UserContextProvider>
+                    <Header />
                     <NavBar />
-                    <Header />
                     <Component {...pageProps} />
-
-                    <Header />
                 </UserContextProvider>
             </MantineProvider>
         </div>

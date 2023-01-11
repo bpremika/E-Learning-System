@@ -26,7 +26,7 @@ export const createStudentUser = async (req: Request, res: Response) => {
                     res.status(400).json({
                         message:
                             "There is a unique constraint violation, a new user cannot be created with this email",
-                    })
+                    });
                 }
             }
             // throw e;
@@ -57,7 +57,7 @@ export const createInstructorUser = async (req: Request, res: Response) => {
                     res.status(400).json({
                         message:
                             "There is a unique constraint violation, a new user cannot be created with this email",
-                    })
+                    });
                 }
             }
             throw e;
