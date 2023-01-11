@@ -9,32 +9,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCourse = void 0;
+exports.getInstructorUser = void 0;
 const prisma_1 = require("../common/prisma");
-const getCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getInstructorUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
-    const course = yield prisma_1.prisma.course.findUnique({
+    const instructorUser = yield prisma_1.prisma.instructorUser.findUnique({
         where: { id },
         include: {
-            instructor: true,
+            course: true,
         },
     });
-    if (course === null) {
+    if (instructorUser === null) {
         res.status(404).send({ message: "not found" });
         return;
     }
-    const instructor = course.instructor;
-    const courseDto = {
-        name: course.name,
-        course_desc: course.course_desc,
-        first_name: instructor.first_name,
-        last_name: instructor.last_name,
-        guide_url: course.guide_url,
+    const courses = instructorUser.course;
+    let total_all_student = 0;
+    for (let i = 0; i < courses.length; i++) {
+        total_all_student += courses[i].curr_student;
+    }
+    const instructorDashboardDto = {
+        total_course: courses.length,
+        total_all_student,
+        courses: courses.map((course) => ({
+            name: course.name,
+            course_cover_url: course.course_cover_url,
+            max_student: course.max_student,
+            curr_student: course.curr_student,
+        })),
     };
-    res.status(200).json(courseDto);
+    res.status(200).json(instructorDashboardDto);
 });
-exports.getCourse = getCourse;
+exports.getInstructorUser = getInstructorUser;
