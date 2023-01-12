@@ -23,6 +23,7 @@ const getDetailedCourse = async (req: Request, res: Response) => {
     const instructor = course.instructor;
 
     const courseDto: CourseStudentInfoDto = {
+        id: course.id,
         name: course.name,
         course_desc: course.course_desc,
         course_detail: course.course_detail,

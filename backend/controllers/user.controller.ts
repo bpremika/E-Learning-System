@@ -146,13 +146,11 @@ export const getProfile = async (req: Request, res: Response) => {
     } else if (session.username === "") {
         res.status(401).json({ message: "user doesn't log in." });
         return;
-
-    } 
-    else {
-        const userSession : SessionDTO = {
-            username : session.username,
-            role : session.role
-        }
+    } else {
+        const userSession: SessionDTO = {
+            username: session.username,
+            role: session.role,
+        };
         res.status(200).json(userSession);
     }
 };
