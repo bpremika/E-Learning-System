@@ -52,7 +52,6 @@ model Session {
   id        String   @id
   sid       String   @unique
   data      String
-  userId    Int
   expiresAt DateTime
 }
 

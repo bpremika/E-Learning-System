@@ -9,7 +9,7 @@ CREATE TABLE "StudentUser" (
     "password" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "modified_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "image_url" TEXT NOT NULL DEFAULT 'https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/Leaves.jpg',
+    "image_url" TEXT NOT NULL DEFAULT 'Leaves.jpg',
     "phone_number" TEXT NOT NULL DEFAULT '000000000',
 
     CONSTRAINT "StudentUser_pkey" PRIMARY KEY ("id")
@@ -26,8 +26,8 @@ CREATE TABLE "InstructorUser" (
     "password" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "modified_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "phone_number" TEXT NOT NULL DEFAULT 'https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/Leaves.jpg',
-    "image_url" TEXT NOT NULL DEFAULT '000000000',
+    "image_url" TEXT NOT NULL DEFAULT 'Leaves.jpg',
+    "phone_number" TEXT NOT NULL DEFAULT '000000000',
 
     CONSTRAINT "InstructorUser_pkey" PRIMARY KEY ("id")
 );
@@ -50,8 +50,9 @@ CREATE TABLE "Course" (
     "category" TEXT NOT NULL,
     "course_desc" TEXT NOT NULL DEFAULT '',
     "course_detail" TEXT NOT NULL DEFAULT '',
-    "course_cover_url" TEXT NOT NULL DEFAULT 'https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/Leaves.jpg',
+    "course_cover_url" TEXT NOT NULL DEFAULT 'Leaves.jpg',
     "guide_url" TEXT NOT NULL,
+    "course_material" TEXT[],
     "instructor_id" INTEGER NOT NULL,
     "max_student" INTEGER NOT NULL DEFAULT -1,
     "curr_student" INTEGER NOT NULL DEFAULT 0,
