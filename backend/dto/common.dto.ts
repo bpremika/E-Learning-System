@@ -1,4 +1,9 @@
 export interface CourseHomeDto {
+    all_category: string[];
+    courses: PartCourseHomeDto[];
+}
+
+export interface PartCourseHomeDto {
     id: number;
     name: string;
     course_desc: string;

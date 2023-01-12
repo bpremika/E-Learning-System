@@ -1,6 +1,6 @@
 import { prisma } from "../common/prisma";
 import { Request, Response } from "express";
-import { CourseHomeDto } from "../dto/common.dto";
+import { CourseHomeDto, PartCourseHomeDto } from "../dto/common.dto";
 import {
     CoursesDto,
     CreateCourseDto,
@@ -9,6 +9,39 @@ import {
 import { courseSchema } from "../common/CourseValidator";
 
 const amountPerPage = 12;
+
+const getHomeCourse = async (req: Request, res: Response) => {
+    const pages = parseInt(req.params.pages);
+    if (isNaN(pages)) {
+        res.status(404).send({ message: "invalid Pages" });
+        return;
+    }
+
+    const courses = await prisma.course.findMany({
+        skip: (pages - 1) * amountPerPage,
+        take: amountPerPage,
+    });
+
+    let all_category: string[] = [];
+
+    for (let i = 0; i < courses.length; i++) {
+        if (!all_category.includes(courses[i].category)) {
+            all_category.push(courses[i].category);
+        }
+    }
+    all_category.sort();
+
+    const coursesDto: CourseHomeDto = {
+        all_category,
+        courses: courses.map((course) => ({
+            id: course.id,
+            name: course.name,
+            course_desc: course.course_desc,
+            course_cover_url: course.course_cover_url,
+        })),
+    };
+    res.status(200).json(coursesDto);
+};
 
 const getOneCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
@@ -28,7 +61,7 @@ const getOneCourse = async (req: Request, res: Response) => {
         return;
     }
 
-    const courseDto: CourseHomeDto = {
+    const courseDto: PartCourseHomeDto = {
         id: course.id,
         name: course.name,
         course_desc: course.course_desc,
@@ -127,29 +160,6 @@ const getCategoryCourse = async (req: Request, res: Response) => {
     res.status(200).json(coursesDto);
 };
 
-const getManyCourse = async (req: Request, res: Response) => {
-    const pages = parseInt(req.params.pages);
-    if (isNaN(pages)) {
-        res.status(404).send({ message: "invalid Pages" });
-        return;
-    }
-
-    const courses = await prisma.course.findMany({
-        skip: (pages - 1) * amountPerPage,
-        take: amountPerPage,
-    });
-    const coursesDto: CoursesDto = {
-        total: courses.length,
-        courses: courses.map((course) => ({
-            id: course.id,
-            name: course.name,
-            course_desc: course.course_desc,
-            course_cover_url: course.course_cover_url,
-        })),
-    };
-    res.status(200).json(coursesDto);
-};
-
 const createCourse = async (req: Request, res: Response) => {
     const course: CreateCourseDto = req.body;
     const check = courseSchema.safeParse(course);
@@ -223,7 +233,7 @@ export {
     getOneCourse,
     searchCourse,
     getCategoryCourse,
-    getManyCourse,
+    getHomeCourse,
     createCourse,
     updateCourse,
     deleteCourse,
