@@ -8,7 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const express_session_1 = __importDefault(require("express-session"));
 const prisma_session_store_1 = require("@quixo3/prisma-session-store");
 const prisma_1 = require("./common/prisma");
-// import { courseRouter } from "./routes/course.route";
+const course_route_1 = require("./routes/course.route");
 const cors_1 = __importDefault(require("cors"));
 const user_route_1 = require("./routes/user.route");
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
@@ -17,7 +17,7 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 const corsOptions = {
-    // origin: "*",
+    origin: "http://localhost:3000",
     allowedHeaders: "Origin, Content-Type, Accept",
     credentials: true,
 };
@@ -36,10 +36,10 @@ app.use((0, express_session_1.default)({
         dbRecordIdFunction: undefined,
     }),
 }));
-// app.use("/course", courseRouter);
-// app.get("/",()=>{
-//     console.log("server connect")
-// })
+app.use("/course", course_route_1.courseRouter);
+app.get("/", () => {
+    console.log("server connect");
+});
 app.use("/user", user_route_1.userRouter);
 // app.post("/upload", (req, res) => {
 //     req.files?.selected_file

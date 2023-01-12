@@ -159,7 +159,7 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const userSession = {
             userID: session.userID,
             username: session.username,
-            role: session.role
+            role: session.role,
         };
         res.status(200).json(userSession);
     }

@@ -13,6 +13,7 @@ module.exports = {
                 smoothgrey: "#757575",
                 cyanlight: "#C3DCE3",
                 f654: "#F6F5F4",
+                FFA: "#FFAFA3",
             },
             fontFamily: {
                 dela: ["Dela Gothic One , sans-serif"],

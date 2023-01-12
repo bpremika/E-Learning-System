@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import session, { Session, SessionData } from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./common/prisma";
-// import { courseRouter } from "./routes/course.route";
+import { courseRouter } from "./routes/course.route";
 import cors from "cors";
 import { userRouter } from "./routes/user.route";
 import fileUpload from "express-fileupload";
@@ -28,7 +28,7 @@ const app: Express = express();
 const port = process.env.PORT;
 
 const corsOptions: cors.CorsOptions = {
-    // origin: "*",
+    origin: "http://localhost:3000",
     allowedHeaders: "Origin, Content-Type, Accept",
     credentials: true,
 };
@@ -51,11 +51,10 @@ app.use(
     })
 );
 
-// app.use("/course", courseRouter);
-// app.get("/",()=>{
-//     console.log("server connect")
-
-// })
+app.use("/course", courseRouter);
+app.get("/", () => {
+    console.log("server connect");
+});
 app.use("/user", userRouter);
 // app.post("/upload", (req, res) => {
 //     req.files?.selected_file

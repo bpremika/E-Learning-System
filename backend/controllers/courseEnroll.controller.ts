@@ -22,15 +22,16 @@ const getCourse = async (req: Request, res: Response) => {
 
     const instructor = course.instructor;
 
-    // const courseDto: CourseEnrollDto = {
-    //     name: course.name,
-    //     course_desc: course.course_desc,
-    //     first_name: instructor.first_name,
-    //     last_name: instructor.last_name,
-    //     guide_url: course.guide_url,
-    // };
+    const courseDto: CourseEnrollDto = {
+        id: course.id,
+        name: course.name,
+        course_desc: course.course_desc,
+        first_name: instructor.first_name,
+        last_name: instructor.last_name,
+        guide_url: course.guide_url,
+    };
 
-    // res.status(200).json(courseDto);
+    res.status(200).json(courseDto);
 };
 
 export { getCourse };
