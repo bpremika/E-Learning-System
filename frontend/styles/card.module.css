@@ -1,0 +1,102 @@
+.card1 {
+    display: flex;
+    height: 117px;
+    width: 204px;
+    border-radius: 20px;
+    background-color: #2b788b;
+    color: white;
+    font-family: ;
+    /* align-items: center; */
+}
+
+.text1_1 {
+    position: absolute;
+    left: 20px;
+    top: 7px;
+    font-size: 20px;
+}
+
+.text1_2 {
+    position: absolute;
+    left: 30px;
+    top: 40px;
+    font-size: 40px;
+}
+
+.card2 {
+    overflow: hidden;
+    display: flex;
+    height: 100px;
+    width: 136px;
+    border-radius: 10px;
+    background-color: #454545;
+    color: white;
+    font-family: ;
+}
+
+.card2_1 {
+    display: flex;
+    height: 30px;
+    width: 136px;
+    position: absolute;
+    top: 70px;
+    background-color: #d9d9d9;
+    color: black;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.text2_1 {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    font-size: 14px;
+}
+
+.text2_2 {
+    position: absolute;
+    right: 17px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.img2 {
+    position: relative;
+    right: 3px;
+    bottom: 1px;
+}
+
+.table1_1 {
+    height: 530px;
+    width: 224px;
+    border-radius: 20px;
+    display: flexbox;
+    background-color: white;
+}
+
+.table1_2 {
+    height: 35px;
+    width: 224px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #d9d9d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table1_3 {
+    position: relative;
+    bottom: 0px;
+    height: 495px;
+    width: 224px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #efefef;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
