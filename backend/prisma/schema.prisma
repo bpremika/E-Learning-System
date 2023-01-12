@@ -24,7 +24,7 @@ model StudentUser {
   created_at  DateTime @default(now())
   modified_at DateTime @default(now())
 
-  image_url          String               @default("https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/Leaves.jpg")
+  image_url          String               @default("Leaves.jpg")
   phone_number       String               @default("000000000")
   course             Course[]
   assignment_student Assignment_Student[]
@@ -43,8 +43,8 @@ model InstructorUser {
   created_at  DateTime @default(now())
   modified_at DateTime @default(now())
 
-  phone_number String   @default("https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/Leaves.jpg")
-  image_url    String   @default("000000000")
+  image_url    String   @default("Leaves.jpg")
+  phone_number String   @default("000000000")
   course       Course[]
 }
 
@@ -57,13 +57,14 @@ model Session {
 }
 
 model Course {
-  id               Int    @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   name             String
   category         String
-  course_desc      String @default("")
-  course_detail    String @default("")
-  course_cover_url String @default("https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/Leaves.jpg")
+  course_desc      String   @default("")
+  course_detail    String   @default("")
+  course_cover_url String   @default("Leaves.jpg")
   guide_url        String
+  course_material  String[]
 
   instructor    InstructorUser @relation(fields: [instructor_id], references: [id])
   instructor_id Int
