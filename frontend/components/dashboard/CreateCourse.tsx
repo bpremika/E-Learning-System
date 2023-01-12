@@ -27,10 +27,21 @@ export default function CreateCourse() {
             current_student: "",
         },
     });
-    const guideURLHandler = ()=>{
-        const originalUrl = form.values.guide_url;
-        // form.setFieldValue("guide_url",)
+    const submitHandler = async (e : React.FormEvent) =>{
+        e.preventDefault();
+        guideURLHandler();
+        console.log(form.values)
+
     }
+    function guideURLHandler(){
+        const originalUrl = form.values.guide_url;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = originalUrl.match(regExp);
+        const getID = (match && match[2].length === 11)
+        ? match[2]
+        : null;
+        form.setFieldValue("guide_url",`http://www.youtube.com/embed/${getID}`)
+        }
     const previews = files.map((file, index) => {
         const imageUrl = URL.createObjectURL(file);
         return (
@@ -48,7 +59,7 @@ export default function CreateCourse() {
                 onClose={() => setOpened(false)}
                 title="Create New Course"
             >
-                <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                <form onSubmit={submitHandler}>
                     <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>
                         <Text align="center">Drop images here</Text>
                         {previews}
