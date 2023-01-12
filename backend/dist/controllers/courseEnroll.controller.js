@@ -28,13 +28,14 @@ const getCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
     const instructor = course.instructor;
-    // const courseDto: CourseEnrollDto = {
-    //     name: course.name,
-    //     course_desc: course.course_desc,
-    //     first_name: instructor.first_name,
-    //     last_name: instructor.last_name,
-    //     guide_url: course.guide_url,
-    // };
-    // res.status(200).json(courseDto);
+
+    const courseDto = {
+        name: course.name,
+        course_desc: course.course_desc,
+        first_name: instructor.first_name,
+        last_name: instructor.last_name,
+        guide_url: course.guide_url,
+    };
+    res.status(200).json(courseDto);
 });
 exports.getCourse = getCourse;

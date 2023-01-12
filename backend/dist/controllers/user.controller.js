@@ -144,12 +144,13 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     if (session.username == undefined || session.role == undefined) {
         req.session.username = "";
         req.session.role = "";
-        console.log("doesn't have session.");
-        res.status(401).json({ message: "user doesn't log in." });
+
+        console.log("doesm't have session.");
+        res.status(403).json({ message: "user doesn't log in." });
         return;
     }
     else if (session.username === "") {
-        res.status(401).json({ message: "user doesn't log in." });
+        res.status(403).json({ message: "user doesn't log in." });
         return;
     }
     else {
