@@ -3,9 +3,9 @@
     height: 117px;
     width: 204px;
     border-radius: 20px;
-    background-color: #2B788B;
+    background-color: #2b788b;
     color: white;
-    font-family: 
+    font-family: ;
     /* align-items: center; */
 }
 
@@ -31,7 +31,7 @@
     border-radius: 10px;
     background-color: #454545;
     color: white;
-    font-family: 
+    font-family: ;
 }
 
 .card2_1 {
@@ -40,7 +40,7 @@
     width: 136px;
     position: absolute;
     top: 70px;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     color: black;
     align-items: center;
     border-bottom-left-radius: 10px;
@@ -66,7 +66,6 @@
     position: relative;
     right: 3px;
     bottom: 1px;
-
 }
 
 .table1_1 {
@@ -82,7 +81,7 @@
     width: 224px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,10 +94,9 @@
     width: 224px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color: #EFEFEF;
+    background-color: #efefef;
     display: flex;
     justify-content: center;
     overflow-x: hidden;
     overflow-y: scroll;
 }
-

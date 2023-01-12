@@ -10,6 +10,3 @@ export interface CreateUser {
     last_name: string;
     phone_number: string;
 }
-
-
-

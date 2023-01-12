@@ -28,6 +28,7 @@ const getCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
     const instructor = course.instructor;
+
     const courseDto = {
         name: course.name,
         course_desc: course.course_desc,

@@ -1,4 +1,3 @@
 "use strict";
-// import { Days } from "@prisma/client"
-// import { CourseDto } from "./common.dto"
+// import { CourseHomeDto } from "./common.dto";
 Object.defineProperty(exports, "__esModule", { value: true });

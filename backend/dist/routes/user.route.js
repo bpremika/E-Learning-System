@@ -8,5 +8,6 @@ exports.userRouter.post("/studentRegister", user_controller_1.createStudentUser)
 exports.userRouter.post("/instructorRegister", user_controller_1.createInstructorUser);
 exports.userRouter.post("/studentLogin", user_controller_1.studentLogin);
 exports.userRouter.post("/instructorLogin", user_controller_1.instructorLogin);
+exports.userRouter.post("/enrollCourse/:id", user_controller_1.enrollCourse);
 exports.userRouter.get("/logout", user_controller_1.logout);
 exports.userRouter.get("/me", user_controller_1.getProfile);
