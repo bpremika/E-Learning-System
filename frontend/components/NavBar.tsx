@@ -4,21 +4,22 @@ import useMediaQuery from "../common/hook/mediaHook";
 import { useContext, useState } from "react";
 import { Burger, NavLink, Drawer } from "@mantine/core";
 import { useUser } from "../common/contexts/UserContext";
-
+import { useRouter } from "next/router";
 const NavBar = () => {
     const { isAuth, user, logout, login } = useUser();
-    const name = user?.name;
+    const name = user?.username;
     let fLetter: String = "";
-    if (isAuth) {
+    const router = useRouter();
+    if (isAuth && user) {
+        console.log(user);
+
         fLetter = name!.length !== 0 ? name!.charAt(0) : "";
     }
 
     const handleOnSignOut = () => {
         logout();
     };
-    const handleOnSignIn = () => {
-        login();
-    };
+    const handleOnSignIn = () => {};
     const isBiggerThanMd = useMediaQuery("md");
     const splitt: string[] = name?.split(" ", 2) ?? [];
     const [opened, setOpened] = useState(false);
@@ -37,22 +38,25 @@ const NavBar = () => {
                     <div className={`gap-6 flex flex-row items-center`}>
                         <Link
                             className="hover:font-semibold text-smoothgrey"
-                            href="/"
+                            href="/bolonatest"
                         >
                             <div>Home</div>
                         </Link>
-                        <Link
-                            className="hover:font-semibold text-smoothgrey"
-                            href="/"
-                        >
-                            <div>Course</div>
-                        </Link>
-                        <Link
-                            className="hover:font-semibold  text-smoothgrey"
-                            href="/"
-                        >
-                            <div>Mycourses</div>
-                        </Link>
+                        {isAuth ? (
+                            <Link
+                                className="hover:font-semibold text-smoothgrey"
+                                href="/"
+                            >
+                                <div>My Courses</div>
+                            </Link>
+                        ) : (
+                            <Link
+                                className="hover:font-semibold  text-smoothgrey"
+                                href="/"
+                            >
+                                <div>Courses</div>
+                            </Link>
+                        )}
                     </div>
                 </div>
 
@@ -107,24 +111,41 @@ const NavBar = () => {
                         overlayOpacity={0.5}
                     >
                         <div className="flex flex-col  items-center h-[150px]">
-                            <Link className="hover:font-semibold" href="/">
+                            <Link
+                                className="hover:font-semibold"
+                                href="/"
+                                onClick={() => {
+                                    setOpened(false);
+                                }}
+                            >
                                 <div className="w-[100vw] h-[50px] flex hover:bg-offwhite items-center justify-center ">
                                     Home
                                 </div>
                             </Link>
-                            <Link className="hover:font-semibold" href="/">
+                            <Link
+                                className="hover:font-semibold"
+                                href={`/${isAuth ? "Mycourses" : "Courses"}`}
+                                onClick={() => {
+                                    setOpened(false);
+                                }}
+                            >
                                 <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                    Course
+                                    {isAuth ? "Mycourses" : "Courses"}
                                 </div>
                             </Link>
                             <Link
                                 className="hover:font-semibold"
                                 href="/"
-                                onClick={handleOnSignOut}
+                                onClick={() => {
+                                    handleOnSignOut();
+                                    setOpened(false);
+                                }}
                             >
-                                <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                    Sign Out ➜
-                                </div>
+                                {isAuth && (
+                                    <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
+                                        Sign Out ➜
+                                    </div>
+                                )}
                             </Link>
                         </div>
                     </Drawer>

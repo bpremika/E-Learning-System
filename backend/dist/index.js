@@ -16,7 +16,7 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 const corsOptions = {
-    // origin: "*",
+    origin: "http://localhost:3000",
     allowedHeaders: "Origin, Content-Type, Accept",
     credentials: true,
 };
@@ -27,7 +27,7 @@ app.use((0, express_session_1.default)({
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false },
+    cookie: { secure: true, sameSite: "none" },
     store: new prisma_session_store_1.PrismaSessionStore(prisma_1.prisma, {
         checkPeriod: 2 * 60 * 1000,
         dbRecordIdIsSessionId: true,

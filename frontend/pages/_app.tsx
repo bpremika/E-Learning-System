@@ -35,7 +35,6 @@ export default function App({ Component, pageProps }: AppProps) {
             >
                 <UserContextProvider>
                     <Header />
-                    <NavBar />
                     <Component {...pageProps} />
                 </UserContextProvider>
             </MantineProvider>
