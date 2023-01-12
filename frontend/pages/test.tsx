@@ -30,10 +30,11 @@ export default function TestComponent() {
         students={10}
         allStudents={20}></DashboardCourseCard> */}
 
-      <VideoTable elememts={videos}></VideoTable>
+      {/* <VideoTable elememts={videos}></VideoTable> */}
 
       {/* <StudentList elememts={students}></StudentList> */}
 
+      
 
     </>
   )
