@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const Footer = () => {
     const isBiggerThanMd = useMediaQuery("md");
-
+    const { isAuth } = useUser();
     return (
         <>
             <div className="bg-f654 h-[350px] md:h-auto flex flex-row  items-center justify-center">
@@ -20,36 +20,24 @@ const Footer = () => {
                                     Home
                                 </div>
                             </Link>
-                            <Link href="/">
+                            <Link href={`/${isAuth ? "Mycourses" : "Courses"}`}>
                                 <div className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px] ">
-                                    Textbook
-                                </div>
-                            </Link>
-                            <Link href="/">
-                                <div className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px] ">
-                                    Statistics
-                                </div>
-                            </Link>
-                            <Link href="/">
-                                <div className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px] ">
-                                    Sprint
-                                </div>
-                            </Link>
-                            <Link href="/">
-                                <div className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px] ">
-                                    Audio-call
+                                    {isAuth ? "My Courses" : "Courses"}
                                 </div>
                             </Link>
                         </div>
                         <div className="flex md:flex-row flex-col md:gap-6 gap-3">
                             <p className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px]">
-                                Alex
+                                Bruce:Fe
                             </p>
                             <p className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px]">
-                                Gabriel
+                                Pun:Fe
                             </p>
                             <p className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px]">
-                                Marcus
+                                Pun:Be
+                            </p>
+                            <p className=" text-smoothgrey font-['Montserrat'] font-semibold text-[12px] md:text-[14px]">
+                                Bow:Be
                             </p>
                         </div>
                     </div>

@@ -26,7 +26,7 @@ const app: Express = express();
 const port = process.env.PORT;
 
 const corsOptions: cors.CorsOptions = {
-    // origin: "*",
+    origin: "http://localhost:3000",
     allowedHeaders: "Origin, Content-Type, Accept",
     credentials: true,
 };

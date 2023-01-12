@@ -1,3 +1,6 @@
+import axios from "axios";
+import { Router } from "express";
+import { useRouter } from "next/router";
 import React, {
     createContext,
     useCallback,
@@ -5,17 +8,21 @@ import React, {
     useEffect,
     useState,
 } from "react";
+import { client } from "../axios/axios";
 
 interface IUser {
-    name: string;
-    imageUrl: string;
+    username: string;
+    role: "student" | "instructor";
 }
-
+interface unp {
+    username: string;
+    password: string;
+}
 interface IUserContext {
     user: IUser | null;
     isAuth: boolean;
     ready: boolean;
-    login: () => Promise<void>;
+    login: (unp: unp, isStudent: boolean) => Promise<boolean>;
     refresh: () => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -24,7 +31,9 @@ const UserContext = createContext<IUserContext>({
     user: null,
     isAuth: false,
     ready: false,
-    login: async () => {},
+    login: async () => {
+        return false;
+    },
     refresh: async () => {},
     logout: async () => {},
 });
@@ -38,26 +47,63 @@ export function UserContextProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [user, setUser] = useState<IUser | null>({
-        name: "bruce",
-        imageUrl: "",
-    });
-    const [isAuth, setAuth] = useState(true);
+    const [user, setUser] = useState<IUser | null>(null);
+    const [isAuth, setAuth] = useState(false);
     const [ready, setReady] = useState(false);
+    const router = useRouter();
 
-    const login = useCallback(async () => {
+    const login = async (unp: unp, isStudent: boolean) => {
+        let userType = isStudent ? "student" : "instructor";
+        try {
+            const res = await client.post(`/user/${userType}Login`, unp);
+            const userJSON = await client.get("/user/me");
+
+            const user = userJSON.data as IUser;
+
+            setUser(user);
+            router.push("/");
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+
         //login
+    };
+    const refresh = useCallback(async () => {
+        try {
+            const userJSON = await client.get("/user/me");
+
+            const user = userJSON.data as IUser;
+
+            setUser(user);
+        } catch (e) {
+            console.log(e);
+        }
     }, []);
-    const refresh = useCallback(async () => {}, []);
     const logout = useCallback(async () => {
         //fetch logout api...
-        setUser(null);
-        setAuth(false);
+        try {
+            await client.get("/user/logout");
+            setUser(null);
+            router.push("/");
+        } catch (error) {
+            console.log(error);
+        }
     }, []);
 
     useEffect(() => {
         refresh();
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            setAuth(true);
+        } else {
+            setAuth(false);
+        }
+        setReady(true);
+    }, [user]);
 
     const value: IUserContext = {
         user,
