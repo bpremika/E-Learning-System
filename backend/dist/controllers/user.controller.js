@@ -155,7 +155,7 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     else {
         const userSession = {
             username: session.username,
-            role: session.role
+            role: session.role,
         };
         res.status(200).json(userSession);
     }

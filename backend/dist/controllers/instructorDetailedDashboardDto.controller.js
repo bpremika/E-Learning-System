@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getcourse = void 0;
+exports.updateAssignment = exports.updateCourseVideo = exports.updateDescCourse = exports.getDetailedDashboard = void 0;
 const prisma_1 = require("../common/prisma");
 const getDetailedDashboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(req.params.id);
@@ -36,31 +36,61 @@ const getDetailedDashboard = (req, res) => __awaiter(void 0, void 0, void 0, fun
         })),
         videos_in_course: course.courseVideo.map((video) => ({
             id: video.id,
-            name: video.title,
+            name: video.name,
             video_url: video.video_url,
         })),
-        assignments_in_course: [],
-        course_desc: "",
-        course_detail: "",
+        assignments_in_course: course.assignment.map((assignment) => ({
+            id: assignment.id,
+            name: assignment.name,
+            description: assignment.description,
+            aj_file_url: assignment.aj_file_url,
+            max_score: assignment.max_score,
+        })),
+        course_desc: course.course_desc,
+        course_detail: course.course_detail,
     };
-    res.status(200).json(instructorDashboardDto);
+    res.status(200).json(instructorDetailedDashboardDto);
 });
-const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getDetailedDashboard = getDetailedDashboard;
+const updateDescCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(req.params.id);
     const newCourseDto = req.body;
     const course = yield prisma_1.prisma.course.update({
         where: { id },
         data: {
-            name: newCourseDto.name,
-            category: newCourseDto.category,
             course_desc: newCourseDto.course_desc,
             course_detail: newCourseDto.course_detail,
-            course_cover_url: newCourseDto.course_cover_url,
-            guide_url: newCourseDto.guide_url,
-            instructor_id: newCourseDto.instructor_id,
-            max_student: newCourseDto.max_student,
-            curr_student: newCourseDto.curr_student,
         },
     });
     res.status(200).json(course);
 });
+exports.updateDescCourse = updateDescCourse;
+const updateCourseVideo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    const newVideoDto = req.body;
+    const courseVideo = yield prisma_1.prisma.courseVideo.update({
+        where: { id },
+        data: {
+            name: newVideoDto.name,
+            video_url: newVideoDto.video_url,
+        },
+    });
+    res.status(200).json(courseVideo);
+});
+exports.updateCourseVideo = updateCourseVideo;
+const updateAssignment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    const newAssignment = req.body;
+    const assignment = yield prisma_1.prisma.assignment.update({
+        where: { id },
+        data: {
+            name: newAssignment.name,
+            description: newAssignment.description,
+            aj_file_url: newAssignment.aj_file_url,
+            max_score: newAssignment.max_score,
+        },
+    });
+    res.status(200).json(assignment);
+});
+exports.updateAssignment = updateAssignment;
+const createCourseVideo = (req, res) => __awaiter(void 0, void 0, void 0, function* () { });

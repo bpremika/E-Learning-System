@@ -29,6 +29,7 @@ const getOneCourse = async (req: Request, res: Response) => {
     }
 
     const courseDto: CourseHomeDto = {
+        id: course.id,
         name: course.name,
         course_desc: course.course_desc,
         course_cover_url: course.course_cover_url,
@@ -48,7 +49,7 @@ const searchCourse = async (req: Request, res: Response) => {
 
     let courses;
 
-    if (search === null) {
+    if (search == null) {
         courses = await prisma.course.findMany({
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
@@ -80,6 +81,7 @@ const searchCourse = async (req: Request, res: Response) => {
     const coursesDto: CoursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_desc: course.course_desc,
             course_cover_url: course.course_cover_url,
@@ -96,7 +98,8 @@ const getCategoryCourse = async (req: Request, res: Response) => {
         return;
     }
 
-    const category = req.params.cat.toUpperCase();
+    // const category = req.params.cat.toUpperCase();
+    const category = req.params.cat;
     const courses = await prisma.course.findMany({
         where: { category },
         include: {
@@ -114,6 +117,7 @@ const getCategoryCourse = async (req: Request, res: Response) => {
     const coursesDto: CoursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_desc: course.course_desc,
             course_cover_url: course.course_cover_url,
@@ -137,6 +141,7 @@ const getManyCourse = async (req: Request, res: Response) => {
     const coursesDto: CoursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_desc: course.course_desc,
             course_cover_url: course.course_cover_url,

@@ -30,6 +30,7 @@ const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     const courseDto = {
+        id: course.id,
         name: course.name,
         course_desc: course.course_desc,
         course_cover_url: course.course_cover_url,
@@ -45,11 +46,13 @@ const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     let courses;
-    if (search === null) {
+    if (search == null) {
         courses = yield prisma_1.prisma.course.findMany({
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
         });
+        res.status(404).send({ message: "not found" });
+        return;
     }
     else {
         var search_arr = search.split("+");
@@ -72,6 +75,7 @@ const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const coursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_desc: course.course_desc,
             course_cover_url: course.course_cover_url,
@@ -86,7 +90,8 @@ const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(404).send({ message: "invalid Pages" });
         return;
     }
-    const category = req.params.cat.toUpperCase();
+    // const category = req.params.cat.toUpperCase();
+    const category = req.params.cat;
     const courses = yield prisma_1.prisma.course.findMany({
         where: { category },
         include: {
@@ -102,6 +107,7 @@ const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
     const coursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_desc: course.course_desc,
             course_cover_url: course.course_cover_url,
@@ -123,6 +129,7 @@ const getManyCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const coursesDto = {
         total: courses.length,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_desc: course.course_desc,
             course_cover_url: course.course_cover_url,
