@@ -1,7 +1,12 @@
+import { client } from "../common/axios/axios";
+import { CourseResultDTO } from "../common/dto/course";
 import SearchBar from "../components/common/SearchBar";
 import NavBar from "../components/NavBar";
 
-const Courses = () => {
+interface props {
+    course: CourseResultDTO;
+}
+const Courses = ({ course }: props) => {
     return (
         <>
             <NavBar />
@@ -19,8 +24,11 @@ const Courses = () => {
 export default Courses;
 
 export async function getStaticProps() {
-    const courses = await clien;
+    const res = await client.get("/course/getMany/1");
+    const course = res.data as CourseResultDTO;
     return {
-        props: {}, // will be passed to the page component as props
+        props: {
+            course: course,
+        }, // will be passed to the page component as props
     };
 }
