@@ -11,6 +11,7 @@ const prisma_1 = require("./common/prisma");
 const course_route_1 = require("./routes/course.route");
 const cors_1 = __importDefault(require("cors"));
 const user_route_1 = require("./routes/user.route");
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const fileUpload_controller_1 = __importDefault(require("./controllers/fileUpload.controller"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -22,6 +23,7 @@ const corsOptions = {
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
+app.use((0, express_fileupload_1.default)());
 app.set("trust proxy", 1); // trust first proxy
 app.use((0, express_session_1.default)({
     secret: "keyboard cat",
@@ -39,6 +41,10 @@ app.get("/", () => {
     console.log("server connect");
 });
 app.use("/user", user_route_1.userRouter);
+// app.post("/upload", (req, res) => {
+//     req.files?.selected_file
+//     console.log(req.files?.selected_file);
+// });
 app.post("/upload", fileUpload_controller_1.default);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
