@@ -15,9 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const spacesEndpoint = new aws_sdk_1.default.Endpoint("sgp1.digitaloceanspaces.com");
+const spacesEndpoint = new aws_sdk_1.default.Endpoint("sgp1.cdn.digitaloceanspaces.com");
 const s3 = new aws_sdk_1.default.S3({
     endpoint: spacesEndpoint,
+    credentials: {
+        accessKeyId: process.env.AWS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    }
 });
 const upload = multer({
     storage: multerS3({
@@ -36,8 +40,9 @@ function uploadFile(req, res, next) {
             if (error) {
                 console.log(error);
                 res.status(400).json(error);
+                return;
             }
-            console.log("File uploaded successfully.");
+            res.status(200).json("File uploaded successfully.");
         });
     });
 }
