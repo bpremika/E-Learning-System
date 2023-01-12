@@ -16,6 +16,8 @@ import {
     updateDescCourse,
     updateCourseVideo,
     updateAssignment,
+    createAssignment,
+    createCourseVideo,
 } from "../controllers/instructorDetailedDashboardDto.controller";
 
 export const courseRouter = Router();
@@ -24,11 +26,16 @@ courseRouter.get("/search/:pages", searchCourse);
 courseRouter.get("/category/:cat/:pages", getCategoryCourse);
 courseRouter.get("/home/:pages", getHomeCourse);
 courseRouter.post("/createCourse/", createCourse);
-courseRouter.patch("/:id", updateCourse);
-courseRouter.delete("/:id", deleteCourse);
+courseRouter.patch("/updateCourse/:id", updateCourse);
+courseRouter.delete("/deleteCourse/:id", deleteCourse);
 
 courseRouter.get("/enroll/:id", getCourse);
 courseRouter.get("/studentInfo/:id", getDetailedCourse);
 courseRouter.get("/instructorDashboard/:id", getInstructorUser);
 
 courseRouter.get("/instructorDetailedDashboard/:id", getDetailedDashboard);
+courseRouter.patch("/updateDescCourse/:id", updateDescCourse);
+courseRouter.patch("/updateCourseVideo/:id", updateCourseVideo);
+courseRouter.patch("/updateAssignment/:id", updateAssignment);
+courseRouter.post("/createCourseVideo/", createCourseVideo);
+courseRouter.post("/createAssignment/", createAssignment);
