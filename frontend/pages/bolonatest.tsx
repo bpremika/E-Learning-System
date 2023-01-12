@@ -11,6 +11,7 @@ import { Button, FileInput } from "@mantine/core";
 import FormData from "form-data"
 //icons
 import FileName from "../components/common/FileName";
+import CreateCourse from "../components/dashboard/CreateCourse";
 
 export default function bolonatest() {
     const [selectedFile, setFiles] = useState<File | null>(null);
@@ -39,6 +40,7 @@ export default function bolonatest() {
                 <Button type="submit">submit</Button>
             </form>
             <FileName/>
+            <CreateCourse/>
         </div>
     );
 }
