@@ -90,6 +90,7 @@ export const studentLogin = async (req: Request, res: Response) => {
             });
             return;
         }
+        req.session.userID = user.id;
         req.session.username = username;
         req.session.role = "student";
         res.status(200).json({ message: "login successful" });
@@ -121,6 +122,7 @@ export const instructorLogin = async (req: Request, res: Response) => {
             });
             return;
         }
+        req.session.userID = user.id;
         req.session.username = username;
         req.session.role = "instructor";
         res.status(200).json({ message: "login successful" });
@@ -137,10 +139,11 @@ export const logout = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     const session = req.session;
-    if (session.username == undefined || session.role == undefined) {
+    if (session.userID == undefined || session.username == undefined || session.role == undefined) {
+        req.session.userID = -1;
         req.session.username = "";
         req.session.role = "";
-        console.log("doesn't have session.");
+        console.log("create session successfully!");
         res.status(401).json({ message: "user doesn't log in." });
         return;
     } else if (session.username === "") {
@@ -150,6 +153,7 @@ export const getProfile = async (req: Request, res: Response) => {
     } 
     else {
         const userSession : SessionDTO = {
+            userID : session.userID,
             username : session.username,
             role : session.role
         }
