@@ -1,3 +1,8 @@
+import Login from "../components/login";
 export default function Test() {
-    return <></>;
+    return (
+        <>
+            <Login isStudent={false} />
+        </>
+    );
 }

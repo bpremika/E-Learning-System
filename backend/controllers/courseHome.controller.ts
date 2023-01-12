@@ -37,72 +37,72 @@ const getOneCourse = async (req: Request, res: Response) => {
     res.status(200).json(courseDto);
 };
 
-const searchCourse = async (req: Request, res: Response) => {
-    const search = req.query.search as string | null;
-    const pages = parseInt(req.params.pages);
+// const searchCourse = async (req: Request, res: Response) => {
+//     const search = req.query.search as string | null;
+//     const pages = parseInt(req.params.pages);
 
-    if (isNaN(pages)) {
-        res.status(404).send({ message: "invalid Pages" });
-        return;
-    }
+//     if (isNaN(pages)) {
+//         res.status(404).send({ message: "invalid Pages" });
+//         return;
+//     }
 
-    let courses;
+//     let courses;
 
-    if (search === null) {
-        courses = await prisma.course.findMany({
-            skip: (pages - 1) * amountPerPage,
-            take: amountPerPage,
-        });
-    } else {
-        var search_arr = search.split("+");
-        var new_search = search_arr.join(" & ");
+//     if (search === null) {
+//         courses = await prisma.course.findMany({
+//             skip: (pages - 1) * amountPerPage,
+//             take: amountPerPage,
+//         });
+//     } else {
+//         var search_arr = search.split("+");
+//         var new_search = search_arr.join(" & ");
 
-        courses = await prisma.course.findMany({
-            where: {
-                name: {
-                    search: new_search,
-                },
-            },
-            skip: (pages - 1) * amountPerPage,
-            take: amountPerPage,
-        });
+//         courses = await prisma.course.findMany({
+//             where: {
+//                 name: {
+//                     search: new_search,
+//                 },
+//             },
+//             skip: (pages - 1) * amountPerPage,
+//             take: amountPerPage,
+//         });
 
-        console.log("search by: " + new_search);
-    }
+//         console.log("search by: " + new_search);
+//     }
 
-    if (courses === null) {
-        res.status(404).send({ message: "not found" });
-        return;
-    }
+//     if (courses === null) {
+//         res.status(404).send({ message: "not found" });
+//         return;
+//     }
 
-    const coursesDto: CoursesDto = {
-        total: courses.length,
-        courses: courses.map((course) => ({
-            name: course.name,
-            course_desc: course.course_desc,
-            course_cover_url: course.course_cover_url,
-        })),
-    };
+//     const coursesDto: CoursesDto = {
+//         total: courses.length,
+//         courses: courses.map((course) => ({
+//             name: course.name,
+//             course_desc: course.course_desc,
+//             course_cover_url: course.course_cover_url,
+//         })),
+//     };
 
-    res.status(200).json(coursesDto);
-};
+//     res.status(200).json(coursesDto);
+// };
 
-const getCategoryCourse = async (req: Request, res: Response) => {
-    const pages = parseInt(req.params.pages);
-    if (isNaN(pages)) {
-        res.status(404).send({ message: "invalid Pages" });
-        return;
-    }
+// const getCategoryCourse = async (req: Request, res: Response) => {
+//     const pages = parseInt(req.params.pages);
+//     if (isNaN(pages)) {
+//         res.status(404).send({ message: "invalid Pages" });
+//         return;
+//     }
 
-    const category = req.params.cat.toUpperCase();
-    const courses = await prisma.course.findMany({
-        where: { category },
-        include: {
-            studentUser: true,
-        },
-        skip: (pages - 1) * amountPerPage,
-        take: amountPerPage,
-    });
+//     const category = req.params.cat.toUpperCase();
+//     const courses = await prisma.course.findMany({
+//         where: { category },
+//         include: {
+//             studentUser: true,
+//         },
+//         skip: (pages - 1) * amountPerPage,
+//         take: amountPerPage,
+//     });
 
     if (courses === null) {
         res.status(404).send({ message: "not found" });
@@ -143,27 +143,26 @@ const getManyCourse = async (req: Request, res: Response) => {
     res.status(200).json(coursesDto);
 };
 
-const createCourse = async (req: Request, res: Response) => {
-    const course: CreateCourseDto = req.body;
-    const check = courseSchema.safeParse(course);
-    if (check.success) {
-        try {
-            const result = await prisma.course.create({
-                data: {
-                    name: course.name,
-                    category: course.category,
-                    course_desc: course.course_desc,
-                    course_detail: course.course_detail,
-                    course_cover_url: course.course_cover_url,
-                    guide_url: course.guide_url,
-                    instructor_id: course.instructor_id,
-                    max_student: course.max_student,
-                    curr_student: course.curr_student,
-                },
-            });
+// const createCourse = async (req: Request, res: Response) => {
+//     const course: CreateCourseDto = req.body;
+//     const check = courseSchema.safeParse(course);
+//     if (check.success) {
+//         try {
+//             const result = await prisma.course.create({
+//                 data: {
+//                     name: course.name,
+//                     category: course.category,
+//                     course_desc: course.course_desc,
+//                     course_detail: course.course_detail,
+//                     course_cover_url: course.course_cover_url,
+//                     guide_url: course.guide_url,
+//                     instructor_id: course.instructor_id,
+//                     max_student: course.max_student,
+//                     curr_student: course.curr_student,
+//                 },
+//             });
 
             console.log(result);
-
             res.status(201).json(result);
         } catch (e) {
             console.log(e);
@@ -204,12 +203,22 @@ const deleteCourse = async (req: Request, res: Response) => {
     res.status(204).send();
 };
 
-export {
-    getOneCourse,
-    searchCourse,
-    getCategoryCourse,
-    getManyCourse,
-    createCourse,
-    updateCourse,
-    deleteCourse,
-};
+// // const deleteCourse = async (req: Request, res: Response) => {
+// //     const id = req.params.id;
+// //     await prisma.course.delete({
+// //         where: {
+// //             id: parseInt(id),
+// //         },
+// //     });
+// //     res.status(204).send();
+// // };
+
+// export {
+//     getOneCourse,
+//     searchCourse,
+//     getCategoryCourse,
+//     getManyCourse,
+//     createCourse,
+//     updateCourse,
+//     deleteCourse,
+// };

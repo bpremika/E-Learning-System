@@ -11,12 +11,14 @@ const prisma_1 = require("./common/prisma");
 // import { courseRouter } from "./routes/course.route";
 const cors_1 = __importDefault(require("cors"));
 const user_route_1 = require("./routes/user.route");
-const fileUpload_controller_1 = __importDefault(require("./controllers/fileUpload.controller"));
+const fileUpload_controller_1 = __importDefault(
+    require("./controllers/fileUpload.controller")
+);
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 const corsOptions = {
-    // origin: "*",
+    origin: "http://localhost:3000",
     allowedHeaders: "Origin, Content-Type, Accept",
     credentials: true,
 };
