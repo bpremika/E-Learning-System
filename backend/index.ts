@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import session, { Session, SessionData } from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./common/prisma";
-// import { courseRouter } from "./routes/course.route";
+import { courseRouter } from "./routes/course.route";
 import cors from "cors";
 import { userRouter } from "./routes/user.route";
 import uploadFile from "./controllers/fileUpload.controller";
@@ -48,11 +48,10 @@ app.use(
     })
 );
 
-// app.use("/course", courseRouter);
-// app.get("/",()=>{
-//     console.log("server connect")
-    
-// })
+app.use("/course", courseRouter);
+app.get("/", () => {
+    console.log("server connect");
+});
 app.use("/user", userRouter);
 app.post("/upload", uploadFile);
 

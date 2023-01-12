@@ -69,11 +69,13 @@ model Course {
 }
 
 model CourseVideo {
-  id        Int    @id @default(autoincrement())
-  title     String
-  video_url String
-  course_id Int
-  course    Course @relation(fields: [course_id], references: [id])
+  id          Int      @id @default(autoincrement())
+  name        String
+  video_url   String
+  course_id   Int
+  course      Course   @relation(fields: [course_id], references: [id])
+  created_at  DateTime @default(now())
+  modified_at DateTime @default(now())
 }
 
 model Assignment {

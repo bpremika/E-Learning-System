@@ -58,3 +58,30 @@ export interface CourseDashboardDto {
     max_student: number;
     curr_student: number;
 }
+
+export interface InstructorDetailedDashboardDto {
+    students_in_course: StudentInInstructorDetailedDashboardDto[];
+    videos_in_course: VideoInInstructorDetailedDashboardDto[];
+    assignments_in_course: AssignmentInInstructorDetailedDashboardDto[];
+    course_desc: string;
+    course_detail: string;
+}
+
+export interface StudentInInstructorDetailedDashboardDto {
+    first_name: string;
+    last_name: string;
+}
+
+export interface VideoInInstructorDetailedDashboardDto {
+    id: number;
+    name: string;
+    video_url: string;
+}
+
+export interface AssignmentInInstructorDetailedDashboardDto {
+    id: string;
+    name: string;
+    description: string;
+    aj_file_url: string;
+    max_score: number;
+}
