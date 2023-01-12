@@ -79,7 +79,7 @@ export interface VideoInInstructorDetailedDashboardDto {
 }
 
 export interface AssignmentInInstructorDetailedDashboardDto {
-    id: string;
+    id: number;
     name: string;
     description: string;
     aj_file_url: string;

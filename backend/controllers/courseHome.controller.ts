@@ -53,6 +53,8 @@ const searchCourse = async (req: Request, res: Response) => {
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
         });
+        res.status(404).send({ message: "not found" });
+        return;
     } else {
         var search_arr = search.split("+");
         var new_search = search_arr.join(" & ");
