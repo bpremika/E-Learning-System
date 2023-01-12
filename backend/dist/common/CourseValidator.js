@@ -10,6 +10,7 @@ exports.courseSchema = zod_1.z.object({
     course_detail: zod_1.z.string().optional(),
     course_cover_url: zod_1.z.string().optional(),
     guide_url: zod_1.z.string(),
+    course_material: zod_1.z.string().array(),
     instructor_id: zod_1.z.number().int().positive(),
     max_student: zod_1.z.number().int().refine(isPositiveOrMinusOne).optional(),
     curr_student: zod_1.z.number().int().positive().optional(),

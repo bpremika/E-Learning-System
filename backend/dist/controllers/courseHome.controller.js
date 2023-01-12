@@ -151,6 +151,7 @@ const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                     course_detail: course.course_detail,
                     course_cover_url: course.course_cover_url,
                     guide_url: course.guide_url,
+                    // course_material: course.
                     instructor_id: course.instructor_id,
                     max_student: course.max_student,
                     curr_student: course.curr_student,

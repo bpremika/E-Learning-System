@@ -63,7 +63,7 @@ model Course {
   course_detail    String   @default("")
   course_cover_url String   @default("Leaves.jpg")
   guide_url        String
-  course_material  String[]
+  course_material  String[] @default([])
 
   instructor    InstructorUser @relation(fields: [instructor_id], references: [id])
   instructor_id Int

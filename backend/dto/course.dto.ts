@@ -13,6 +13,7 @@ export interface CreateCourseDto {
     course_detail: string;
     course_cover_url: string;
     guide_url: string;
+    course_material: string[];
     instructor_id: number;
     max_student: number;
     curr_student: number;
@@ -25,6 +26,7 @@ export interface UpdateCourseDto {
     course_detail: string;
     course_cover_url: string;
     guide_url: string;
+    course_material: string[];
     instructor_id: number;
     max_student: number;
     curr_student: number;

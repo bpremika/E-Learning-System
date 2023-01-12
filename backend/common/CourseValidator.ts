@@ -9,6 +9,7 @@ export const courseSchema = z.object({
     course_detail: z.string().optional(),
     course_cover_url: z.string().optional(),
     guide_url: z.string(),
+    course_material: z.string().array().optional(),
     instructor_id: z.number().int().positive(),
     max_student: z.number().int().refine(isPositiveOrMinusOne).optional(),
     curr_student: z.number().int().positive().optional(),
