@@ -5,7 +5,16 @@ import {
     UpdateCourseInInstructorDto,
     UpdateCourseVideoInInstructorDto,
     UpdateAssignmentInInstructorDto,
+    CreateCourseVideoDto,
+    CreateAssignmentDto,
 } from "../dto/course.dto";
+import {
+    createAssignmentSchema,
+    createCourseVideoSchema,
+    updateAssignmentSchema,
+    updateCourseVideoSchema,
+    updateDescCourseSchema,
+} from "../common/CourseValidator";
 
 const getDetailedDashboard = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
@@ -54,49 +63,116 @@ const getDetailedDashboard = async (req: Request, res: Response) => {
 const updateDescCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const newCourseDto: UpdateCourseInInstructorDto = req.body;
-    const course = await prisma.course.update({
-        where: { id },
-        data: {
-            course_desc: newCourseDto.course_desc,
-            course_detail: newCourseDto.course_detail,
-        },
-    });
-    res.status(200).json(course);
+    const check = updateDescCourseSchema.safeParse(newCourseDto);
+    if (check.success) {
+        const course = await prisma.course.update({
+            where: { id },
+            data: {
+                course_desc: newCourseDto.course_desc,
+                course_detail: newCourseDto.course_detail,
+            },
+        });
+        res.status(200).json(course);
+    } else {
+        res.status(400).json({ message: "something went wrong" });
+    }
 };
 
 const updateCourseVideo = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const newVideoDto: UpdateCourseVideoInInstructorDto = req.body;
-    const courseVideo = await prisma.courseVideo.update({
-        where: { id },
-        data: {
-            name: newVideoDto.name,
-            video_url: newVideoDto.video_url,
-        },
-    });
-    res.status(200).json(courseVideo);
+    const check = updateCourseVideoSchema.safeParse(newVideoDto);
+    if (check.success) {
+        const courseVideo = await prisma.courseVideo.update({
+            where: { id },
+            data: {
+                name: newVideoDto.name,
+                video_url: newVideoDto.video_url,
+            },
+        });
+        res.status(200).json(courseVideo);
+    } else {
+        res.status(400).json({ message: "something went wrong" });
+    }
 };
 
 const updateAssignment = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const newAssignment: UpdateAssignmentInInstructorDto = req.body;
-    const assignment = await prisma.assignment.update({
-        where: { id },
-        data: {
-            name: newAssignment.name,
-            description: newAssignment.description,
-            aj_file_url: newAssignment.aj_file_url,
-            max_score: newAssignment.max_score,
-        },
-    });
-    res.status(200).json(assignment);
+    const check = updateAssignmentSchema.safeParse(newAssignment);
+    if (check.success) {
+        const assignment = await prisma.assignment.update({
+            where: { id },
+            data: {
+                name: newAssignment.name,
+                description: newAssignment.description,
+                aj_file_url: newAssignment.aj_file_url,
+                max_score: newAssignment.max_score,
+            },
+        });
+        res.status(200).json(assignment);
+    } else {
+        res.status(400).json({ message: "something went wrong" });
+    }
 };
 
-const createCourseVideo = async (req: Request, res: Response) => {};
+const createCourseVideo = async (req: Request, res: Response) => {
+    const courseVideo: CreateCourseVideoDto = req.body;
+    const check = createCourseVideoSchema.safeParse(courseVideo);
+    if (check.success) {
+        try {
+            const result = await prisma.courseVideo.create({
+                data: {
+                    name: courseVideo.name,
+                    video_url: courseVideo.video_url,
+                    course_id: courseVideo.course_id,
+                },
+            });
+
+            console.log(result);
+
+            res.status(201).json(result);
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({ message: "something wents wrong" });
+        }
+    } else {
+        res.status(400).json({ message: "something went wrong" });
+    }
+};
+
+const createAssignment = async (req: Request, res: Response) => {
+    const assignment: CreateAssignmentDto = req.body;
+    const check = createAssignmentSchema.safeParse(assignment);
+    if (check.success) {
+        try {
+            const result = await prisma.assignment.create({
+                data: {
+                    name: assignment.name,
+                    description: assignment.description,
+                    aj_file_url: assignment.aj_file_url,
+                    max_score: assignment.max_score,
+                    course_id: assignment.course_id,
+                },
+            });
+
+            console.log(result);
+
+            res.status(201).json(result);
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({ message: "something wents wrong" });
+        }
+    } else {
+        res.status(400).json({ message: "something went wrong" });
+    }
+};
 
 export {
     getDetailedDashboard,
     updateDescCourse,
     updateCourseVideo,
     updateAssignment,
+    createCourseVideo,
+    createAssignment,
 };

@@ -185,22 +185,28 @@ const createCourse = async (req: Request, res: Response) => {
 const updateCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const newCourseDto: UpdateCourseDto = req.body;
-    const course = await prisma.course.update({
-        where: { id },
-        data: {
-            name: newCourseDto.name,
-            category: newCourseDto.category,
-            course_desc: newCourseDto.course_desc,
-            course_detail: newCourseDto.course_detail,
-            course_cover_url: newCourseDto.course_cover_url,
-            guide_url: newCourseDto.guide_url,
-            course_material: newCourseDto.course_material,
-            instructor_id: newCourseDto.instructor_id,
-            max_student: newCourseDto.max_student,
-            curr_student: newCourseDto.curr_student,
-        },
-    });
-    res.status(200).json(course);
+    const check = courseSchema.safeParse(newCourseDto);
+
+    if (check.success) {
+        const course = await prisma.course.update({
+            where: { id },
+            data: {
+                name: newCourseDto.name,
+                category: newCourseDto.category,
+                course_desc: newCourseDto.course_desc,
+                course_detail: newCourseDto.course_detail,
+                course_cover_url: newCourseDto.course_cover_url,
+                guide_url: newCourseDto.guide_url,
+                course_material: newCourseDto.course_material,
+                instructor_id: newCourseDto.instructor_id,
+                max_student: newCourseDto.max_student,
+                curr_student: newCourseDto.curr_student,
+            },
+        });
+        res.status(200).json(course);
+    } else {
+        res.status(400).json({ message: "something went wrong" });
+    }
 };
 
 const deleteCourse = async (req: Request, res: Response) => {

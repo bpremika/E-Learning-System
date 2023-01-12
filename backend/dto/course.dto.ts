@@ -49,16 +49,16 @@ export interface UpdateAssignmentInInstructorDto {
     max_score: number;
 }
 
-export interface CreateCourseVideoDto {}
+export interface CreateCourseVideoDto {
+    name: string;
+    video_url: string;
+    course_id: number;
+}
 
 export interface CreateAssignmentDto {
-    //     name           String
-    //   description    String
-    //   aj_file_url    String
-    //   max_score      Int
-    //   get_score      Int
-    //   course_id      Int
-    //   course         Course         @relation(fields: [course_id], references: [id])
-    //   created_at     DateTime       @default(now())
-    //   modified_at    DateTime       @default(now())
+    name: string;
+    description: string;
+    aj_file_url: string;
+    max_score: number;
+    course_id: number;
 }

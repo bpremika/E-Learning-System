@@ -14,3 +14,34 @@ export const courseSchema = z.object({
     max_student: z.number().int().refine(isPositiveOrMinusOne).optional(),
     curr_student: z.number().int().positive().optional(),
 });
+
+export const createCourseVideoSchema = z.object({
+    name: z.string(),
+    video_url: z.string(),
+    course_id: z.number().int().positive(),
+});
+
+export const updateCourseVideoSchema = z.object({
+    name: z.string(),
+    video_url: z.string(),
+});
+
+export const createAssignmentSchema = z.object({
+    name: z.string(),
+    description: z.string(),
+    aj_file_url: z.string(),
+    max_score: z.number().int().positive(),
+    course_id: z.number().int().positive(),
+});
+
+export const updateAssignmentSchema = z.object({
+    name: z.string(),
+    description: z.string(),
+    aj_file_url: z.string(),
+    max_score: z.number().int().positive(),
+});
+
+export const updateDescCourseSchema = z.object({
+    course_desc: z.string().optional(),
+    course_detail: z.string().optional(),
+});
