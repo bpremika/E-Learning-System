@@ -141,10 +141,10 @@ export const getProfile = async (req: Request, res: Response) => {
         req.session.username = "";
         req.session.role = "";
         console.log("doesn't have session.");
-        res.status(403).json({ message: "user doesn't log in." });
+        res.status(401).json({ message: "user doesn't log in." });
         return;
     } else if (session.username === "") {
-        res.status(403).json({ message: "user doesn't log in." });
+        res.status(401).json({ message: "user doesn't log in." });
         return;
 
     } 

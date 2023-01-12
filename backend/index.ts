@@ -26,7 +26,8 @@ const app: Express = express();
 const port = process.env.PORT;
 
 const corsOptions: cors.CorsOptions = {
-    origin: "http://localhost:3000",
+    // origin: "*",
+    allowedHeaders: "Origin, Content-Type, Accept",
     credentials: true,
 };
 
@@ -38,7 +39,7 @@ app.use(
         secret: "keyboard cat",
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false },
+        cookie: { secure: true, sameSite: "none" },
         store: new PrismaSessionStore(prisma, {
             checkPeriod: 2 * 60 * 1000, //ms
             dbRecordIdIsSessionId: true,
@@ -50,7 +51,7 @@ app.use(
 // app.use("/course", courseRouter);
 // app.get("/",()=>{
 //     console.log("server connect")
-    
+
 // })
 app.use("/user", userRouter);
 app.post("/upload", uploadFile);
