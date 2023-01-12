@@ -20,32 +20,28 @@ export default function CourseCard(data: Props) {
 
     return (
         <>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
+            <Card
+                shadow="sm"
+                p="lg"
+                radius="md"
+                m="sm"
+                withBorder
+                w="300px"
+                component="a"
+                href="/"
+            >
                 <Card.Section>
-                    <Image src={data.imgurl} height={160} alt="subject" />
+                    <Image src={data.imgurl} height={150} alt="subject" />
                 </Card.Section>
+                <div className="w-full">
+                    <Group position="apart" mt="md" mb="xs">
+                        <Text weight={500}>{data.name}</Text>
+                    </Group>
+                </div>
 
-                <Group position="apart" mt="md" mb="xs">
-                    <Text weight={500}>{data.name}</Text>
-                    {/* <Badge color="pink" variant="light">
-          On Sale
-        </Badge> */}
-                </Group>
-
-                <Text size="sm" color="dimmed">
+                <Text size="sm" color="dimmed" w="full" truncate lineClamp={3}>
                     {data.description}
                 </Text>
-
-                <Button
-                    variant="light"
-                    color="blue"
-                    fullWidth
-                    mt="md"
-                    radius="md"
-                    onClick={() => router.push(data.name)}
-                >
-                    Details
-                </Button>
             </Card>
         </>
     );
