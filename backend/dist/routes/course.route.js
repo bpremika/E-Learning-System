@@ -22,9 +22,11 @@ exports.courseRouter.get("/getCourseStudentAssignment/:id", courseStudentAssignm
 exports.courseRouter.get("/enroll/:id", courseEnroll_controller_1.getCourse);
 exports.courseRouter.get("/studentInfo/:id", courseStudentInfo_controller_1.getDetailedCourse);
 exports.courseRouter.get("/instructorDashboard/:id", InstructorDashboard_controller_1.getInstructorUser);
+exports.courseRouter.get("/getCourseVideo/:id", courseStudentInfo_controller_1.getCourseVideo);
 exports.courseRouter.get("/instructorDetailedDashboard/:id", instructorDetailedDashboardDto_controller_1.getDetailedDashboard);
 exports.courseRouter.patch("/updateDescCourse/:id", instructorDetailedDashboardDto_controller_1.updateDescCourse);
 exports.courseRouter.patch("/updateCourseVideo/:id", instructorDetailedDashboardDto_controller_1.updateCourseVideo);
 exports.courseRouter.patch("/updateAssignment/:id", instructorDetailedDashboardDto_controller_1.updateAssignment);
-exports.courseRouter.post("/createCourseVideo/", instructorDetailedDashboardDto_controller_1.createCourseVideo);
 exports.courseRouter.post("/createAssignment/", instructorDetailedDashboardDto_controller_1.createAssignment);
+exports.courseRouter.post("/createCourseVideo/", instructorDetailedDashboardDto_controller_1.createCourseVideo);
+exports.courseRouter.post("/createCourseMaterial/:id", instructorDetailedDashboardDto_controller_1.createCourseMaterial);

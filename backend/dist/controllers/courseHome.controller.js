@@ -269,7 +269,8 @@ const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     else {
-        res.status(400).json({ message: "something went wrong" });
+        console.log(check.error);
+        res.status(400).json({ message: "parsing error" });
     }
 });
 exports.createCourse = createCourse;

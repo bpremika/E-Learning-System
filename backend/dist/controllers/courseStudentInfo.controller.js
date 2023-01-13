@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDetailedCourse = void 0;
+exports.getCourseVideo = exports.getDetailedCourse = void 0;
 const prisma_1 = require("../common/prisma");
 const getDetailedCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(req.params.id);
@@ -41,3 +41,26 @@ const getDetailedCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
     res.status(200).json(courseDto);
 });
 exports.getDetailedCourse = getDetailedCourse;
+const getCourseVideo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        res.status(404).send({ message: "invalid ID" });
+        return;
+    }
+    const course = yield prisma_1.prisma.course.findUnique({
+        where: { id },
+        include: {
+            courseVideo: true,
+        },
+    });
+    if (course === null) {
+        res.status(404).send({ message: "course not found" });
+        return;
+    }
+    const CourseVideos = {
+        totalVideo: course.courseVideo.length,
+        courseVideo: course.courseVideo
+    };
+    res.status(200).json(CourseVideos);
+});
+exports.getCourseVideo = getCourseVideo;

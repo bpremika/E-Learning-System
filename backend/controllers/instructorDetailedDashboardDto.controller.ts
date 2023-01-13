@@ -9,12 +9,14 @@ import {
     CreateAssignmentDto,
 } from "../dto/course.dto";
 import {
+    courseMaterialSchema,
     createAssignmentSchema,
     createCourseVideoSchema,
     updateAssignmentSchema,
     updateCourseVideoSchema,
     updateDescCourseSchema,
 } from "../common/CourseValidator";
+import { CourseMaterial } from "../dto/user.dto";
 
 const getDetailedDashboard = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
@@ -168,6 +170,39 @@ const createAssignment = async (req: Request, res: Response) => {
     }
 };
 
+
+const createCourseMaterial = async (req:Request,res:Response)=>{
+    const id = parseInt(req.params.id);
+    const material:CourseMaterial = req.body;
+    const result = courseMaterialSchema.safeParse(material);
+    if (result.success){
+        try{
+            if (material == null || undefined){
+                res.status(401).send({ message: "file name is undefined" });
+                return;
+            }
+            const course = await prisma.course.findUnique({
+                where:{
+                    id
+                },
+            })
+            if (course === null) {
+                res.status(404).send({ message: "course not found" });
+                return;
+            }
+            res.status(200).json({message: "upload file successfully!"})
+            course.course_material.push(result.data.name)
+        }
+        catch{
+            res.status(401).send({ message: "upload file fail." });
+            return;
+        }
+    }
+    else{
+        res.status(401).json({message: "parse error."})
+    }
+
+}
 export {
     getDetailedDashboard,
     updateDescCourse,
@@ -175,4 +210,5 @@ export {
     updateAssignment,
     createCourseVideo,
     createAssignment,
+    createCourseMaterial
 };
