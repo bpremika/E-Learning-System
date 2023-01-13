@@ -139,7 +139,11 @@ export const logout = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     const session = req.session;
-    if (session.userID == undefined || session.username == undefined || session.role == undefined) {
+    if (
+        session.userID == undefined ||
+        session.username == undefined ||
+        session.role == undefined
+    ) {
         req.session.userID = -1;
         req.session.username = "";
         req.session.role = "";
@@ -149,14 +153,12 @@ export const getProfile = async (req: Request, res: Response) => {
     } else if (session.username === "") {
         res.status(401).json({ message: "user doesn't log in." });
         return;
-
-    } 
-    else {
-        const userSession : SessionDTO = {
-            userID : session.userID,
-            username : session.username,
-            role : session.role
-        }
+    } else {
+        const userSession: SessionDTO = {
+            userID: session.userID,
+            username: session.username,
+            role: session.role,
+        };
         res.status(200).json(userSession);
     }
 };
@@ -205,6 +207,8 @@ export const enrollCourse = async (req: Request, res: Response) => {
         res.status(200).json({ message: "join course successful" });
     } catch (error) {
         // res.status(400).json({ message: "something went wrong" });
+        console.log(error);
+
         res.status(400).send(error);
     }
 };
