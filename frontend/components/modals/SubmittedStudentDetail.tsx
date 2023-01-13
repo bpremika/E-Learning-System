@@ -16,12 +16,8 @@ const SubmittedStudentDetail = () => {
             <td>{element.name}</td>
             <td>{element.symbol}</td>
             <td>
-                <TextInput />
+                <TextInput placeholder ="score" defaultValue={element.name}/>
             </td>
-            {/* <td>
-                <EditAssignment/>
-            </td>
-            <td><SubmittedStudentDetail/></td> */}
         </tr>
     ));
     const form = useForm({
