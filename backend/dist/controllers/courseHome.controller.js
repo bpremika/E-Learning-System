@@ -52,6 +52,11 @@ const getHomeCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 name: {
                     search: new_search,
                 },
+                OR: {
+                    course_desc: {
+                        search: new_search,
+                    },
+                },
             },
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
@@ -186,6 +191,11 @@ const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
             where: {
                 name: {
                     search: new_search,
+                },
+                OR: {
+                    course_desc: {
+                        search: new_search,
+                    },
                 },
             },
             skip: (pages - 1) * amountPerPage,
