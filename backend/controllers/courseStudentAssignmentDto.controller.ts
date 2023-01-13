@@ -5,7 +5,7 @@ import { CourseStudentAssignmentDto } from "../dto/common.dto";
 const getCourseStudentAssignment = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
 
-    if (isNaN(id)) {
+    if (isNaN(id) && id != req.session.userID) {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
