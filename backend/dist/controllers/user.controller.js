@@ -162,7 +162,7 @@ const instructorLogin = (req, res) =>
         const result = UserValidator_1.loginSchema.safeParse(req.body);
         if (result.success) {
             const username = result.data.username;
-            const user = yield prisma_1.prisma.studentUser.findUnique({
+            const user = yield prisma_1.prisma.instructorUser.findUnique({
                 where: { username },
             });
             if (user == null) {
