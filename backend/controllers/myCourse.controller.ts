@@ -19,22 +19,9 @@ const getMyCourse = async (req: Request, res: Response) => {
         res.status(404).send({ message: "invalid Role" });
         return;
     }
-
-            studentUser: true,
     if (user === null) {
         res.status(404).send({ message: "not found" });
         return;
-    }
-
-    let new_courses = [];
-
-    for (const course of courses) {
-        for (const studentUser of course.studentUser) {
-            if (studentUser.id === req.session.userID) {
-                new_courses.push(course);
-                continue;
-            }
-        }
     }
 
     const myCourseDto: MyCourseDto = {
