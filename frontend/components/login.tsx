@@ -1,9 +1,6 @@
 import { PasswordInput, TextInput } from "@mantine/core";
 import React, { useRef } from "react";
-import axios from "axios";
 import { useUser } from "../common/contexts/UserContext";
-import { ClassNames } from "@emotion/react";
-import Link from "next/link";
 import Register from "./register/Register";
 
 interface props {

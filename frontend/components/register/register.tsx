@@ -10,13 +10,9 @@ import {
     Text,
     PasswordInput,
 } from "@mantine/core";
-import { useUser } from "../../common/contexts/UserContext";
 import { useForm } from "@mantine/form";
-import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from "@mantine/dropzone";
-import loginpage from "../../pages/loginpage";
 import { client } from "../../common/axios/axios";
 import { showNotification } from "@mantine/notifications";
-import { ClassNames } from "@emotion/react";
 interface prop {
     isStudent: boolean;
 }
