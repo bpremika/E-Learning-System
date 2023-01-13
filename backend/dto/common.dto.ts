@@ -95,6 +95,7 @@ export interface AssignmentInInstructorDetailedDashboardDto {
     description: string;
     aj_file_url: string;
     max_score: number;
+    all_submitted_student: number;
 }
 
 export interface MyCourseDto {
