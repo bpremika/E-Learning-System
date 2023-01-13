@@ -12,6 +12,7 @@ import FormData from "form-data";
 import FileName from "../components/common/FileName";
 import CreateCourse from "../components/dashboard/CreateCourse";
 import NavBar from "../components/NavBar";
+import CourseMaterialUpload from "../components/dashboard/CoureMaterialUpload";
 
 export default function bolonatest() {
     const [selectedFile, setFiles] = useState<File | null>(null);
@@ -19,6 +20,7 @@ export default function bolonatest() {
     const formData = new FormData();
     const uploadHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log(selectedFile)
         if (selectedFile != null) {
             formData.append("selected_file", selectedFile);
             console.log(formData);
@@ -43,6 +45,7 @@ export default function bolonatest() {
                 </form>
                 <FileName />
                 <CreateCourse />
+                <CourseMaterialUpload/>
             </div>
         </div>
     );

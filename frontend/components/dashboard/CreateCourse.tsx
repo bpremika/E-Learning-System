@@ -11,9 +11,14 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from "@mantine/dropzone";
+import { client } from "../../common/axios/axios";
+import FormData from "form-data";
+
 export default function CreateCourse() {
     const [opened, setOpened] = useState(false);
     const [files, setFiles] = useState<FileWithPath[]>([]);
+    // const [selectedFile, setselectedFile] = useState<File | null>(null);
+    const formData = new FormData();
     const form = useForm({
         initialValues: {
             name: "",
@@ -27,10 +32,38 @@ export default function CreateCourse() {
             current_student: "",
         },
     });
-    const guideURLHandler = ()=>{
-        const originalUrl = form.values.guide_url;
-        // form.setFieldValue("guide_url",)
+    
+    const submitHandler = async (e : React.FormEvent) =>{
+        e.preventDefault();
+        guideURLHandler();
+        console.log(form.values)
+        console.log(files)
+        const file = files[0] as File
+        
+        console.log(file)
+        if (file != null) {
+            formData.append("selected_file", file);
+            console.log(formData);
+            const uploadRes = await client.post(
+                "/upload",
+                formData
+            );
+            if (uploadRes.status==201){
+                const res = await client.post("/createCourse/",form.values);
+            }
+        }
+        // const uploading = await client.post("/upload",);
+
     }
+    function guideURLHandler(){
+        const originalUrl = form.values.guide_url;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = originalUrl.match(regExp);
+        const getID = (match && match[2].length === 11)
+        ? match[2]
+        : null;
+        form.setFieldValue("guide_url",`http://www.youtube.com/embed/${getID}`)
+        }
     const previews = files.map((file, index) => {
         const imageUrl = URL.createObjectURL(file);
         return (
@@ -48,7 +81,7 @@ export default function CreateCourse() {
                 onClose={() => setOpened(false)}
                 title="Create New Course"
             >
-                <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                <form onSubmit={submitHandler} encType="multipart/form-data">
                     <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>
                         <Text align="center">Drop images here</Text>
                         {previews}
