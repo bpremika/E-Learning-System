@@ -8,10 +8,10 @@ const courseStudentInfo_controller_1 = require("../controllers/courseStudentInfo
 const InstructorDashboard_controller_1 = require("../controllers/InstructorDashboard.controller");
 const instructorDetailedDashboardDto_controller_1 = require("../controllers/instructorDetailedDashboardDto.controller");
 exports.courseRouter = (0, express_1.Router)();
-exports.courseRouter.get("/getOne/:id", courseHome_controller_1.getOneCourse);
-exports.courseRouter.get("/search/:pages", courseHome_controller_1.searchCourse);
-exports.courseRouter.get("/category/:cat/:pages", courseHome_controller_1.getCategoryCourse);
+// courseRouter.get("/getOne/:id", getOneCourse);
+// courseRouter.get("/search/:pages", searchCourse);
 exports.courseRouter.get("/home/:pages", courseHome_controller_1.getHomeCourse);
+exports.courseRouter.get("/category/:cat/:pages", courseHome_controller_1.getCategoryCourse);
 exports.courseRouter.post("/createCourse/", courseHome_controller_1.createCourse);
 exports.courseRouter.patch("/updateCourse/:id", courseHome_controller_1.updateCourse);
 exports.courseRouter.delete("/deleteCourse/:id", courseHome_controller_1.deleteCourse);

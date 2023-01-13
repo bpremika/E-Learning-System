@@ -1,12 +1,12 @@
 import { Router } from "express";
 import {
-    createCourse,
-    deleteCourse,
     getHomeCourse,
-    getOneCourse,
-    searchCourse,
     getCategoryCourse,
+    createCourse,
     updateCourse,
+    deleteCourse,
+    // getOneCourse,
+    // searchCourse,
 } from "../controllers/courseHome.controller";
 import { getCourse } from "../controllers/courseEnroll.controller";
 import { getDetailedCourse } from "../controllers/courseStudentInfo.controller";
@@ -21,10 +21,10 @@ import {
 } from "../controllers/instructorDetailedDashboardDto.controller";
 
 export const courseRouter = Router();
-courseRouter.get("/getOne/:id", getOneCourse);
-courseRouter.get("/search/:pages", searchCourse);
-courseRouter.get("/category/:cat/:pages", getCategoryCourse);
+// courseRouter.get("/getOne/:id", getOneCourse);
+// courseRouter.get("/search/:pages", searchCourse);
 courseRouter.get("/home/:pages", getHomeCourse);
+courseRouter.get("/category/:cat/:pages", getCategoryCourse);
 courseRouter.post("/createCourse/", createCourse);
 courseRouter.patch("/updateCourse/:id", updateCourse);
 courseRouter.delete("/deleteCourse/:id", deleteCourse);

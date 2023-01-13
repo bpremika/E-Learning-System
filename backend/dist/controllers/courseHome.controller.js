@@ -9,84 +9,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getHomeCourse = exports.getCategoryCourse = exports.searchCourse = exports.getOneCourse = void 0;
+exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getHomeCourse = exports.getCategoryCourse = void 0;
 const prisma_1 = require("../common/prisma");
 const CourseValidator_1 = require("../common/CourseValidator");
 const amountPerPage = 12;
 const getHomeCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pages = parseInt(req.params.pages);
-    if (isNaN(pages)) {
-        res.status(404).send({ message: "invalid Pages" });
-        return;
-    }
-    const courses = yield prisma_1.prisma.course.findMany({
-        skip: (pages - 1) * amountPerPage,
-        take: amountPerPage,
-    });
-    let all_category = [];
-    for (let i = 0; i < courses.length; i++) {
-        if (!all_category.includes(courses[i].category)) {
-            all_category.push(courses[i].category);
-        }
-    }
-    all_category.sort();
-    const coursesDto = {
-        all_category,
-        courses: courses.map((course) => ({
-            id: course.id,
-            name: course.name,
-            course_desc: course.course_desc,
-            course_cover_url: course.course_cover_url,
-        })),
-    };
-    res.status(200).json(coursesDto);
-});
-exports.getHomeCourse = getHomeCourse;
-const getOneCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = parseInt(req.params.id);
-    if (isNaN(id)) {
-        res.status(404).send({ message: "invalid ID" });
-        return;
-    }
-    const course = yield prisma_1.prisma.course.findUnique({
-        where: { id },
-        include: {
-            studentUser: true,
-        },
-    });
-    if (course === null) {
-        res.status(404).send({ message: "not found" });
-        return;
-    }
-    const courseDto = {
-        id: course.id,
-        name: course.name,
-        course_desc: course.course_desc,
-        course_cover_url: course.course_cover_url,
-    };
-    res.status(200).json(courseDto);
-});
-exports.getOneCourse = getOneCourse;
-const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const search = req.query.search;
-    const pages = parseInt(req.params.pages);
     if (isNaN(pages)) {
         res.status(404).send({ message: "invalid Pages" });
         return;
     }
-    let courses;
     if (search == null) {
-        // courses = await prisma.course.findMany({
-        //     skip: (pages - 1) * amountPerPage,
-        //     take: amountPerPage,
-        // });
-        res.status(404).send({ message: "not found" });
-        return;
+        const courses = yield prisma_1.prisma.course.findMany({
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+        const coursesForAllCat = yield prisma_1.prisma.course.findMany();
+        let all_category = [];
+        for (const element of coursesForAllCat) {
+            if (!all_category.includes(element.category)) {
+                all_category.push(element.category);
+            }
+        }
+        all_category.sort();
+        const coursesDto = {
+            all_category,
+            courses: courses.map((course) => ({
+                id: course.id,
+                name: course.name,
+                course_desc: course.course_desc,
+                course_cover_url: course.course_cover_url,
+            })),
+        };
+        res.status(200).json(coursesDto);
     }
     else {
         const search_arr = search.split("+");
         const new_search = search_arr.join(" & ");
-        courses = yield prisma_1.prisma.course.findMany({
+        const courses = yield prisma_1.prisma.course.findMany({
             where: {
                 name: {
                     search: new_search,
@@ -95,56 +56,191 @@ const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
         });
+        const coursesForAllCat = yield prisma_1.prisma.course.findMany();
+        let all_category = [];
+        for (const element of coursesForAllCat) {
+            if (!all_category.includes(element.category)) {
+                all_category.push(element.category);
+            }
+        }
+        all_category.sort();
         console.log("search by: " + new_search);
+        if (courses === null) {
+            res.status(404).send({ message: "not found" });
+            return;
+        }
+        const coursesDto = {
+            all_category,
+            courses: courses.map((course) => ({
+                id: course.id,
+                name: course.name,
+                course_desc: course.course_desc,
+                course_cover_url: course.course_cover_url,
+            })),
+        };
+        res.status(200).json(coursesDto);
     }
-    if (courses === null) {
-        res.status(404).send({ message: "not found" });
-        return;
-    }
-    const coursesDto = {
-        total: courses.length,
-        courses: courses.map((course) => ({
-            id: course.id,
-            name: course.name,
-            course_desc: course.course_desc,
-            course_cover_url: course.course_cover_url,
-        })),
-    };
-    res.status(200).json(coursesDto);
 });
-exports.searchCourse = searchCourse;
+exports.getHomeCourse = getHomeCourse;
+// const searchCourse = async (req: Request, res: Response) => {
+//     const search = req.query.search as string | null;
+//     const pages = parseInt(req.params.pages);
+//     if (isNaN(pages)) {
+//         res.status(404).send({ message: "invalid Pages" });
+//         return;
+//     }
+//     let courses;
+//     if (search == null) {
+//         courses = await prisma.course.findMany({
+//             skip: (pages - 1) * amountPerPage,
+//             take: amountPerPage,
+//         });
+//         if (courses === null) {
+//             res.status(404).send({ message: "not found" });
+//             return;
+//         }
+//         const coursesDto: CoursesDto = {
+//             total: courses.length,
+//             courses: courses.map((course) => ({
+//                 id: course.id,
+//                 name: course.name,
+//                 course_desc: course.course_desc,
+//                 course_cover_url: course.course_cover_url,
+//             })),
+//         };
+//         res.status(200).json(coursesDto);
+//     } else {
+//         const search_arr = search.split("+");
+//         const new_search = search_arr.join(" & ");
+//         courses = await prisma.course.findMany({
+//             where: {
+//                 name: {
+//                     search: new_search,
+//                 },
+//             },
+//             skip: (pages - 1) * amountPerPage,
+//             take: amountPerPage,
+//         });
+//         console.log("search by: " + new_search);
+//         if (courses === null) {
+//             res.status(404).send({ message: "not found" });
+//             return;
+//         }
+//         const coursesDto: CoursesDto = {
+//             total: courses.length,
+//             courses: courses.map((course) => ({
+//                 id: course.id,
+//                 name: course.name,
+//                 course_desc: course.course_desc,
+//                 course_cover_url: course.course_cover_url,
+//             })),
+//         };
+//         res.status(200).json(coursesDto);
+//     }
+// };
 const getCategoryCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pages = parseInt(req.params.pages);
+    const search = req.query.search;
+    // const category = req.params.cat.toUpperCase();
+    const category = req.params.cat;
     if (isNaN(pages)) {
         res.status(404).send({ message: "invalid Pages" });
         return;
     }
-    // const category = req.params.cat.toUpperCase();
-    const category = req.params.cat;
-    const courses = yield prisma_1.prisma.course.findMany({
-        where: { category },
-        include: {
-            studentUser: true,
-        },
-        skip: (pages - 1) * amountPerPage,
-        take: amountPerPage,
-    });
-    if (courses === null) {
-        res.status(404).send({ message: "not found" });
-        return;
+    if (search == null) {
+        const courses = yield prisma_1.prisma.course.findMany({
+            where: { category },
+            include: {
+                studentUser: true,
+            },
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+        if (courses === null) {
+            res.status(404).send({ message: "not found" });
+            return;
+        }
+        const coursesForAllCat = yield prisma_1.prisma.course.findMany();
+        let all_category = [];
+        for (const element of coursesForAllCat) {
+            if (!all_category.includes(element.category)) {
+                all_category.push(element.category);
+            }
+        }
+        all_category.sort();
+        const coursesDto = {
+            all_category,
+            courses: courses.map((course) => ({
+                id: course.id,
+                name: course.name,
+                course_desc: course.course_desc,
+                course_cover_url: course.course_cover_url,
+            })),
+        };
+        res.status(200).json(coursesDto);
     }
-    const coursesDto = {
-        total: courses.length,
-        courses: courses.map((course) => ({
-            id: course.id,
-            name: course.name,
-            course_desc: course.course_desc,
-            course_cover_url: course.course_cover_url,
-        })),
-    };
-    res.status(200).json(coursesDto);
+    else {
+        const search_arr = search.split("+");
+        const new_search = search_arr.join(" & ");
+        const courses = yield prisma_1.prisma.course.findMany({
+            where: {
+                name: {
+                    search: new_search,
+                },
+            },
+            skip: (pages - 1) * amountPerPage,
+            take: amountPerPage,
+        });
+        const coursesForAllCat = yield prisma_1.prisma.course.findMany();
+        let all_category = [];
+        for (const element of coursesForAllCat) {
+            if (!all_category.includes(element.category)) {
+                all_category.push(element.category);
+            }
+        }
+        all_category.sort();
+        console.log("search by: " + new_search);
+        if (courses === null) {
+            res.status(404).send({ message: "not found" });
+            return;
+        }
+        const coursesDto = {
+            all_category,
+            courses: courses.map((course) => ({
+                id: course.id,
+                name: course.name,
+                course_desc: course.course_desc,
+                course_cover_url: course.course_cover_url,
+            })),
+        };
+        res.status(200).json(coursesDto);
+    }
 });
 exports.getCategoryCourse = getCategoryCourse;
+// const getOneCourse = async (req: Request, res: Response) => {
+//     const id = parseInt(req.params.id);
+//     if (isNaN(id)) {
+//         res.status(404).send({ message: "invalid ID" });
+//         return;
+//     }
+//     const course = await prisma.course.findUnique({
+//         where: { id },
+//         include: {
+//             studentUser: true,
+//         },
+//     });
+//     if (course === null) {
+//         res.status(404).send({ message: "not found" });
+//         return;
+//     }
+//     const courseDto: PartCourseHomeDto = {
+//         id: course.id,
+//         name: course.name,
+//         course_desc: course.course_desc,
+//         course_cover_url: course.course_cover_url,
+//     };
+//     res.status(200).json(courseDto);
+// };
 const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const course = req.body;
     const check = CourseValidator_1.courseSchema.safeParse(course);
