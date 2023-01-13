@@ -50,5 +50,5 @@ courseRouter.patch("/updateDescCourse/:id", updateDescCourse);
 courseRouter.patch("/updateCourseVideo/:id", updateCourseVideo);
 courseRouter.patch("/updateAssignment/:id", updateAssignment);
 courseRouter.post("/createAssignment/:id", createAssignment);
-courseRouter.post("/createCourseVideo/", createCourseVideo);
+courseRouter.post("/createCourseVideo/:id", createCourseVideo);
 courseRouter.post("/createCourseMaterial/:id", createCourseMaterial);
