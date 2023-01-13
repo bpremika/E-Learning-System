@@ -1,26 +1,26 @@
 .card1 {
-    display: flex;
+    display: flexbox;
     height: 117px;
     width: 204px;
     border-radius: 20px;
     background-color: #2b788b;
     color: white;
-    font-family: ;
-    /* align-items: center; */
+    margin-right: 30px;
+    margin-top: 20px;
 }
 
 .text1_1 {
-    position: absolute;
-    left: 20px;
+    position: relative;
+    left: 18px;
     top: 7px;
     font-size: 20px;
 }
 
 .text1_2 {
-    position: absolute;
-    left: 30px;
-    top: 40px;
-    font-size: 40px;
+    position: relative;
+    left: 25px;
+    top: 25px;
+    font-size: 45px;
 }
 
 .card2 {
@@ -31,14 +31,13 @@
     border-radius: 10px;
     background-color: #454545;
     color: white;
-    font-family: ;
 }
 
 .card2_1 {
     display: flex;
     height: 30px;
     width: 136px;
-    position: absolute;
+    position: relative;
     top: 70px;
     background-color: #d9d9d9;
     color: black;
@@ -48,10 +47,11 @@
 }
 
 .text2_1 {
-    position: absolute;
+    position: relative;
     left: 15px;
-    top: 15px;
+    bottom: 65px;
     font-size: 14px;
+    color: white;
 }
 
 .text2_2 {
