@@ -35,7 +35,7 @@ export default function EditText(Props: Element) {
 
             <Group
                 position="center"
-                style={{ position: "relative", right: 20 }}
+                style={{ position: "relative", right: 32 }}
             >
                 <Button onClick={() => setOpened(true)}>Edit</Button>
             </Group>

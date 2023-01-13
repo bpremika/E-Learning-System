@@ -5,6 +5,7 @@ import StudentsList from "../components/common/StudentsList";
 import VideoTable from "../components/common/VideoTable";
 import AssignmentTable from "../components/dashboard/AssignmentTable";
 import NavBar from "../components/NavBar";
+import { Textarea } from '@mantine/core';
 
 interface DashboardDetailProps{
     students_in_course: Array<Student>;
@@ -63,7 +64,7 @@ export default function DashboardDetail() {
     
     async function getData() {
         try {
-            const res = await client.get("/course/instructorDetailDashboard/1")
+            const res = await client.get("/course/instructorDetailedDashboard/1")
             console.log(res.data);
             setData(res.data);
         } catch (e) {
@@ -79,6 +80,8 @@ export default function DashboardDetail() {
     }, []);
     
     const {user} = useUser();
+
+    const [value, setValue] = useState<string | undefined>(data?.course_desc);
     
     return (
         <>
@@ -88,10 +91,13 @@ export default function DashboardDetail() {
                     <h1 className="text-2xl font-bold font-['Montserrat']">
                         {`Aj.${user?.username} Dashboard`}
                     </h1>
+                    <h1 style={{color: '#757575'}} className="text-xl font-bold font-['Montserrat']">
+                        
+                    </h1>
                 </div>
 
                 <div style={{display: 'flex', flexFlow: 'row'}}>
-                    <div style={{width: 230, height: 540, marginTop: 25}}>
+                    <div style={{width: 230, height: 540, marginTop: 35, marginLeft: 30}}>
                     <StudentsList
                     elememts={data?.students_in_course.map((student)=>{
                         return student.username
@@ -99,13 +105,19 @@ export default function DashboardDetail() {
                     
                     </div>
 
-                    <div style={{width: 750, marginLeft: 80, marginTop: 40}}>
+                    <div style={{width: 750, marginLeft: 120, marginTop: 40}}>
                         <h1 className="text-xl font-bold font-['Montserrat']" style={{marginBottom: 30}}>
                             Course Description
                         </h1>
                         
                         <div style={{height: 165, marginBottom: 30, borderRadius: 20, backgroundColor: '#E5F5FB'}}>
-
+                            <Textarea style={{marginLeft: 27, marginRight: 27, marginTop:10, marginBottom: 10, overflow: 'visible'}}
+                            variant="unstyled"
+                            withAsterisk
+                            value={value} 
+                            onChange={(event) => setValue(event.currentTarget.value)}
+                            defaultValue={data?.course_desc}
+                            />
                         </div>
 
                         <h1 className="text-xl font-bold font-['Montserrat']" style={{marginBottom: 30}}>
@@ -115,11 +127,23 @@ export default function DashboardDetail() {
                         <div style={{height: 250, marginBottom: 30}}>
                             <VideoTable
                             elememts={data?.videos_in_course.map((video)=> {
-                                return {id: video.id, name: video.name, videoURL: video.video_url, categoryVideo: '???'}}
-                            ) ??[{id: 0, name: 'none', videoURL: 'none', categoryVideo: 'none'}] }/>
+                                return {id: video.id, name: video.name, videoUrl: video.video_url, categoryVideo: '???'}}
+                            ) ??[{id: 0, name: 'none', videoUrl: 'none', categoryVideo: 'none'}] }/>
                         </div>
+
+
                     </div>
                 </div>
+                
+                <h1 className="text-xl font-bold font-['Montserrat']" style={{marginBottom: 30}}>
+                    Assignment
+                </h1>
+                
+                <AssignmentTable
+                element={data?.assignments_in_course.map((row)=> {
+                    return {id: row.id, name: row.name, aj_file_url: row.aj_file_url, max_score: row.max_score, description: row.description}
+                }) ??[{id: 0, name: '', aj_file_url: '', max_score: 0, description: ''}]}
+                />
             </div>
         </>
     )

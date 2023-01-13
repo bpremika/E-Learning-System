@@ -23,7 +23,7 @@ export default function VideoTable(props: Elements) {
     const rows = props.elememts.map((element: any) => (
         <tr key={element.name}>
             <td>{element.id}</td>
-            <td style={{ textOverflow: "ellipsis" }}>
+            {/* <td style={{ textOverflow: "ellipsis" }}>
                 <div
                     style={{
                         overflow: "hidden",
@@ -33,7 +33,7 @@ export default function VideoTable(props: Elements) {
                 >
                     {element.categoryVideo}
                 </div>
-            </td>
+            </td> */}
             <td>
                 <div
                     style={{
@@ -80,7 +80,7 @@ export default function VideoTable(props: Elements) {
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Category Video</th>
+                        {/* <th>Category Video</th> */}
                         <th>Name</th>
                         <th>Video URL</th>
                         <th>Edit</th>

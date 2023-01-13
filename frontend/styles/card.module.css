@@ -69,7 +69,7 @@
 }
 
 .table1_1 {
-    height: 530px;
+    height: 550px;
     width: 224px;
     border-radius: 20px;
     display: flexbox;
@@ -90,7 +90,7 @@
 .table1_3 {
     position: relative;
     bottom: 0px;
-    height: 495px;
+    height: 515px;
     width: 224px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
