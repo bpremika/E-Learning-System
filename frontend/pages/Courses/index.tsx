@@ -6,18 +6,24 @@ import CourseCard from "../../components/common/CourseCard";
 import { useEffect, useState } from "react";
 import { Chip, FocusTrap, Pagination } from "@mantine/core";
 import { AxiosResponse } from "axios";
-import { usePagination } from "@mantine/hooks";
+import { useDebouncedState } from "@mantine/hooks";
 import Footer from "../../components/Footer";
-import e from "express";
 
 // interface props {
 //     course: CourseResultDTO;
 // }
 const Courses = () => {
+    const [search, setSearch] = useDebouncedState("", 300);
     const [courses, setCourses] = useState<CourseInfo[]>([]);
     const [value, setValue] = useState("all");
 
     const [activePage, setPage] = useState(1);
+    function setDebound(e: string) {
+        setSearch(e);
+    }
+    useEffect(() => {
+        getCourseSearch(search);
+    }, [search]);
     async function getCourses() {
         try {
             let res: AxiosResponse;
@@ -47,10 +53,12 @@ const Courses = () => {
             console.log(err);
         }
     }
+
     async function getCourseSearch(e: string) {
         try {
             let res: AxiosResponse;
-            res = await client.get(`/home/${activePage}?search=${e}`);
+            const newe = e.replace(" ", "_");
+            res = await client.get(`/course/home/${activePage}?search=${newe}`);
             const newcourse = res.data as CourseResultDTO;
             const newcoursewI = newcourse.courses.map((course) => {
                 if (course.course_cover_url.startsWith("http")) {
@@ -77,8 +85,8 @@ const Courses = () => {
         <>
             <NavBar />
             <div className="my-[50px] flex flex-col items-center h-[100%] min-h-screen">
-                <div className="flex flex-row justify-around w-[100vw] m-[30px] items-center">
-                    <div className="font-bold text-[30px] font-['Montserrat'] ">
+                <div className="flex gap-4 md:gap-0 flex-col md:flex-row md:justify-around w-[100vw] m-[30px] items-center">
+                    <div className="font-bold text-[30px] font-['Montserrat'] text-center md:text-start">
                         Online Courses
                         <Chip.Group
                             position="center"
@@ -94,7 +102,7 @@ const Courses = () => {
                             <Chip value="English">Eng</Chip>
                         </Chip.Group>
                     </div>
-                    <SearchBar onSearchValueChange={getCourseSearch} />
+                    <SearchBar onSearchValueChange={setDebound} />
                 </div>
                 <div className="flex flex-row flex-wrap w-[80vw] justify-center ">
                     {courses.map((d) => {
