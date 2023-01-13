@@ -3,18 +3,25 @@ import { Request, Response } from "express";
 import { MyCourseDto } from "../dto/common.dto";
 
 const getMyCourse = async (req: Request, res: Response) => {
+    const session = req.session;
+    if (session.username == "") {
+        res.status(404).json({ message: "Course Not found." });
+    }
+    const user = await prisma.studentUser.findUnique({
+        where: {
+            id: session.userID,
+        },
+        include: {
+            course: true,
+        },
+    });
     if (req.session.role == "instructor") {
         res.status(404).send({ message: "invalid Role" });
         return;
     }
 
-    const courses = await prisma.course.findMany({
-        include: {
             studentUser: true,
-        },
-    });
-
-    if (courses === null) {
+    if (user === null) {
         res.status(404).send({ message: "not found" });
         return;
     }
@@ -31,7 +38,7 @@ const getMyCourse = async (req: Request, res: Response) => {
     }
 
     const myCourseDto: MyCourseDto = {
-        courses: new_courses.map((course) => ({
+        courses: user.course.map((course) => ({
             id: course.id,
             name: course.name,
             course_desc: course.course_desc,

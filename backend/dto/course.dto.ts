@@ -65,3 +65,12 @@ export interface CreateAssignmentDto {
 export interface UpdateStudentAssignment {
     file_url: string;
 }
+
+export interface CourseVideo {
+    name: string;
+    video_url: string;
+}
+export interface GetCourseVideoDTO {
+    totalVideo: number;
+    courseVideo: CourseVideo[];
+}

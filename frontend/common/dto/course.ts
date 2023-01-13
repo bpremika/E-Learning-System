@@ -1,4 +1,5 @@
 export interface CourseInfo {
+    id: number;
     name: string;
     course_desc: string;
     course_cover_url: string;

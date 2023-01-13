@@ -14,6 +14,7 @@ module.exports = {
                 cyanlight: "#C3DCE3",
                 f654: "#F6F5F4",
                 FFA: "#FFAFA3",
+                38: "#383838",
             },
             fontFamily: {
                 dela: ["Dela Gothic One , sans-serif"],

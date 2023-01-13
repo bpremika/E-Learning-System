@@ -8,15 +8,12 @@ export default function CourseMaterialUpload() {
     const formData = new FormData();
     const uploadHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(selectedFile)
+        console.log(selectedFile);
         if (selectedFile != null) {
             formData.append("selected_file", selectedFile);
             console.log(formData);
-            const res = await client.post(
-                "/upload",
-                formData
-            );
-            console.log(res)
+            const res = await client.post("/upload", formData);
+            console.log(res);
         }
     };
     return (

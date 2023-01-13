@@ -18,14 +18,14 @@ export const config = {
 };
 
 export default async function uploadFile(req: Request, res: Response) {
-    const files = req.files?.selected_file
+    const files = req.files?.selected_file;
     if (!files) {
         res.status(400).send("Invalid file");
         return;
     }
     console.log(files);
 
-    const file = Array.isArray(files) ? files[files.length - 1 ] : files;
+    const file = Array.isArray(files) ? files[files.length - 1] : files;
     try {
         s3Client.putObject(
             {

@@ -103,7 +103,7 @@ export const instructorLogin = async (req: Request, res: Response) => {
     const result = loginSchema.safeParse(req.body);
     if (result.success) {
         const username = result.data.username;
-        const user = await prisma.studentUser.findUnique({
+        const user = await prisma.instructorUser.findUnique({
             where: { username },
         });
         if (user == null) {
@@ -171,12 +171,11 @@ export const enrollCourse = async (req: Request, res: Response) => {
     }
     try {
         const session = req.session;
-        if (
-            session == null ||
-            session == undefined ||
-            session.role == "instructor"
-        ) {
-            res.status(401).json({ message: "session error" });
+        console.log(session);
+        if (session.username == "") {
+            res.status(401).json({
+                message: "Student need to login before enroll course.",
+            });
             return;
         }
         const course = await prisma.course.findUnique({
