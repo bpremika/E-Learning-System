@@ -29,6 +29,6 @@ exports.courseRouter.get("/instructorDetailedDashboard/:id", instructorDetailedD
 exports.courseRouter.patch("/updateDescCourse/:id", instructorDetailedDashboard_controller_1.updateDescCourse);
 exports.courseRouter.patch("/updateCourseVideo/:id", instructorDetailedDashboard_controller_1.updateCourseVideo);
 exports.courseRouter.patch("/updateAssignment/:id", instructorDetailedDashboard_controller_1.updateAssignment);
-exports.courseRouter.post("/createAssignment/", instructorDetailedDashboard_controller_1.createAssignment);
-exports.courseRouter.post("/createCourseVideo/", instructorDetailedDashboard_controller_1.createCourseVideo);
+exports.courseRouter.post("/createAssignment/:id", instructorDetailedDashboard_controller_1.createAssignment);
+exports.courseRouter.post("/createCourseVideo/:id", instructorDetailedDashboard_controller_1.createCourseVideo);
 exports.courseRouter.post("/createCourseMaterial/:id", instructorDetailedDashboard_controller_1.createCourseMaterial);
