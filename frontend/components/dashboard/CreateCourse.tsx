@@ -15,17 +15,7 @@ import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from "@mantine/dropzone";
 import { client } from "../../common/axios/axios";
 import FormData from "form-data";
 import { showNotification, updateNotification } from "@mantine/notifications";
-// interface formData {
-//     name: "";
-//     category: "";
-//     course_desc: "";
-//     course_detail: "";
-//     course_cover_url: "";
-//     guide_url: "";
-//     instructor_id: "";
-//     max_student: "";
-//     current_student: "";
-// }
+
 export default function CreateCourse() {
     const [opened, setOpened] = useState(false);
     const [files, setFiles] = useState<FileWithPath[]>([]);
@@ -49,7 +39,10 @@ export default function CreateCourse() {
         }),
     });
 
-    const submitHandler = async (e: React.FormEvent) => {
+    const submitHandler = async (
+        e: React.FormEvent,
+        value: typeof form.values
+    ) => {
         e.preventDefault();
         guideURLHandler();
         console.log(form);
@@ -109,7 +102,14 @@ export default function CreateCourse() {
                 onClose={() => setOpened(false)}
                 title="Create New Course"
             >
-                <form onSubmit={submitHandler} encType="multipart/form-data">
+                <form
+                    onSubmit={(e) => {
+                        form.onSubmit((v) => {
+                            submitHandler(e, v);
+                        })();
+                    }}
+                    encType="multipart/form-data"
+                >
                     <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>
                         <Text align="center">Drop images here</Text>
                         {previews}
