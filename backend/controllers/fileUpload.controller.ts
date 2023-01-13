@@ -1,6 +1,4 @@
-import fs from "fs";
 import AWS from "aws-sdk";
-import formidable, { File } from "formidable";
 import { Response, Request } from "express";
 import { UploadedFile } from "express-fileupload";
 
@@ -20,14 +18,14 @@ export const config = {
 };
 
 export default async function uploadFile(req: Request, res: Response) {
-    const files = req.files?.selected_file as UploadedFile[] | undefined;
-    if (!files || files.length == 0) {
+    const files = req.files?.selected_file;
+    if (!files) {
         res.status(400).send("Invalid file");
         return;
     }
     console.log(files);
 
-    const file = files[files.length - 1];
+    const file = Array.isArray(files) ? files[files.length - 1] : files;
     try {
         s3Client.putObject(
             {

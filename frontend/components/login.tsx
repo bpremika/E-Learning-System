@@ -4,6 +4,7 @@ import axios from "axios";
 import { useUser } from "../common/contexts/UserContext";
 import { ClassNames } from "@emotion/react";
 import Link from "next/link";
+import Register from "./register/Register";
 
 interface props {
     isStudent: boolean;
@@ -75,12 +76,7 @@ const Login = ({ isStudent }: props) => {
                 } text-sm`}
             >
                 <p className="text-center">Not a member?</p>
-                <Link
-                    href={"/"}
-                    className="underline decoration-solid text-center text-"
-                >
-                    <div>Create an account</div>
-                </Link>
+                <Register isStudent={isStudent} />
             </div>
         </div>
     );

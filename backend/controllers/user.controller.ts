@@ -103,7 +103,7 @@ export const instructorLogin = async (req: Request, res: Response) => {
     const result = loginSchema.safeParse(req.body);
     if (result.success) {
         const username = result.data.username;
-        const user = await prisma.studentUser.findUnique({
+        const user = await prisma.instructorUser.findUnique({
             where: { username },
         });
         if (user == null) {
@@ -139,7 +139,11 @@ export const logout = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     const session = req.session;
-    if (session.userID == undefined || session.username == undefined || session.role == undefined) {
+    if (
+        session.userID == undefined ||
+        session.username == undefined ||
+        session.role == undefined
+    ) {
         req.session.userID = -1;
         req.session.username = "";
         req.session.role = "";
@@ -149,14 +153,12 @@ export const getProfile = async (req: Request, res: Response) => {
     } else if (session.username === "") {
         res.status(401).json({ message: "user doesn't log in." });
         return;
-
-    } 
-    else {
-        const userSession : SessionDTO = {
-            userID : session.userID,
-            username : session.username,
-            role : session.role
-        }
+    } else {
+        const userSession: SessionDTO = {
+            userID: session.userID,
+            username: session.username,
+            role: session.role,
+        };
         res.status(200).json(userSession);
     }
 };
@@ -169,8 +171,11 @@ export const enrollCourse = async (req: Request, res: Response) => {
     }
     try {
         const session = req.session;
-        if (session == null || session == undefined) {
-            res.status(401).json({ message: "session error" });
+        console.log(session);
+        if (session.username == "") {
+            res.status(401).json({
+                message: "Student need to login before enroll course.",
+            });
             return;
         }
         const course = await prisma.course.findUnique({
@@ -188,7 +193,10 @@ export const enrollCourse = async (req: Request, res: Response) => {
             res.status(400).json({ message: "user already in course" });
             return;
         }
-        if (course.curr_student >= course.max_student) {
+        if (
+            course.max_student != -1 &&
+            course.curr_student >= course.max_student
+        ) {
             res.status(400).json({ message: "this course is already full" });
             return;
         }
@@ -201,6 +209,7 @@ export const enrollCourse = async (req: Request, res: Response) => {
         });
         res.status(200).json({ message: "join course successful" });
     } catch (error) {
-        res.status(400).json({ message: "something went wrong" });
+        // res.status(400).json({ message: "something went wrong" });
+        res.status(400).send(error);
     }
 };

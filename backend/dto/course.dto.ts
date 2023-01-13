@@ -1,9 +1,8 @@
-import { nullable } from "zod";
-import { CourseHomeDto } from "./common.dto";
+import { PartCourseHomeDto } from "./common.dto";
 
 export interface CoursesDto {
     total: number;
-    courses: CourseHomeDto[];
+    courses: PartCourseHomeDto[];
 }
 
 export interface CreateCourseDto {
@@ -13,6 +12,7 @@ export interface CreateCourseDto {
     course_detail: string;
     course_cover_url: string;
     guide_url: string;
+    course_material: string[];
     instructor_id: number;
     max_student: number;
     curr_student: number;
@@ -25,6 +25,7 @@ export interface UpdateCourseDto {
     course_detail: string;
     course_cover_url: string;
     guide_url: string;
+    course_material: string[];
     instructor_id: number;
     max_student: number;
     curr_student: number;
@@ -47,16 +48,25 @@ export interface UpdateAssignmentInInstructorDto {
     max_score: number;
 }
 
-export interface CreateCourseVideoDto {}
+export interface CreateCourseVideoDto {
+    name: string;
+    video_url: string;
+    course_id: number;
+}
 
 export interface CreateAssignmentDto {
-    //     name           String
-    //   description    String
-    //   aj_file_url    String
-    //   max_score      Int
-    //   get_score      Int
-    //   course_id      Int
-    //   course         Course         @relation(fields: [course_id], references: [id])
-    //   created_at     DateTime       @default(now())
-    //   modified_at    DateTime       @default(now())
+    name: string;
+    description: string;
+    aj_file_url: string;
+    max_score: number;
+    course_id: number;
+}
+
+export interface CourseVideo {
+    name: string;
+    video_url: string;
+}
+export interface GetCourseVideoDTO {
+    totalVideo: number;
+    courseVideo: CourseVideo[];
 }
