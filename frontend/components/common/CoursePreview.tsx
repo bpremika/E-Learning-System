@@ -16,7 +16,7 @@ export default function CoursePreview(prop: Props) {
         console.log(prop.id);
         try {
             const res = await client.post(`user/enrollCourse/${prop.id}`);
-            router.push(`/videopage/${prop.id}`);
+            router.push(`/Mycourses/${prop.id}`);
         } catch (e: any) {
             showNotification({
                 title: "Error",

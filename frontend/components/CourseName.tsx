@@ -33,7 +33,6 @@ const CoursesName = () => {
 
     return (
         <div>
-            <NavBar />
             <div className="w-[100vw] h-[100vh] bg-white">
                 <div
                     className="bg-f654 w-[100vw] h-auto max-h-[337px] flex  flex-col md:flex-row justify-around gap-3 items-center
