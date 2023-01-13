@@ -13,7 +13,7 @@ exports.courseSchema = zod_1.z.object({
     course_material: zod_1.z.string().array().optional(),
     instructor_id: zod_1.z.number().int().positive(),
     max_student: zod_1.z.number().int().refine(isPositiveOrMinusOne).optional(),
-    curr_student: zod_1.z.number().int().positive().optional(),
+    curr_student: zod_1.z.number().int().nonnegative().optional(),
 });
 exports.createCourseVideoSchema = zod_1.z.object({
     name: zod_1.z.string(),

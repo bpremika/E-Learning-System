@@ -121,11 +121,11 @@ model Assignment_Student {
   isScored    Boolean @default(false)
   get_score   Int     @default(0)
 
-  modified_at    DateTime     @default(now())
-  StudentUser    StudentUser? @relation(fields: [studentUser_id], references: [id])
-  studentUser_id Int?
-  Assignment     Assignment?  @relation(fields: [assignment_id], references: [id])
-  assignment_id  Int?
+  modified_at    DateTime    @default(now())
+  StudentUser    StudentUser @relation(fields: [studentUser_id], references: [id])
+  studentUser_id Int
+  Assignment     Assignment  @relation(fields: [assignment_id], references: [id])
+  assignment_id  Int
 
   HomeworkFile HomeworkFile[]
 }

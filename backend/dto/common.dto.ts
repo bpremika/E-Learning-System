@@ -1,3 +1,5 @@
+import { DateTime } from "aws-sdk/clients/devicefarm";
+
 export interface CourseHomeDto {
     all_category: string[];
     courses: PartCourseHomeDto[];
@@ -98,4 +100,25 @@ export interface AssignmentInInstructorDetailedDashboardDto {
 
 export interface MyCourseDto {
     courses: PartCourseHomeDto[];
+}
+
+export interface CourseStudentAssignmentDto {
+    to_do_assignments: ToDoAssignmentDto[];
+    finished_assignments: FinishedAssignmentDto[];
+}
+
+export interface ToDoAssignmentDto {
+    id: number;
+    name: string;
+    isSubmitted: boolean;
+    max_score: number;
+    modified_at: DateTime;
+}
+
+export interface FinishedAssignmentDto {
+    id: number;
+    name: string;
+    isScored: boolean;
+    getScored: number;
+    max_score: number;
 }

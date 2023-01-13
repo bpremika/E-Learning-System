@@ -4,6 +4,8 @@ exports.courseRouter = void 0;
 const express_1 = require("express");
 const courseHome_controller_1 = require("../controllers/courseHome.controller");
 const courseEnroll_controller_1 = require("../controllers/courseEnroll.controller");
+const myCourse_controller_1 = require("../controllers/myCourse.controller");
+const courseStudentAssignmentDto_controller_1 = require("../controllers/courseStudentAssignmentDto.controller");
 const courseStudentInfo_controller_1 = require("../controllers/courseStudentInfo.controller");
 const InstructorDashboard_controller_1 = require("../controllers/InstructorDashboard.controller");
 const instructorDetailedDashboardDto_controller_1 = require("../controllers/instructorDetailedDashboardDto.controller");
@@ -15,6 +17,8 @@ exports.courseRouter.get("/category/:cat/:pages", courseHome_controller_1.getCat
 exports.courseRouter.post("/createCourse/", courseHome_controller_1.createCourse);
 exports.courseRouter.patch("/updateCourse/:id", courseHome_controller_1.updateCourse);
 exports.courseRouter.delete("/deleteCourse/:id", courseHome_controller_1.deleteCourse);
+exports.courseRouter.get("/getMyCourse", myCourse_controller_1.getMyCourse);
+exports.courseRouter.get("/getCourseStudentAssignment/:id", courseStudentAssignmentDto_controller_1.getCourseStudentAssignment);
 exports.courseRouter.get("/enroll/:id", courseEnroll_controller_1.getCourse);
 exports.courseRouter.get("/studentInfo/:id", courseStudentInfo_controller_1.getDetailedCourse);
 exports.courseRouter.get("/instructorDashboard/:id", InstructorDashboard_controller_1.getInstructorUser);

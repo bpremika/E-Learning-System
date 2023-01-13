@@ -12,7 +12,7 @@ export const courseSchema = z.object({
     course_material: z.string().array().optional(),
     instructor_id: z.number().int().positive(),
     max_student: z.number().int().refine(isPositiveOrMinusOne).optional(),
-    curr_student: z.number().int().positive().optional(),
+    curr_student: z.number().int().nonnegative().optional(),
 });
 
 export const createCourseVideoSchema = z.object({
