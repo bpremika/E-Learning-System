@@ -1,10 +1,12 @@
 export interface CourseHomeDto {
+    id: number;
     name: string;
     course_desc: string;
     course_cover_url: string;
 }
 
 export interface CourseEnrollDto {
+    id: number;
     name: string;
     course_desc: string;
     first_name: string;
@@ -13,6 +15,7 @@ export interface CourseEnrollDto {
 }
 
 export interface CourseStudentInfoDto {
+    id: number;
     name: string;
     course_desc: string;
     course_detail: string;
@@ -29,6 +32,7 @@ export interface StudentUserDto {
     password: string;
     first_name: string;
     last_name: string;
+    prefix: string;
     phone_number: string;
     image_url: string;
     courses?: CourseHomeDto[];
@@ -41,6 +45,7 @@ export interface InstructorUserDto {
     password: string;
     first_name: string;
     last_name: string;
+    prefix: string;
     phone_number: string;
     image_url: string;
     courses?: CourseHomeDto[];
@@ -57,4 +62,31 @@ export interface CourseDashboardDto {
     course_cover_url: string;
     max_student: number;
     curr_student: number;
+}
+
+export interface InstructorDetailedDashboardDto {
+    students_in_course: StudentInInstructorDetailedDashboardDto[];
+    videos_in_course: VideoInInstructorDetailedDashboardDto[];
+    assignments_in_course: AssignmentInInstructorDetailedDashboardDto[];
+    course_desc: string;
+    course_detail: string;
+}
+
+export interface StudentInInstructorDetailedDashboardDto {
+    first_name: string;
+    last_name: string;
+}
+
+export interface VideoInInstructorDetailedDashboardDto {
+    id: number;
+    name: string;
+    video_url: string;
+}
+
+export interface AssignmentInInstructorDetailedDashboardDto {
+    id: number;
+    name: string;
+    description: string;
+    aj_file_url: string;
+    max_score: number;
 }

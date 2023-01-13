@@ -3,13 +3,15 @@ import dotenv from "dotenv";
 import session, { Session, SessionData } from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./common/prisma";
-// import { courseRouter } from "./routes/course.route";
+import { courseRouter } from "./routes/course.route";
 import cors from "cors";
 import { userRouter } from "./routes/user.route";
+import fileUpload from "express-fileupload";
 import uploadFile from "./controllers/fileUpload.controller";
 
 declare module "express-session" {
     interface SessionData {
+        userID : number;
         username: string;
         role: string;
     }
@@ -33,6 +35,7 @@ const corsOptions: cors.CorsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(fileUpload());
 app.set("trust proxy", 1); // trust first proxy
 app.use(
     session({
@@ -48,12 +51,15 @@ app.use(
     })
 );
 
-// app.use("/course", courseRouter);
-// app.get("/",()=>{
-//     console.log("server connect")
-
-// })
+app.use("/course", courseRouter);
+app.get("/", () => {
+    console.log("server connect");
+});
 app.use("/user", userRouter);
+// app.post("/upload", (req, res) => {
+//     req.files?.selected_file
+//     console.log(req.files?.selected_file);
+// });
 app.post("/upload", uploadFile);
 
 app.listen(port, () => {

@@ -1,36 +1,48 @@
 import fs from "fs";
-import aws from "aws-sdk";
-import { Request, Response } from "express";
+import AWS from "aws-sdk";
+import formidable, { File } from "formidable";
+import { Response, Request } from "express";
+import { UploadedFile } from "express-fileupload";
 
-const multer = require("multer");
-const multerS3 = require("multer-s3");
-const spacesEndpoint = new aws.Endpoint("sgp1.cdn.digitaloceanspaces.com");
-const s3 = new aws.S3({
-    endpoint: spacesEndpoint,
-    credentials :{
-        accessKeyId : process.env.AWS_KEY_ID!,
-        secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY!,
-    }
+const s3Client = new AWS.S3({
+    endpoint: process.env.DO_SPACES_URL,
+    region: "sgp1",
+    credentials: {
+        accessKeyId: process.env.DO_SPACES_ID!,
+        secretAccessKey: process.env.DO_SPACES_SECRET!,
+    },
 });
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: "hacktoschool",
-        acl: "public-read",
-        key: function (request: Request, file: any, cb: any) {
-            console.log(file);
-            cb(null, file.originalname);
-        },
-    }),
-}).array("upload", 1);
 
-export default async function uploadFile(req: Request,res: Response,next: any) {
-    upload(req, res, function (error: any) {
-        if (error) {
-            console.log(error);
-            res.status(400).json(error);
-            return;
-        }
-        res.status(200).json("File uploaded successfully.");
-    });
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+};
+
+export default async function uploadFile(req: Request, res: Response) {
+    const files = req.files?.selected_file as UploadedFile[] | undefined;
+    if (!files || files.length == 0) {
+        res.status(400).send("Invalid file");
+        return;
+    }
+    console.log(files);
+
+    const file = files[files.length - 1];
+    try {
+        s3Client.putObject(
+            {
+                Bucket: process.env.DO_SPACES_BUCKET!,
+                Key: file.name ?? "",
+                Body: file.data,
+                ACL: "public-read",
+            },
+            (e) => {
+                res.status(201).send(e);
+                return;
+            }
+        );
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Error uploading file");
+    }
 }

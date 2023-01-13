@@ -95,6 +95,7 @@ const studentLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             });
             return;
         }
+        req.session.userID = user.id;
         req.session.username = username;
         req.session.role = "student";
         res.status(200).json({ message: "login successful" });
@@ -124,6 +125,7 @@ const instructorLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
             });
             return;
         }
+        req.session.userID = user.id;
         req.session.username = username;
         req.session.role = "instructor";
         res.status(200).json({ message: "login successful" });
@@ -141,20 +143,21 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.logout = logout;
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const session = req.session;
-    if (session.username == undefined || session.role == undefined) {
+    if (session.userID == undefined || session.username == undefined || session.role == undefined) {
+        req.session.userID = -1;
         req.session.username = "";
         req.session.role = "";
-
-        console.log("doesm't have session.");
-        res.status(403).json({ message: "user doesn't log in." });
+        console.log("create session successfully!");
+        res.status(401).json({ message: "user doesn't log in." });
         return;
     }
     else if (session.username === "") {
-        res.status(403).json({ message: "user doesn't log in." });
+        res.status(401).json({ message: "user doesn't log in." });
         return;
     }
     else {
         const userSession = {
+            userID: session.userID,
             username: session.username,
             role: session.role
         };

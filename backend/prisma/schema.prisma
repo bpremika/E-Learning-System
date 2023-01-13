@@ -12,31 +12,40 @@ datasource db {
 }
 
 model StudentUser {
-  id           Int      @id @default(autoincrement())
-  username     String   @unique
-  email        String   @unique
-  password     String
-  first_name   String
-  last_name    String
-  phone_number String
-  image_url    String
-  created_at   DateTime @default(now())
-  modified_at  DateTime @default(now())
-  course       Course[]
+  id         Int    @id @default(autoincrement())
+  first_name String
+  last_name  String
+  prefix     String
+
+  username String @unique
+  email    String @unique
+  password String
+
+  created_at  DateTime @default(now())
+  modified_at DateTime @default(now())
+
+  image_url          String               @default("Leaves.jpg")
+  phone_number       String               @default("000000000")
+  course             Course[]
+  assignment_student Assignment_Student[]
 }
 
 model InstructorUser {
-  id           Int      @id @default(autoincrement())
-  username     String   @unique
-  email        String   @unique
-  password     String
-  first_name   String
-  last_name    String
-  phone_number String
-  image_url    String
+  id         Int    @id @default(autoincrement())
+  first_name String
+  last_name  String
+  prefix     String
+
+  username String @unique
+  email    String @unique
+  password String
+
+  created_at  DateTime @default(now())
+  modified_at DateTime @default(now())
+
+  image_url    String   @default("Leaves.jpg")
+  phone_number String   @default("000000000")
   course       Course[]
-  created_at   DateTime @default(now())
-  modified_at  DateTime @default(now())
 }
 
 model Session {
@@ -47,13 +56,14 @@ model Session {
 }
 
 model Course {
-  id               Int    @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   name             String
   category         String
-  course_desc      String
-  course_detail    String
-  course_cover_url String
+  course_desc      String   @default("")
+  course_detail    String   @default("")
+  course_cover_url String   @default("Leaves.jpg")
   guide_url        String
+  course_material  String[]
 
   instructor    InstructorUser @relation(fields: [instructor_id], references: [id])
   instructor_id Int
@@ -61,40 +71,61 @@ model Course {
   curr_student  Int            @default(0)
 
   studentUser StudentUser[]
-  courseVideo CourseVideo[]
   assignment  Assignment[]
+  courseVideo CourseVideo[]
 
   created_at  DateTime @default(now())
   modified_at DateTime @default(now())
 }
 
 model CourseVideo {
-  id        Int    @id @default(autoincrement())
-  title     String
-  video_url String
-  course_id Int
-  course    Course @relation(fields: [course_id], references: [id])
+  id          Int      @id @default(autoincrement())
+  name        String
+  video_url   String
+  course_id   Int
+  course      Course   @relation(fields: [course_id], references: [id])
+  created_at  DateTime @default(now())
+  modified_at DateTime @default(now())
 }
 
 model Assignment {
-  id             Int            @id @default(autoincrement())
-  name           String
-  description    String
-  aj_file_url    String
-  homework_files HomeworkFile[]
-  max_score      Int
-  get_score      Int
-  course_id      Int
-  course         Course         @relation(fields: [course_id], references: [id])
-  created_at     DateTime       @default(now())
-  modified_at    DateTime       @default(now())
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String @default("")
+  aj_file_url String @default("")
+  max_score   Int
+
+  course_id Int
+  course    Course @relation(fields: [course_id], references: [id])
+
+  created_at  DateTime @default(now())
+  modified_at DateTime @default(now())
+
+  assignment_student Assignment_Student[]
 }
 
 model HomeworkFile {
-  id            Int        @id @default(autoincrement())
+  id            Int                @id @default(autoincrement())
   student_id    Int
   assignment_id Int
-  assignment    Assignment @relation(fields: [assignment_id], references: [id])
-  created_at    DateTime   @default(now())
-  modified_at   DateTime   @default(now())
+  assignment    Assignment_Student @relation(fields: [assignment_id], references: [id])
+  file_url      String
+
+  created_at  DateTime @default(now())
+  modified_at DateTime @default(now())
+}
+
+model Assignment_Student {
+  id          Int     @id @default(autoincrement())
+  isSubmitted Boolean @default(false)
+  isScored    Boolean @default(false)
+  get_score   Int     @default(0)
+
+  modified_at    DateTime     @default(now())
+  StudentUser    StudentUser? @relation(fields: [studentUser_id], references: [id])
+  studentUser_id Int?
+  Assignment     Assignment?  @relation(fields: [assignment_id], references: [id])
+  assignment_id  Int?
+
+  HomeworkFile HomeworkFile[]
 }

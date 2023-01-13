@@ -23,6 +23,7 @@ const getCourse = async (req: Request, res: Response) => {
     const instructor = course.instructor;
 
     const courseDto: CourseEnrollDto = {
+        id: course.id,
         name: course.name,
         course_desc: course.course_desc,
         first_name: instructor.first_name,
