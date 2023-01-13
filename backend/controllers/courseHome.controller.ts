@@ -315,6 +315,10 @@ const createCourse = async (req: Request, res: Response) => {
 
 const updateCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        res.status(404).send({ message: "invalid ID" });
+        return;
+    }
     const newCourseDto: UpdateCourseDto = req.body;
     const check = courseSchema.safeParse(newCourseDto);
 

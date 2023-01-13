@@ -61,3 +61,7 @@ export interface CreateAssignmentDto {
     max_score: number;
     course_id: number;
 }
+
+export interface UpdateStudentAssignment {
+    file_url: string;
+}

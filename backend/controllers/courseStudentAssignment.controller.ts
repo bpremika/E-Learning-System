@@ -1,6 +1,8 @@
 import { prisma } from "../common/prisma";
 import { Request, Response } from "express";
 import { CourseStudentAssignmentDto } from "../dto/common.dto";
+import { updateStudentAssignmentSchema } from "../common/CourseValidator";
+import { UpdateStudentAssignment } from "../dto/course.dto";
 
 const getCourseStudentAssignment = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
@@ -69,4 +71,22 @@ const getCourseStudentAssignment = async (req: Request, res: Response) => {
     res.status(200).json(myCourseDto);
 };
 
-export { getCourseStudentAssignment };
+const updateStudentAssignment = async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id); //id of assignment_student
+    const newStudentAssignment: UpdateStudentAssignment = req.body;
+    const check = updateStudentAssignmentSchema.safeParse(newStudentAssignment);
+
+    if (check.success) {
+        const assignment_Student = await prisma.assignment_Student.update({
+            where: { id },
+            data: {
+                file_url: newStudentAssignment.file_url,
+            },
+        });
+        res.status(200).json(assignment_Student);
+    } else {
+        res.status(400).json({ message: "something went wrong" });
+    }
+};
+
+export { getCourseStudentAssignment, updateStudentAssignment };

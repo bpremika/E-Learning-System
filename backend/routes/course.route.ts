@@ -11,7 +11,7 @@ import {
 import { getCourse } from "../controllers/courseEnroll.controller";
 import { getMyCourse } from "../controllers/myCourse.controller";
 import { getAllCategory } from "../controllers/allCategory.controller";
-import { getCourseStudentAssignment } from "../controllers/courseStudentAssignmentDto.controller";
+import { getCourseStudentAssignment } from "../controllers/courseStudentAssignment.controller";
 import { getDetailedCourse } from "../controllers/courseStudentInfo.controller";
 import { getInstructorUser } from "../controllers/InstructorDashboard.controller";
 import {
@@ -21,7 +21,7 @@ import {
     updateAssignment,
     createAssignment,
     createCourseVideo,
-} from "../controllers/instructorDetailedDashboardDto.controller";
+} from "../controllers/instructorDetailedDashboard.controller";
 
 export const courseRouter = Router();
 // courseRouter.get("/getOne/:id", getOneCourse);
