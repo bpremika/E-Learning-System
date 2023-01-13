@@ -28,8 +28,10 @@ import {
     updateScoreCheckHomework,
     checkHomework,
 } from "../controllers/instructorDetailedDashboard.controller";
+import { getActiveUserDto } from "../controllers/activeUser.controller";
 
 export const courseRouter = Router();
+
 // courseRouter.get("/getOne/:id", getOneCourse);
 // courseRouter.get("/search/:pages", searchCourse);
 courseRouter.get("/home/:pages", getHomeCourse);
@@ -56,3 +58,5 @@ courseRouter.patch("/updateScoreCheckHomework/:id", updateScoreCheckHomework);
 courseRouter.post("/createAssignment/:id", createAssignment);
 courseRouter.post("/createCourseVideo/:id", createCourseVideo);
 courseRouter.post("/createCourseMaterial/:id", createCourseMaterial);
+
+courseRouter.get("/getActiveUserDto/", getActiveUserDto);

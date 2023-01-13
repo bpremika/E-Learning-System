@@ -150,19 +150,19 @@ const updateCourseVideo = async (req: Request, res: Response) => {
     const newVideoDto: UpdateCourseVideoInInstructorDto = req.body;
     const check = updateCourseVideoSchema.safeParse(newVideoDto);
     if (check.success) {
-        const course_check_id = await prisma.course.findUnique({
-            where: { id },
-        });
+        // const course_check_id = await prisma.course.findUnique({
+        //     where: { id },
+        // });
 
-        if (course_check_id == null) {
-            res.status(404).send({ message: "not found" });
-            return;
-        }
+        // if (course_check_id == null) {
+        //     res.status(404).send({ message: "not found" });
+        //     return;
+        // }
 
-        if (course_check_id.instructor_id != req.session.userID) {
-            res.status(404).send({ message: "invalid ID" });
-            return;
-        }
+        // if (course_check_id.instructor_id != req.session.userID) {
+        //     res.status(404).send({ message: "invalid ID" });
+        //     return;
+        // }
 
         const courseVideo = await prisma.courseVideo.update({
             where: {
@@ -194,19 +194,19 @@ const updateAssignment = async (req: Request, res: Response) => {
     const newAssignment: UpdateAssignmentInInstructorDto = req.body;
     const check = updateAssignmentSchema.safeParse(newAssignment);
     if (check.success) {
-        const course_check_id = await prisma.course.findUnique({
-            where: { id },
-        });
+        // const course_check_id = await prisma.course.findUnique({
+        //     where: { id },
+        // });
 
-        if (course_check_id == null) {
-            res.status(404).send({ message: "not found" });
-            return;
-        }
+        // if (course_check_id == null) {
+        //     res.status(404).send({ message: "not found" });
+        //     return;
+        // }
 
-        if (course_check_id.instructor_id != req.session.userID) {
-            res.status(404).send({ message: "invalid ID" });
-            return;
-        }
+        // if (course_check_id.instructor_id != req.session.userID) {
+        //     res.status(404).send({ message: "invalid ID" });
+        //     return;
+        // }
 
         const assignment = await prisma.assignment.update({
             where: { id },
@@ -327,9 +327,34 @@ const createAssignment = async (req: Request, res: Response) => {
 
 const createCourseMaterial = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
+
+    if (isNaN(id)) {
+        res.status(404).send({ message: "invalid ID" });
+        return;
+    }
+
+    if (req.session.role == "student") {
+        res.status(404).send({ message: "invalid Role" });
+        return;
+    }
+
     const material: CourseMaterial = req.body;
     const result = courseMaterialSchema.safeParse(material);
     if (result.success) {
+        const course_check_id = await prisma.course.findUnique({
+            where: { id },
+        });
+
+        if (course_check_id == null) {
+            res.status(404).send({ message: "not found" });
+            return;
+        }
+
+        if (course_check_id.instructor_id != req.session.userID) {
+            res.status(404).send({ message: "invalid ID" });
+            return;
+        }
+
         try {
             if (material == null || undefined) {
                 res.status(401).send({ message: "file name is undefined" });
@@ -364,6 +389,20 @@ const checkHomework = async (req: Request, res: Response) => {
 
     if (req.session.role == "student") {
         res.status(404).send({ message: "invalid Role" });
+        return;
+    }
+
+    const course_check_id = await prisma.course.findUnique({
+        where: { id },
+    });
+
+    if (course_check_id == null) {
+        res.status(404).send({ message: "not found" });
+        return;
+    }
+
+    if (course_check_id.instructor_id != req.session.userID) {
+        res.status(404).send({ message: "invalid ID" });
         return;
     }
 
