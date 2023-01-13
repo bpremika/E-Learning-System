@@ -4,6 +4,7 @@ export interface User {
 }
 
 export interface SessionDTO {
+    userID : number;
     username: string;
     role: string;
 }
