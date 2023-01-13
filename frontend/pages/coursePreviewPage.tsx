@@ -5,7 +5,6 @@ export default function coursePreviewPage() {
     return (
         <>
             <NavBar />
-            <CoursePreview />
         </>
     );
 }

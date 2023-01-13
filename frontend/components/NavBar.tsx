@@ -38,7 +38,7 @@ const NavBar = () => {
                     <div className={`gap-6 flex flex-row items-center`}>
                         <Link
                             className="hover:font-semibold text-smoothgrey"
-                            href="/bolonatest"
+                            href="/"
                         >
                             <div>Home</div>
                         </Link>
@@ -52,7 +52,7 @@ const NavBar = () => {
                         ) : (
                             <Link
                                 className="hover:font-semibold  text-smoothgrey"
-                                href="/"
+                                href="/Courses"
                             >
                                 <div>Courses</div>
                             </Link>

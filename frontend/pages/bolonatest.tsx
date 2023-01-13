@@ -21,7 +21,7 @@ export default function bolonatest() {
     const formData = new FormData();
     const uploadHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(selectedFile)
+        console.log(selectedFile);
         if (selectedFile != null) {
             formData.append("selected_file", selectedFile);
             console.log(formData);
@@ -35,9 +35,6 @@ export default function bolonatest() {
         <div>
             <NavBar />
             <div className="w-full">
-                <div className="flex flex-col justify-center items-center">
-                    <CoursePreview />
-                </div>
                 <CourseVideoPreview />
                 <h1>Upload file</h1>
                 <form encType="multipart/form-data" onSubmit={uploadHandler}>
@@ -46,8 +43,8 @@ export default function bolonatest() {
                 </form>
                 <FileName />
                 <CreateCourse />
-                <CourseMaterialUpload/>
-                <AssignmentTable/>
+                <CourseMaterialUpload />
+                <AssignmentTable />
             </div>
         </div>
     );

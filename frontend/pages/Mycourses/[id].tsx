@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
-
+import CoursesName from "../../components/CourseName";
 const StudentCourses = () => {
-    const router = useRouter();
-    const { id } = router.query;
-
-    return <div>Hello StudentCourses{id}</div>;
+    return (
+        <>
+            <CoursesName />
+        </>
+    );
 };
 export default StudentCourses;

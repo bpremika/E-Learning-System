@@ -47,5 +47,5 @@ export const updateDescCourseSchema = z.object({
 });
 
 export const courseMaterialSchema = z.object({
-    name : z.string()
-})
+    name: z.string(),
+});

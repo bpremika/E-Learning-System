@@ -62,11 +62,11 @@ export interface CreateAssignmentDto {
     course_id: number;
 }
 
-export interface CourseVideo{
-    name : string;
-    video_url : string;
+export interface CourseVideo {
+    name: string;
+    video_url: string;
 }
-export interface GetCourseVideoDTO{
-    totalVideo : number;
-    courseVideo : CourseVideo[]
+export interface GetCourseVideoDTO {
+    totalVideo: number;
+    courseVideo: CourseVideo[];
 }

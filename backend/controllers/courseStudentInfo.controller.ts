@@ -54,12 +54,12 @@ const getCourseVideo = async (req: Request, res: Response) => {
         return;
     }
 
-    const CourseVideos : GetCourseVideoDTO = {
-        totalVideo :  course.courseVideo.length,
-        courseVideo: course.courseVideo as CourseVideo[]
-    }
+    const CourseVideos: GetCourseVideoDTO = {
+        totalVideo: course.courseVideo.length,
+        courseVideo: course.courseVideo as CourseVideo[],
+    };
 
     res.status(200).json(CourseVideos);
 };
 
-export { getDetailedCourse,getCourseVideo };
+export { getDetailedCourse, getCourseVideo };

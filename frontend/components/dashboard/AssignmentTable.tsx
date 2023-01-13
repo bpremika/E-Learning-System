@@ -16,7 +16,6 @@ const operationKey: Record<keyof RowData, string> = {
     description: "Description",
     aj_file_url: "File_URL",
     max_score: "Max Score",
-    
 };
 
 interface RowData {
@@ -36,9 +35,11 @@ export default function AssignmentTable() {
             <td>{element.mass}</td>
             <td>100</td>
             <td>
-                <EditAssignment/>
+                <EditAssignment />
             </td>
-            <td><SubmittedStudentDetail/></td>
+            <td>
+                <SubmittedStudentDetail />
+            </td>
         </tr>
     ));
     const columns = Object.entries(operationKey).map((data) => (

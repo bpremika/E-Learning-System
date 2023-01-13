@@ -11,7 +11,7 @@ import uploadFile from "./controllers/fileUpload.controller";
 
 declare module "express-session" {
     interface SessionData {
-        userID : number;
+        userID: number;
         username: string;
         role: string;
     }

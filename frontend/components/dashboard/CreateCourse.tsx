@@ -14,7 +14,7 @@ import { useForm } from "@mantine/form";
 import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from "@mantine/dropzone";
 import { client } from "../../common/axios/axios";
 import FormData from "form-data";
-import { showNotification, updateNotification } from '@mantine/notifications';
+import { showNotification, updateNotification } from "@mantine/notifications";
 // interface formData {
 //     name: "";
 //     category: "";
@@ -141,7 +141,9 @@ export default function CreateCourse() {
                         withAsterisk
                         {...form.getInputProps("max_student")}
                     />
-                    <Button type="submit" onClick={() => setOpened(false)}>Create</Button>
+                    <Button type="submit" onClick={() => setOpened(false)}>
+                        Create
+                    </Button>
                 </form>
             </Modal>
 

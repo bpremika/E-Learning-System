@@ -1,6 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.courseMaterialSchema = exports.updateDescCourseSchema = exports.updateAssignmentSchema = exports.createAssignmentSchema = exports.updateCourseVideoSchema = exports.createCourseVideoSchema = exports.courseSchema = void 0;
+exports.courseMaterialSchema =
+    exports.updateDescCourseSchema =
+    exports.updateAssignmentSchema =
+    exports.createAssignmentSchema =
+    exports.updateCourseVideoSchema =
+    exports.createCourseVideoSchema =
+    exports.courseSchema =
+        void 0;
 const zod_1 = require("zod");
 const isPositiveOrMinusOne = (n) => n >= 0 || n == -1;
 exports.courseSchema = zod_1.z.object({
@@ -42,5 +49,5 @@ exports.updateDescCourseSchema = zod_1.z.object({
     course_detail: zod_1.z.string().optional(),
 });
 exports.courseMaterialSchema = zod_1.z.object({
-    name: zod_1.z.string()
+    name: zod_1.z.string(),
 });

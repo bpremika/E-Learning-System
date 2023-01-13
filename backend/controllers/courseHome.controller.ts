@@ -309,7 +309,7 @@ const createCourse = async (req: Request, res: Response) => {
             res.status(400).json({ message: "something wents wrong" });
         }
     } else {
-        console.log(check.error)
+        console.log(check.error);
         res.status(400).json({ message: "parsing error" });
     }
 };

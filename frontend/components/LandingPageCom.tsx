@@ -40,7 +40,7 @@ export default function LandingPageCom() {
                     </div>
                     <div>
                         <Link
-                            href="/test"
+                            href="/Courses"
                             className="font-['Montserrat'] font-bold text-cyandark bg-cyanlight rounded-[100px] w-fit pt-[10px] pb-[10px] pr-[15px] pl-[15px]"
                         >
                             Explore our courses

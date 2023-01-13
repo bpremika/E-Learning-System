@@ -4,12 +4,12 @@ export interface User {
 }
 
 export interface SessionDTO {
-    userID : number;
+    userID: number;
     username: string;
     role: string;
 }
 export interface CreateUser {
-    prefix : string;
+    prefix: string;
     username: string;
     email: string;
     password: string;
@@ -19,6 +19,6 @@ export interface CreateUser {
     image_url: string;
 }
 
-export interface CourseMaterial{
-    name : string;
+export interface CourseMaterial {
+    name: string;
 }
