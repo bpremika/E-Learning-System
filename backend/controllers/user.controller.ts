@@ -188,7 +188,10 @@ export const enrollCourse = async (req: Request, res: Response) => {
             res.status(400).json({ message: "user already in course" });
             return;
         }
-        if (course.curr_student >= course.max_student) {
+        if (
+            course.max_student != -1 &&
+            course.curr_student >= course.max_student
+        ) {
             res.status(400).json({ message: "this course is already full" });
             return;
         }
@@ -201,6 +204,7 @@ export const enrollCourse = async (req: Request, res: Response) => {
         });
         res.status(200).json({ message: "join course successful" });
     } catch (error) {
-        res.status(400).json({ message: "something went wrong" });
+        // res.status(400).json({ message: "something went wrong" });
+        res.status(400).send(error);
     }
 };
