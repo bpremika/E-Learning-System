@@ -139,7 +139,11 @@ export const logout = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     const session = req.session;
-    if (session.userID == undefined || session.username == undefined || session.role == undefined) {
+    if (
+        session.userID == undefined ||
+        session.username == undefined ||
+        session.role == undefined
+    ) {
         req.session.userID = -1;
         req.session.username = "";
         req.session.role = "";
@@ -149,14 +153,12 @@ export const getProfile = async (req: Request, res: Response) => {
     } else if (session.username === "") {
         res.status(401).json({ message: "user doesn't log in." });
         return;
-
-    } 
-    else {
-        const userSession : SessionDTO = {
-            userID : session.userID,
-            username : session.username,
-            role : session.role
-        }
+    } else {
+        const userSession: SessionDTO = {
+            userID: session.userID,
+            username: session.username,
+            role: session.role,
+        };
         res.status(200).json(userSession);
     }
 };
@@ -169,9 +171,11 @@ export const enrollCourse = async (req: Request, res: Response) => {
     }
     try {
         const session = req.session;
-        console.log(session)
+        console.log(session);
         if (session.username == "") {
-            res.status(401).json({ message: "Student need to login before enroll course." });
+            res.status(401).json({
+                message: "Student need to login before enroll course.",
+            });
             return;
         }
         const course = await prisma.course.findUnique({

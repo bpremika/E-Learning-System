@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAssignment = exports.createCourseVideo = exports.updateAssignment = exports.updateCourseVideo = exports.updateDescCourse = exports.getDetailedDashboard = void 0;
+exports.createCourseMaterial = exports.createAssignment = exports.createCourseVideo = exports.updateAssignment = exports.updateCourseVideo = exports.updateDescCourse = exports.getDetailedDashboard = void 0;
 const prisma_1 = require("../common/prisma");
 const CourseValidator_1 = require("../common/CourseValidator");
 const getDetailedDashboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -164,3 +164,35 @@ const createAssignment = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.createAssignment = createAssignment;
+const createCourseMaterial = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    const material = req.body;
+    const result = CourseValidator_1.courseMaterialSchema.safeParse(material);
+    if (result.success) {
+        try {
+            if (material == null || undefined) {
+                res.status(401).send({ message: "file name is undefined" });
+                return;
+            }
+            const course = yield prisma_1.prisma.course.findUnique({
+                where: {
+                    id
+                },
+            });
+            if (course === null) {
+                res.status(404).send({ message: "course not found" });
+                return;
+            }
+            res.status(200).json({ message: "upload file successfully!" });
+            course.course_material.push(result.data.name);
+        }
+        catch (_a) {
+            res.status(401).send({ message: "upload file fail." });
+            return;
+        }
+    }
+    else {
+        res.status(401).json({ message: "parse error." });
+    }
+});
+exports.createCourseMaterial = createCourseMaterial;

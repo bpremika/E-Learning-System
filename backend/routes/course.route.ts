@@ -23,6 +23,7 @@ import {
     updateAssignment,
     createAssignment,
     createCourseVideo,
+    createCourseMaterial,
 } from "../controllers/instructorDetailedDashboardDto.controller";
 
 export const courseRouter = Router();
@@ -46,5 +47,6 @@ courseRouter.get("/instructorDetailedDashboard/:id", getDetailedDashboard);
 courseRouter.patch("/updateDescCourse/:id", updateDescCourse);
 courseRouter.patch("/updateCourseVideo/:id", updateCourseVideo);
 courseRouter.patch("/updateAssignment/:id", updateAssignment);
-courseRouter.post("/createCourseVideo/", createCourseVideo);
 courseRouter.post("/createAssignment/", createAssignment);
+courseRouter.post("/createCourseVideo/", createCourseVideo);
+courseRouter.post("/createCourseMaterial/:id", createCourseMaterial);

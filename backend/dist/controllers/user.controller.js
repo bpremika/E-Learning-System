@@ -143,7 +143,9 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.logout = logout;
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const session = req.session;
-    if (session.userID == undefined || session.username == undefined || session.role == undefined) {
+    if (session.userID == undefined ||
+        session.username == undefined ||
+        session.role == undefined) {
         req.session.userID = -1;
         req.session.username = "";
         req.session.role = "";
@@ -159,7 +161,7 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const userSession = {
             userID: session.userID,
             username: session.username,
-            role: session.role
+            role: session.role,
         };
         res.status(200).json(userSession);
     }
@@ -175,7 +177,9 @@ const enrollCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const session = req.session;
         console.log(session);
         if (session.username == "") {
-            res.status(401).json({ message: "Student need to login before enroll course." });
+            res.status(401).json({
+                message: "Student need to login before enroll course.",
+            });
             return;
         }
         const course = yield prisma_1.prisma.course.findUnique({

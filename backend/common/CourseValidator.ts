@@ -45,3 +45,7 @@ export const updateDescCourseSchema = z.object({
     course_desc: z.string().optional(),
     course_detail: z.string().optional(),
 });
+
+export const courseMaterialSchema = z.object({
+    name : z.string()
+})
