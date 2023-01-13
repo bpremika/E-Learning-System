@@ -1,9 +1,9 @@
-import DashboardTotalCard from "../components/common/DashboardTotalCard";
-import DashboardCourseCard from "../components/common/DashboardCourseCard";
-import NavBar from "../components/NavBar";
+import DashboardTotalCard from "../../components/common/DashboardTotalCard";
+import DashboardCourseCard from "../../components/common/DashboardCourseCard";
+import NavBar from "../../components/NavBar";
 import { createStyles, Chip, NativeSelect} from '@mantine/core';
 import { useEffect, useState } from "react";
-import { client } from "../common/axios/axios";
+import { client } from "../../common/axios/axios";
 import { countReset } from "console";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
