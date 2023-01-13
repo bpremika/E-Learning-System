@@ -10,6 +10,11 @@ const getCourseStudentAssignment = async (req: Request, res: Response) => {
         return;
     }
 
+    if (req.session.role == "instructor") {
+        res.status(404).send({ message: "invalid Role" });
+        return;
+    }
+
     const studentUser = await prisma.studentUser.findUnique({
         where: { id },
         include: {
@@ -23,6 +28,11 @@ const getCourseStudentAssignment = async (req: Request, res: Response) => {
 
     if (studentUser === null) {
         res.status(404).send({ message: "not found" });
+        return;
+    }
+
+    if (studentUser.id != req.session.userID) {
+        res.status(404).send({ message: "invalid ID" });
         return;
     }
 

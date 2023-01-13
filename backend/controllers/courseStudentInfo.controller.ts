@@ -8,15 +8,35 @@ const getDetailedCourse = async (req: Request, res: Response) => {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
+
+    if (req.session.role == "instructor") {
+        res.status(404).send({ message: "invalid Role" });
+        return;
+    }
+
     const course = await prisma.course.findUnique({
         where: { id },
         include: {
             instructor: true,
+            studentUser: true,
         },
     });
 
     if (course === null) {
         res.status(404).send({ message: "not found" });
+        return;
+    }
+
+    let check = false;
+
+    for (const element of course.studentUser) {
+        if (element.id === req.session.userID) {
+            check = true;
+        }
+    }
+
+    if (!check) {
+        res.status(404).send({ message: "This course not contain this ID" });
         return;
     }
 

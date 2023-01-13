@@ -22,6 +22,12 @@ const getDetailedDashboard = async (req: Request, res: Response) => {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
+
+    if (req.session.role == "student") {
+        res.status(404).send({ message: "invalid Role" });
+        return;
+    }
+
     const course = await prisma.course.findUnique({
         where: { id },
         include: {
@@ -33,6 +39,11 @@ const getDetailedDashboard = async (req: Request, res: Response) => {
 
     if (course === null) {
         res.status(404).send({ message: "not found" });
+        return;
+    }
+
+    if (course.instructor_id != req.session.userID) {
+        res.status(404).send({ message: "This course not contain this ID" });
         return;
     }
 

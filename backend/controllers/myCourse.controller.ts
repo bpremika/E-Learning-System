@@ -3,6 +3,11 @@ import { Request, Response } from "express";
 import { MyCourseDto } from "../dto/common.dto";
 
 const getMyCourse = async (req: Request, res: Response) => {
+    if (req.session.role == "instructor") {
+        res.status(404).send({ message: "invalid Role" });
+        return;
+    }
+
     const courses = await prisma.course.findMany();
 
     if (courses === null) {

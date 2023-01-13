@@ -10,6 +10,7 @@ import {
 } from "../controllers/courseHome.controller";
 import { getCourse } from "../controllers/courseEnroll.controller";
 import { getMyCourse } from "../controllers/myCourse.controller";
+import { getAllCategory } from "../controllers/allCategory.controller";
 import { getCourseStudentAssignment } from "../controllers/courseStudentAssignmentDto.controller";
 import { getDetailedCourse } from "../controllers/courseStudentInfo.controller";
 import { getInstructorUser } from "../controllers/InstructorDashboard.controller";
@@ -32,6 +33,7 @@ courseRouter.patch("/updateCourse/:id", updateCourse);
 courseRouter.delete("/deleteCourse/:id", deleteCourse);
 
 courseRouter.get("/getMyCourse", getMyCourse);
+courseRouter.get("/getAllCategory", getAllCategory);
 courseRouter.get("/getCourseStudentAssignment/:id", getCourseStudentAssignment);
 
 courseRouter.get("/enroll/:id", getCourse);

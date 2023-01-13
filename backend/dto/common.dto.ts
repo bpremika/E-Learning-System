@@ -122,3 +122,7 @@ export interface FinishedAssignmentDto {
     getScored: number;
     max_score: number;
 }
+
+export interface AllCategoryDto {
+    all_categories: string[];
+}

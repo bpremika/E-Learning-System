@@ -171,7 +171,11 @@ export const enrollCourse = async (req: Request, res: Response) => {
     }
     try {
         const session = req.session;
-        if (session == null || session == undefined) {
+        if (
+            session == null ||
+            session == undefined ||
+            session.role == "instructor"
+        ) {
             res.status(401).json({ message: "session error" });
             return;
         }
