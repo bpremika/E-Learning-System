@@ -172,6 +172,14 @@ export const enrollCourse = async (req: Request, res: Response) => {
     try {
         const session = req.session;
         console.log(session);
+
+        if (session.role == "instructor") {
+            res.status(401).json({
+                message: "You don't have permission to enroll.",
+            });
+            return;
+        }
+
         if (session.username == "") {
             res.status(401).json({
                 message: "Student need to login before enroll course.",
