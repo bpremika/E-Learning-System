@@ -47,3 +47,7 @@ export const updateDescCourseSchema = z.object({
 export const courseMaterialSchema = z.object({
     name: z.string(),
 });
+
+export const updateStudentAssignmentSchema = z.object({
+    homeworkFile: z.string(),
+});

@@ -15,7 +15,10 @@ const getMyCourse = async (req: Request, res: Response) => {
             course: true,
         },
     });
-
+    if (req.session.role == "instructor") {
+        res.status(404).send({ message: "invalid Role" });
+        return;
+    }
     if (user === null) {
         res.status(404).send({ message: "not found" });
         return;
