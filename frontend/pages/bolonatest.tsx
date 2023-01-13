@@ -13,6 +13,7 @@ import FileName from "../components/common/FileName";
 import CreateCourse from "../components/dashboard/CreateCourse";
 import NavBar from "../components/NavBar";
 import CourseMaterialUpload from "../components/dashboard/CoureMaterialUpload";
+import AssignmentTable from "../components/dashboard/AssignmentTable";
 
 export default function bolonatest() {
     const [selectedFile, setFiles] = useState<File | null>(null);
@@ -46,6 +47,7 @@ export default function bolonatest() {
                 <FileName />
                 <CreateCourse />
                 <CourseMaterialUpload/>
+                <AssignmentTable/>
             </div>
         </div>
     );
