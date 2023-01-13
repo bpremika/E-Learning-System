@@ -14,6 +14,17 @@ import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from "@mantine/dropzone";
 import { client } from "../../common/axios/axios";
 import FormData from "form-data";
 
+// interface formData {
+//     name: "";
+//     category: "";
+//     course_desc: "";
+//     course_detail: "";
+//     course_cover_url: "";
+//     guide_url: "";
+//     instructor_id: "";
+//     max_student: "";
+//     current_student: "";
+// }
 export default function CreateCourse() {
     const [opened, setOpened] = useState(false);
     const [files, setFiles] = useState<FileWithPath[]>([]);
@@ -27,20 +38,24 @@ export default function CreateCourse() {
             course_detail: "",
             course_cover_url: "",
             guide_url: "",
-            instructor_id: "",
-            max_student: "",
-            current_student: "",
+            instructor_id: 1,
+            max_student: 0,
+            curr_student: 0,
         },
+        transformValues: (values) => ({
+            ...values,
+            max_student: Number(values.max_student),
+          }),
     });
-    
-    const submitHandler = async (e : React.FormEvent) =>{
+
+    const submitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
         guideURLHandler();
-        console.log(form.values)
-        console.log(files)
-        const file = files[0] as File
-        
-        console.log(file)
+        console.log(form);
+        console.log(files);
+        const file = files[0] as File;
+
+        console.log(file);
         if (file != null) {
             formData.append("selected_file", file);
             console.log(formData);
@@ -49,21 +64,22 @@ export default function CreateCourse() {
                 formData
             );
             if (uploadRes.status==201){
-                const res = await client.post("/createCourse/",form.values);
+            const res = await client.post("course/createCourse/", form.values);
             }
         }
         // const uploading = await client.post("/upload",);
-
-    }
-    function guideURLHandler(){
+    };
+    function guideURLHandler() {
         const originalUrl = form.values.guide_url;
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const regExp =
+            /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
         const match = originalUrl.match(regExp);
-        const getID = (match && match[2].length === 11)
-        ? match[2]
-        : null;
-        form.setFieldValue("guide_url",`http://www.youtube.com/embed/${getID}`)
-        }
+        const getID = match && match[2].length === 11 ? match[2] : null;
+        form.setFieldValue(
+            "guide_url",
+            `http://www.youtube.com/embed/${getID}`
+        );
+    }
     const previews = files.map((file, index) => {
         const imageUrl = URL.createObjectURL(file);
         return (
@@ -90,7 +106,7 @@ export default function CreateCourse() {
                         placeholder="name"
                         label="name"
                         withAsterisk
-                        {...form.getInputProps('name')}
+                        {...form.getInputProps("name")}
                     />
                     <Select
                         label="Course Category"
@@ -98,31 +114,31 @@ export default function CreateCourse() {
                         searchable
                         nothingFound="No options"
                         data={["Thai", "Math", "Business", "Frontend"]}
-                        {...form.getInputProps('category')}
+                        {...form.getInputProps("category")}
                     />
                     <Textarea
                         placeholder="description"
                         label="Description"
                         withAsterisk
-                        {...form.getInputProps('course_desc')}
+                        {...form.getInputProps("course_desc")}
                     />
                     <Textarea
                         placeholder="detail"
                         label="Course Detail"
                         withAsterisk
-                        {...form.getInputProps('course_detail')}
+                        {...form.getInputProps("course_detail")}
                     />
                     <TextInput
                         placeholder="https://www.youtube.com/watch?v="
                         label="Guide Video Link"
                         withAsterisk
-                        {...form.getInputProps('guide_url')}
+                        {...form.getInputProps("guide_url")}
                     />
                     <TextInput
                         placeholder="student"
                         label="Max Student"
                         withAsterisk
-                        {...form.getInputProps('max_student')}
+                        {...form.getInputProps("max_student")}
                     />
                     <Button type="submit">Create</Button>
                 </form>

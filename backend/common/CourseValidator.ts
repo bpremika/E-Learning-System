@@ -11,5 +11,5 @@ export const courseSchema = z.object({
     guide_url: z.string(),
     instructor_id: z.number().int().positive(),
     max_student: z.number().int().refine(isPositiveOrMinusOne).optional(),
-    curr_student: z.number().int().positive().optional(),
+    curr_student: z.number().int().nonnegative().optional(),
 });
