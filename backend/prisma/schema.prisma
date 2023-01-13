@@ -104,16 +104,16 @@ model Assignment {
   assignment_student Assignment_Student[]
 }
 
-model HomeworkFile {
-  id            Int                @id @default(autoincrement())
-  student_id    Int
-  assignment_id Int
-  assignment    Assignment_Student @relation(fields: [assignment_id], references: [id])
-  file_url      String
+// model HomeworkFile {
+//   id            Int                @id @default(autoincrement())
+//   student_id    Int
+//   assignment_id Int
+//   assignment    Assignment_Student @relation(fields: [assignment_id], references: [id])
+//   file_url      String
 
-  created_at  DateTime @default(now())
-  modified_at DateTime @default(now())
-}
+//   created_at  DateTime @default(now())
+//   modified_at DateTime @default(now())
+// }
 
 model Assignment_Student {
   id          Int     @id @default(autoincrement())
@@ -127,5 +127,5 @@ model Assignment_Student {
   Assignment     Assignment  @relation(fields: [assignment_id], references: [id])
   assignment_id  Int
 
-  HomeworkFile HomeworkFile[]
+  file_url String @default("")
 }

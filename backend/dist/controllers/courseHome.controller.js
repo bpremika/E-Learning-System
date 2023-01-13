@@ -329,15 +329,24 @@ const updateCourse = (req, res) =>
         } else {
             res.status(400).json({ message: "something went wrong" });
         }
-    });
-exports.updateCourse = updateCourse;
-const deleteCourse = (req, res) =>
-    __awaiter(void 0, void 0, void 0, function* () {
-        const id = req.params.id;
-        yield prisma_1.prisma.course.delete({
-            where: {
-                id: parseInt(id),
-            },
+        catch (e) {
+            console.log(e);
+            res.status(400).json({ message: "something wents wrong" });
+        }
+    }
+    else {
+        res.status(400).json({ message: "something went wrong" });
+    }
+});
+exports.createCourse = createCourse;
+const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    const newCourseDto = req.body;
+    const check = CourseValidator_1.courseSchema.safeParse(newCourseDto);
+    if (check.success) {
+        const course = yield prisma_1.prisma.course.update({
+            where: { id },
+            data: check.data,
         });
         res.status(204).send();
     });

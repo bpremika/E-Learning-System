@@ -32,6 +32,7 @@ export const createAssignmentSchema = z.object({
     aj_file_url: z.string(),
     max_score: z.number().int().positive(),
     course_id: z.number().int().positive(),
+    file_url: z.string(),
 });
 
 export const updateAssignmentSchema = z.object({
@@ -48,4 +49,8 @@ export const updateDescCourseSchema = z.object({
 
 export const courseMaterialSchema = z.object({
     name: z.string(),
+});
+
+export const updateStudentAssignmentSchema = z.object({
+    homeworkFile: z.string(),
 });

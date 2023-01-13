@@ -316,24 +316,17 @@ const createCourse = async (req: Request, res: Response) => {
 
 const updateCourse = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        res.status(404).send({ message: "invalid ID" });
+        return;
+    }
     const newCourseDto: UpdateCourseDto = req.body;
     const check = courseSchema.safeParse(newCourseDto);
 
     if (check.success) {
         const course = await prisma.course.update({
             where: { id },
-            data: {
-                name: newCourseDto.name,
-                category: newCourseDto.category,
-                course_desc: newCourseDto.course_desc,
-                course_detail: newCourseDto.course_detail,
-                course_cover_url: newCourseDto.course_cover_url,
-                guide_url: newCourseDto.guide_url,
-                course_material: newCourseDto.course_material,
-                instructor_id: newCourseDto.instructor_id,
-                max_student: newCourseDto.max_student,
-                curr_student: newCourseDto.curr_student,
-            },
+            data: check.data,
         });
         res.status(200).json(course);
     } else {

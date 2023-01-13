@@ -10,11 +10,12 @@ import {
 } from "../controllers/courseHome.controller";
 import { getCourse } from "../controllers/courseEnroll.controller";
 import { getMyCourse } from "../controllers/myCourse.controller";
-import { getCourseStudentAssignment } from "../controllers/courseStudentAssignmentDto.controller";
 import {
     getCourseVideo,
     getDetailedCourse,
 } from "../controllers/courseStudentInfo.controller";
+import { getAllCategory } from "../controllers/allCategory.controller";
+import { getCourseStudentAssignment } from "../controllers/courseStudentAssignment.controller";
 import { getInstructorUser } from "../controllers/InstructorDashboard.controller";
 import {
     getDetailedDashboard,
@@ -24,7 +25,7 @@ import {
     createAssignment,
     createCourseVideo,
     createCourseMaterial,
-} from "../controllers/instructorDetailedDashboardDto.controller";
+} from "../controllers/instructorDetailedDashboard.controller";
 
 export const courseRouter = Router();
 // courseRouter.get("/getOne/:id", getOneCourse);
@@ -36,6 +37,7 @@ courseRouter.patch("/updateCourse/:id", updateCourse);
 courseRouter.delete("/deleteCourse/:id", deleteCourse);
 
 courseRouter.get("/getMyCourse", getMyCourse);
+courseRouter.get("/getAllCategory", getAllCategory);
 courseRouter.get("/getCourseStudentAssignment/:id", getCourseStudentAssignment);
 
 courseRouter.get("/enroll/:id", getCourse);
