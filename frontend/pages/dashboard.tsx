@@ -5,6 +5,7 @@ import { createStyles, Chip, NativeSelect} from '@mantine/core';
 import { useEffect, useState } from "react";
 import { client } from "../common/axios/axios";
 import { countReset } from "console";
+import CreateCourse from "../components/dashboard/CreateCourse";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   label: {
@@ -94,14 +95,18 @@ export default function Dashboard(props: DashboardProp) {
         <>
             <NavBar />
             <div style={{margin: 30, marginLeft: 50, marginRight: 80}}>
-                <h1 className="text-2xl font-bold font-['Montserrat']">
-                    {`Aj.${props.teacher} Dashboard`}
-                </h1>
+                <div style={{display: 'flex'}}>
+                    <h1 className="text-2xl font-bold font-['Montserrat']">
+                        {`Aj.${props.teacher} Dashboard`}
+                    </h1>
+                </div>
                 
                 <div style={{display: 'flex'}}>
                     <DashboardTotalCard title="total courses" amount={data?.total_course ??0}></DashboardTotalCard>
 
                     <DashboardTotalCard title="total students" amount={data?.total_all_student ??0}></DashboardTotalCard>
+
+                    <CreateCourse></CreateCourse>
                 </div>
 
                 <h1 style={{marginTop: 30}} className="text-2xl font-bold font-['Montserrat']">
