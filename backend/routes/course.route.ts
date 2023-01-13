@@ -47,6 +47,6 @@ courseRouter.get("/instructorDetailedDashboard/:id", getDetailedDashboard);
 courseRouter.patch("/updateDescCourse/:id", updateDescCourse);
 courseRouter.patch("/updateCourseVideo/:id", updateCourseVideo);
 courseRouter.patch("/updateAssignment/:id", updateAssignment);
-courseRouter.post("/createAssignment/", createAssignment);
+courseRouter.post("/createAssignment/:id", createAssignment);
 courseRouter.post("/createCourseVideo/", createCourseVideo);
 courseRouter.post("/createCourseMaterial/:id", createCourseMaterial);

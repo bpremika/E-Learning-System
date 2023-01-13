@@ -62,10 +62,21 @@ export default function CreateCourse() {
             console.log(formData);
             const uploadRes = await client.post("/upload", formData);
             if (uploadRes.status == 201) {
-                const res = await client.post(
-                    "course/createCourse/",
-                    form.values
-                );
+                try {
+                    const res = await client.post(
+                        "course/createCourse/",
+                        form.values
+                    );
+                    showNotification({
+                        title: "Success Create!!",
+                        message: "Hey there, your code is awesome! 🤥",
+                    });
+                } catch (e) {
+                    showNotification({
+                        title: "Failed to Create",
+                        message: "Hey there, your code is awesome! 🤥",
+                    });
+                }
             }
         }
         // const uploading = await client.post("/upload",);

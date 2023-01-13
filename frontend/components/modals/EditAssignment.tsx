@@ -1,15 +1,22 @@
 import { Button, Group, Modal, Select, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
-const EditAssignment = () => {
-    const [open, setOpen] = useState(false);
 
+interface AssignmentData {
+    name : string,
+    description : string,
+    file_url : string,
+    max_score : number
+}
+
+const EditAssignment = () => {
+    const [open, setOpened] = useState(false);
     const form = useForm({
         initialValues: {
             name: "",
             description: "",
             file_url: "",
-            max_score: "",
+            max_score: 0,
         },
     });
     return (
@@ -20,29 +27,13 @@ const EditAssignment = () => {
                     <h1 className="text-lg font-semibold">Edit Assignment</h1>
                 }
                 opened={open}
-                onClose={() => setOpen(false)}
+                onClose={() => setOpened(false)}
             >
                 <form onSubmit={form.onSubmit((values) => console.log(values))}>
-                    <div className="flex flex-row justify-evenly">
-                        <div>
-                            <TextInput
-                                label="Assignment Name"
-                                placeholder="name"
-                            />
-                            <TextInput
-                                label="Description"
-                                placeholder="description"
-                            />
-                            <TextInput
-                                label="File URL"
-                                placeholder="file_url"
-                            />
-                            <TextInput
-                                label="Max Score"
-                                placeholder="max_score"
-                            />
-                        </div>
-                    </div>
+                    <TextInput label="Assignment Name" placeholder="name" />
+                    <TextInput label="Description" placeholder="description" />
+                    <TextInput label="File URL" placeholder="file_url" />
+                    <TextInput label="Max Score" placeholder="max_score" />
                     <Group position="right" mt="md">
                         <Button type="submit">Confirm</Button>
                     </Group>
@@ -50,7 +41,7 @@ const EditAssignment = () => {
             </Modal>
             <a
                 className="underline text-black hover:text-green-800 cursor-pointer"
-                onClick={() => setOpen(true)}
+                onClick={() => setOpened(true)}
             >
                 Edit
             </a>
