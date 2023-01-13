@@ -4,22 +4,28 @@ import SearchBar from "../../components/common/SearchBar";
 import NavBar from "../../components/NavBar";
 import CourseCard from "../../components/common/CourseCard";
 import { useEffect, useState } from "react";
-import { Chip } from "@mantine/core";
+import { Chip, Pagination } from "@mantine/core";
 import { AxiosResponse } from "axios";
+import { usePagination } from "@mantine/hooks";
+
 // interface props {
 //     course: CourseResultDTO;
 // }
 const Courses = () => {
     const [courses, setCourses] = useState<CourseInfo[]>([]);
     const [value, setValue] = useState("all");
+
+    const [activePage, setPage] = useState(1);
     async function getCourses() {
         try {
             let res: AxiosResponse;
             if (value === "all") {
-                res = await client.get("/course/home/1");
+                res = await client.get(`/course/home/${activePage}`);
                 console.log(res.data);
             } else {
-                res = await client.get(`/course/category/${value}/1`);
+                res = await client.get(
+                    `/course/category/${value}/${activePage}`
+                );
                 console.log(res.data);
             }
             const newcourse = res.data as CourseResultDTO;
@@ -41,7 +47,7 @@ const Courses = () => {
     }
     useEffect(() => {
         getCourses();
-    }, [value]);
+    }, [value, activePage]);
     return (
         <>
             <NavBar />
@@ -77,6 +83,15 @@ const Courses = () => {
                             />
                         );
                     })}
+                </div>
+                <div className="fixed bottom-10 bg-greyry p-[10px] rounded-2xl">
+                    <Pagination
+                        page={activePage}
+                        onChange={setPage}
+                        total={10}
+                        size="lg"
+                        radius="lg"
+                    />
                 </div>
             </div>
         </>

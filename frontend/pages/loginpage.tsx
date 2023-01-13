@@ -1,8 +1,8 @@
-import Login from "../components/login";
+import Login from "../components/Login";
 import { SegmentedControl } from "@mantine/core";
 import { useState } from "react";
 import { useEffect } from "react";
-const loginpage = () => {
+const Loginpage = () => {
     const [isStudent, setIsStudent] = useState(true);
     useEffect(() => {
         console.log(isStudent);
@@ -22,4 +22,4 @@ const loginpage = () => {
         </div>
     );
 };
-export default loginpage;
+export default Loginpage;

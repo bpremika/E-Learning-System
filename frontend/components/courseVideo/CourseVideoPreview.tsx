@@ -8,6 +8,7 @@ export default function CourseVideoPreview() {
     const videoList = videoData.map((data, index) => {
         return (
             <CourseVideoTitle
+                key={index}
                 activeVideo={activeVideo}
                 index={index + 1}
                 courseTitle={data.name}
