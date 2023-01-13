@@ -8,6 +8,7 @@ interface Props {
     imgurl: string;
     name: string;
     description: string;
+    id: Number;
 }
 
 export default function CourseCard(data: Props) {
@@ -28,7 +29,7 @@ export default function CourseCard(data: Props) {
                 withBorder
                 w="300px"
                 component="a"
-                href="/"
+                href={`Courses/${data.id}`}
             >
                 <Card.Section>
                     <Image src={data.imgurl} height={150} alt="subject" />

@@ -16,9 +16,11 @@ const Courses = () => {
         try {
             let res: AxiosResponse;
             if (value === "all") {
-                res = await client.get("/course/getMany/1");
+                res = await client.get("/course/home/1");
+                console.log(res.data);
             } else {
                 res = await client.get(`/course/category/${value}/1`);
+                console.log(res.data);
             }
             const newcourse = res.data as CourseResultDTO;
             const newcoursewI = newcourse.courses.map((course) => {
@@ -54,7 +56,9 @@ const Courses = () => {
                             onChange={setValue}
                         >
                             <Chip value="all">All</Chip>
-                            <Chip value="Math">Math</Chip>
+                            <Chip value="Programming_Language">
+                                Programming
+                            </Chip>
                             <Chip value="Business">Business</Chip>
                             <Chip value="English">Eng</Chip>
                         </Chip.Group>
@@ -65,6 +69,8 @@ const Courses = () => {
                     {courses.map((d) => {
                         return (
                             <CourseCard
+                                key={d.id}
+                                id={d.id}
                                 imgurl={d.course_cover_url}
                                 name={d.name}
                                 description={d.course_desc}

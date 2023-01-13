@@ -32,9 +32,6 @@ export default function bolonatest() {
         <div>
             <NavBar />
             <div className="w-full">
-                <div className="flex flex-col justify-center items-center">
-                    <CoursePreview />
-                </div>
                 <CourseVideoPreview />
                 <h1>Upload file</h1>
                 <form encType="multipart/form-data" onSubmit={uploadHandler}>
