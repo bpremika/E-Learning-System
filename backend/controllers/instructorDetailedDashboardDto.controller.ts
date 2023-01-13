@@ -40,7 +40,7 @@ const getDetailedDashboard = async (req: Request, res: Response) => {
 
     const instructorDetailedDashboardDto: InstructorDetailedDashboardDto = {
         students_in_course: course.studentUser.map((student) => ({
-            username : student.username
+            username: student.username,
         })),
         videos_in_course: course.courseVideo.map((video) => ({
             id: video.id,
