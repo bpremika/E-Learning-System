@@ -15,7 +15,7 @@ import NavBar from "../components/NavBar";
 import CourseMaterialUpload from "../components/dashboard/CoureMaterialUpload";
 import AssignmentTable from "../components/dashboard/AssignmentTable";
 
-export default function bolonatest() {
+export default function Bolonatest() {
     const [selectedFile, setFiles] = useState<File | null>(null);
 
     const formData = new FormData();
