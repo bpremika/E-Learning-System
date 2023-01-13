@@ -7,6 +7,7 @@ const StudentCourses = () => {
         <>
             <NavBar />
             <CoursesName />
+            <Footer />
         </>
     );
 };

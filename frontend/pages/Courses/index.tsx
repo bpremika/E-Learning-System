@@ -4,9 +4,11 @@ import SearchBar from "../../components/common/SearchBar";
 import NavBar from "../../components/NavBar";
 import CourseCard from "../../components/common/CourseCard";
 import { useEffect, useState } from "react";
-import { Chip, Pagination } from "@mantine/core";
+import { Chip, FocusTrap, Pagination } from "@mantine/core";
 import { AxiosResponse } from "axios";
 import { usePagination } from "@mantine/hooks";
+import Footer from "../../components/Footer";
+import e from "express";
 
 // interface props {
 //     course: CourseResultDTO;
@@ -45,13 +47,36 @@ const Courses = () => {
             console.log(err);
         }
     }
+    async function getCourseSearch(e: string) {
+        try {
+            let res: AxiosResponse;
+            res = await client.get(`/home/${activePage}?search=${e}`);
+            const newcourse = res.data as CourseResultDTO;
+            const newcoursewI = newcourse.courses.map((course) => {
+                if (course.course_cover_url.startsWith("http")) {
+                    return course;
+                }
+                return {
+                    ...course,
+                    course_cover_url:
+                        "https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/" +
+                        course.course_cover_url,
+                };
+            });
+            setCourses(newcoursewI);
+        } catch (e) {
+            console.log(e);
+        }
+
+        return console.log(e);
+    }
     useEffect(() => {
         getCourses();
     }, [value, activePage]);
     return (
         <>
             <NavBar />
-            <div className="my-[50px] flex flex-col items-center">
+            <div className="my-[50px] flex flex-col items-center h-[100%] min-h-screen">
                 <div className="flex flex-row justify-around w-[100vw] m-[30px] items-center">
                     <div className="font-bold text-[30px] font-['Montserrat'] ">
                         Online Courses
@@ -69,7 +94,7 @@ const Courses = () => {
                             <Chip value="English">Eng</Chip>
                         </Chip.Group>
                     </div>
-                    <SearchBar />
+                    <SearchBar onSearchValueChange={getCourseSearch} />
                 </div>
                 <div className="flex flex-row flex-wrap w-[80vw] justify-center ">
                     {courses.map((d) => {
@@ -94,6 +119,7 @@ const Courses = () => {
                     />
                 </div>
             </div>
+            <Footer />
         </>
     );
 };
