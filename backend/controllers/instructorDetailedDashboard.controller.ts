@@ -254,7 +254,7 @@ const createCourseVideo = async (req: Request, res: Response) => {
 };
 
 const createAssignment = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id); //course id
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
         return;

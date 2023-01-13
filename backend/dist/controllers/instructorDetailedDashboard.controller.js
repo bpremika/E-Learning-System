@@ -40,7 +40,7 @@ const getDetailedDashboard = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     const instructorDetailedDashboardDto = {
         students_in_course: course.studentUser.map((student) => ({
-            username: student.username
+            username: student.username,
         })),
         videos_in_course: course.courseVideo.map((video) => ({
             id: video.id,
@@ -224,7 +224,7 @@ const createCourseVideo = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.createCourseVideo = createCourseVideo;
 const createAssignment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id); //course id
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
         return;

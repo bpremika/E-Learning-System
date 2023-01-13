@@ -18,7 +18,6 @@ exports.courseSchema = zod_1.z.object({
 exports.createCourseVideoSchema = zod_1.z.object({
     name: zod_1.z.string(),
     video_url: zod_1.z.string(),
-    course_id: zod_1.z.number().int().positive(),
 });
 exports.updateCourseVideoSchema = zod_1.z.object({
     name: zod_1.z.string(),
@@ -29,8 +28,6 @@ exports.createAssignmentSchema = zod_1.z.object({
     description: zod_1.z.string(),
     aj_file_url: zod_1.z.string(),
     max_score: zod_1.z.number().int().positive(),
-    course_id: zod_1.z.number().int().positive(),
-    file_url: zod_1.z.string(),
 });
 exports.updateAssignmentSchema = zod_1.z.object({
     name: zod_1.z.string(),
