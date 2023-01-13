@@ -6,6 +6,7 @@ import CourseCard from "../../components/common/CourseCard";
 import { useEffect, useState } from "react";
 import { Chip } from "@mantine/core";
 import { AxiosResponse } from "axios";
+import MyCourseCard from "../../components/common/MyCourseCard";
 
 const MyCourses = () => {
     const [courses, setCourses] = useState<CourseInfo[]>([]);
@@ -47,7 +48,7 @@ const MyCourses = () => {
                 <div className="flex flex-row flex-wrap w-[80vw] justify-center ">
                     {courses.map((d) => {
                         return (
-                            <CourseCard
+                            <MyCourseCard
                                 key={d.id}
                                 id={d.id}
                                 imgurl={d.course_cover_url}

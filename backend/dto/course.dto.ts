@@ -74,3 +74,16 @@ export interface GetCourseVideoDTO {
     totalVideo: number;
     courseVideo: CourseVideo[];
 }
+
+export interface CheckHomeworkDto {
+    partCheckHomeworksDto: PartCheckHomeworkDto[];
+}
+
+export interface PartCheckHomeworkDto {
+    name: string;
+    file_url: string;
+}
+
+export interface UpdateScoreCheckHomeworkDto {
+    get_score: number;
+}

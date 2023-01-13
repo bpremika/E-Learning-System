@@ -54,6 +54,11 @@ const getHomeCourse = async (req: Request, res: Response) => {
                 name: {
                     search: new_search,
                 },
+                OR: {
+                    course_desc: {
+                        search: new_search,
+                    },
+                },
             },
             skip: (pages - 1) * amountPerPage,
             take: amountPerPage,
@@ -215,6 +220,11 @@ const getCategoryCourse = async (req: Request, res: Response) => {
             where: {
                 name: {
                     search: new_search,
+                },
+                OR: {
+                    course_desc: {
+                        search: new_search,
+                    },
                 },
             },
             skip: (pages - 1) * amountPerPage,
