@@ -31,14 +31,13 @@
     border-radius: 10px;
     background-color: #454545;
     color: white;
-    font-family: ;
 }
 
 .card2_1 {
     display: flex;
     height: 30px;
     width: 136px;
-    position: absolute;
+    position: relative;
     top: 70px;
     background-color: #d9d9d9;
     color: black;
@@ -48,10 +47,11 @@
 }
 
 .text2_1 {
-    position: absolute;
+    position: relative;
     left: 15px;
-    top: 15px;
+    bottom: 65px;
     font-size: 14px;
+    color: white;
 }
 
 .text2_2 {

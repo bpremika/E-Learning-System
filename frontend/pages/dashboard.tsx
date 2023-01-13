@@ -3,6 +3,8 @@ import DashboardCourseCard from "../components/common/DashboardCourseCard";
 import NavBar from "../components/NavBar";
 import { createStyles, Chip, NativeSelect} from '@mantine/core';
 import { useEffect, useState } from "react";
+import { client } from "../common/axios/axios";
+import { countReset } from "console";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   label: {
@@ -38,8 +40,33 @@ interface DashboardProp{
     CompletedSubjects: Array<Subject>;
 }
 
-export default function dashboard(props: DashboardProp) {
+interface CourseDTO{
+    name: string;
+    course_cover_url: string;
+    curr_student: number;
+    max_student: number;
+}
+interface DashboardDTO{
+    courses: Array<CourseDTO>;
+    total_all_student: number;
+    total_course: number;
+}
 
+
+
+export default function Dashboard(props: DashboardProp) {
+    
+    async function getData() {
+        const res = await client.get("/course/instructorDashboard/1");
+        console.log(res.data);
+        setData(res.data);
+    }
+
+    const [data, setData] = useState<DashboardDTO | null>(null);
+    useEffect(()=> {
+        getData();
+    }, [])
+    
     const { classes } = useStyles();
 
     const [subjectShow, setSubjectShow] = useState(props.ActiveSubjects);
@@ -72,18 +99,18 @@ export default function dashboard(props: DashboardProp) {
                 </h1>
                 
                 <div style={{display: 'flex'}}>
-                    <DashboardTotalCard title="total courses" amount={props.totalCoursesAmount}></DashboardTotalCard>
+                    <DashboardTotalCard title="total courses" amount={data?.total_course ??0}></DashboardTotalCard>
 
-                    <DashboardTotalCard title="total students" amount={props.totalStudentsAmount}></DashboardTotalCard>
+                    <DashboardTotalCard title="total students" amount={data?.total_all_student ??0}></DashboardTotalCard>
                 </div>
 
                 <h1 style={{marginTop: 30}} className="text-2xl font-bold font-['Montserrat']">
                     Courses
                 </h1>
 
-                <div style={{display: 'flex', marginTop: 20}}>
+                {/* <div style={{display: 'flex', marginTop: 20}}>
                     <Chip.Group position="center">
-                        {/* <Chip classNames={classes} value="Active"
+                        <Chip classNames={classes} value="Active"
                         onClick={() => setSubjectState('Active')}>
                             <div className="text-2xs font-bold font-['Montserrat']">Active</div>
                         </Chip>
@@ -94,7 +121,7 @@ export default function dashboard(props: DashboardProp) {
                         <Chip classNames={classes} value="Completed"
                         onClick={() => setSubjectState('Completed')}>
                             <div className="text-2xs font-bold font-['Montserrat']">Completed</div>
-                        </Chip> */}
+                        </Chip>
                         
                         <Chip classNames={classes} value='Active'
                         onClick={() => setSubjectState('Active')}>Active</Chip>
@@ -104,19 +131,30 @@ export default function dashboard(props: DashboardProp) {
                         onClick={() => setSubjectState('Completed')}>Completed</Chip>
 
                     </Chip.Group>
-                </div >
+                </div > */}
 
-                <div style={{marginTop: 10}} className="text-2xs font-bold font-['Montserrat']">
-                    {/* {`showing ${subjectShow.length}/${props.ActiveSubjects.length+
-                    props.InactiveSubjects.length+props.CompletedSubjects.length}`} */}
+                {/* <div style={{marginTop: 10}} className="text-2xs font-bold font-['Montserrat']">
+                    {`showing ${subjectShow.length}/${props.ActiveSubjects.length+
+                    props.InactiveSubjects.length+props.CompletedSubjects.length}`}
                     showing
-                </div>
+                </div> */}
 
                 <div style={{display: 'flex', marginTop: 10, borderRadius: 20, backgroundColor: '#F2F2F2', height: 260}}>
-
+                    <div style={{display: 'flex', flexWrap: 'wrap', margin: 5, overflowX: 'hidden', overflowY: 'scroll'}}>
+                        {data?.courses.map((course)=>
+                            <DashboardCourseCard
+                            subject={course.name ??''}
+                            students={course.curr_student ??0}
+                            allStudents={data?.total_all_student ??0}></DashboardCourseCard>
+                            )}
+                        {/* <DashboardCourseCard
+                        subject="cal"
+                        students={10}
+                        allStudents={data?.total_all_student ??0}></DashboardCourseCard> */}
+                    </div>
                 </div>
 
-                <h1 style={{marginTop: 30}} className="text-2xl font-bold font-['Montserrat']">
+                {/* <h1 style={{marginTop: 30}} className="text-2xl font-bold font-['Montserrat']">
                     Courses Performance
                 </h1>
 
@@ -137,7 +175,7 @@ export default function dashboard(props: DashboardProp) {
 
                 <div style={{display: 'flex', marginTop: 20, borderRadius: 20, backgroundColor: '#F2F2F2', height: 500}}>
 
-                </div>
+                </div> */}
 
 
                 
