@@ -1,17 +1,19 @@
 import { Button, Group, Modal, Select, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
-import FormData from "form-data";
 import { client } from "../../common/axios/axios";
 import { showNotification } from "@mantine/notifications";
-const CreateAssignment = () => {
+interface Props{
+    courseID : number;
+}
+const CreateAssignment = (prop:Props) => {
     const [open, setOpened] = useState(false);
 
     const form = useForm({
         initialValues: {
             name: "",
             description: "",
-            file_url: "",
+            aj_file_url: "",
             max_score: 0,
         },
         transformValues: (values) => ({
@@ -19,22 +21,29 @@ const CreateAssignment = () => {
             max_score: Number(values.max_score),
         }),
     });
-    const submitHandler = async (e: React.FormEvent) => {
+    // function parseNumber(score : string | number){
+    //     const res = Number(score)
+    //     console.log(res)
+    //     return res
+    // }
+    const submitHandler = async (
+        e: React.FormEvent,
+        value: typeof form.values
+    ) => {
         e.preventDefault();
-        console.log(form.values);
-        try{
-            const res = await client.post("course/createAssignment/1", form.values);
+        console.log(value);
+        try {
+            const res = await client.post(`course/createAssignment/1`, value);
             showNotification({
                 title: "Success Create!!",
                 message: "Hey there, your code is awesome! 🤥",
             });
-        }catch(e){
+        } catch (e) {
             showNotification({
                 title: "Failed to Create",
                 message: "Hey there, your code is awesome! 🤥",
             });
         }
-        
     };
 
     return (
@@ -49,7 +58,13 @@ const CreateAssignment = () => {
                 opened={open}
                 onClose={() => setOpened(false)}
             >
-                <form onSubmit={submitHandler}>
+                <form
+                    onSubmit={(e) => {
+                        form.onSubmit((v) => {
+                            submitHandler(e, v);
+                        })();
+                    }}
+                >
                     <TextInput
                         label="Assignment Name"
                         placeholder="name"
@@ -63,7 +78,7 @@ const CreateAssignment = () => {
                     <TextInput
                         label="File URL"
                         placeholder="file_url"
-                        {...form.getInputProps("file_url")}
+                        {...form.getInputProps("aj_file_url")}
                     />
                     <TextInput
                         label="Max Score"
@@ -71,7 +86,9 @@ const CreateAssignment = () => {
                         {...form.getInputProps("max_score")}
                     />
                     <Group position="right" mt="md">
-                        <Button type="submit">Confirm</Button>
+                        <Button type="submit" onClick={() => setOpened(false)}>
+                            Confirm
+                        </Button>
                     </Group>
                 </form>
             </Modal>
