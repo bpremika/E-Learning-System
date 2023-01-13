@@ -5,6 +5,7 @@ import { createEmotionCache, MantineProvider } from "@mantine/core";
 import NavBar from "../components/NavBar";
 import { createContext, useState, useEffect } from "react";
 import { UserContextProvider } from "../common/contexts/UserContext";
+import { NotificationsProvider } from "@mantine/notifications";
 const myCache = createEmotionCache({
     key: "mantine",
     prepend: false,
@@ -34,8 +35,10 @@ export default function App({ Component, pageProps }: AppProps) {
                 }}
             >
                 <UserContextProvider>
-                    <Header />
-                    <Component {...pageProps} />
+                    <NotificationsProvider>
+                        <Header />
+                        <Component {...pageProps} />
+                    </NotificationsProvider>
                 </UserContextProvider>
             </MantineProvider>
         </div>

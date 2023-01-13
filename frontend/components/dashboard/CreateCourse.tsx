@@ -9,11 +9,12 @@ import {
     Image,
     Text,
 } from "@mantine/core";
+import IconCheck from "../../public/check.svg";
 import { useForm } from "@mantine/form";
 import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from "@mantine/dropzone";
 import { client } from "../../common/axios/axios";
 import FormData from "form-data";
-
+import { showNotification, updateNotification } from '@mantine/notifications';
 // interface formData {
 //     name: "";
 //     category: "";
@@ -39,13 +40,13 @@ export default function CreateCourse() {
             course_cover_url: "",
             guide_url: "",
             instructor_id: 1,
-            max_student: 0,
+            max_student: -1,
             curr_student: 0,
         },
         transformValues: (values) => ({
             ...values,
             max_student: Number(values.max_student),
-          }),
+        }),
     });
 
     const submitHandler = async (e: React.FormEvent) => {
@@ -59,12 +60,12 @@ export default function CreateCourse() {
         if (file != null) {
             formData.append("selected_file", file);
             console.log(formData);
-            const uploadRes = await client.post(
-                "/upload",
-                formData
-            );
-            if (uploadRes.status==201){
-            const res = await client.post("course/createCourse/", form.values);
+            const uploadRes = await client.post("/upload", formData);
+            if (uploadRes.status == 201) {
+                const res = await client.post(
+                    "course/createCourse/",
+                    form.values
+                );
             }
         }
         // const uploading = await client.post("/upload",);
@@ -140,7 +141,7 @@ export default function CreateCourse() {
                         withAsterisk
                         {...form.getInputProps("max_student")}
                     />
-                    <Button type="submit">Create</Button>
+                    <Button type="submit" onClick={() => setOpened(false)}>Create</Button>
                 </form>
             </Modal>
 
