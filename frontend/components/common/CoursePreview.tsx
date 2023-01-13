@@ -1,6 +1,8 @@
 import YoutubeVideo from "./YoutubeVideo";
 import { Button } from "@mantine/core";
 import Router, { useRouter } from "next/router";
+import { client } from "../../common/axios/axios";
+import { showNotification } from "@mantine/notifications";
 interface Props {
     id: number;
     name?: string;
@@ -9,8 +11,18 @@ interface Props {
     video_url: string;
 }
 export default function CoursePreview(prop: Props) {
-    function enroll() {
-        Router.push(`/Mycourses/${prop.id}`);
+    const router = useRouter();
+    async function enroll() {
+        console.log(prop.id);
+        try {
+            const res = await client.post(`user/enrollCourse/${prop.id}`);
+            router.push(`/Mycourses/${prop.id}`);
+        } catch (e: any) {
+            showNotification({
+                title: "Error",
+                message: "You are already enrolled in this course",
+            });
+        }
     }
     return (
         <div className="bg-[#F6F5F4] w-full flex flex-row p-5">

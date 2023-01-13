@@ -11,7 +11,7 @@ const Footer = () => {
     const { isAuth } = useUser();
     return (
         <>
-            <div className="bg-f654 h-[350px] md:h-auto flex flex-row  items-center justify-center">
+            <div className="bg-f654 h-[350px] md:h-auto flex flex-row  items-center justify-center w-[100%]">
                 <div className="w-[70%] h-[100%] pt-[5px] pb-[5px] bg-f654 flex flex-col justify-center gap-3 ">
                     <div className="bg-f654 h-[144px] md:h-[30px] flex justify-around mt-[0px] md:mt-[10px] ">
                         <div className="flex md:flex-row flex-col md:gap-6 gap-3">

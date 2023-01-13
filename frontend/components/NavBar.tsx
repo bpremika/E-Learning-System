@@ -45,7 +45,7 @@ const NavBar = () => {
                         {isAuth ? (
                             <Link
                                 className="hover:font-semibold text-smoothgrey"
-                                href="/"
+                                href="/Mycourses"
                             >
                                 <div>My Courses</div>
                             </Link>
@@ -130,7 +130,7 @@ const NavBar = () => {
                                 }}
                             >
                                 <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                    {isAuth ? "Mycourses" : "Courses"}
+                                    {isAuth ? "My courses" : "Courses"}
                                 </div>
                             </Link>
                             <Link
@@ -143,7 +143,7 @@ const NavBar = () => {
                             >
                                 {isAuth && (
                                     <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                        Sign Out ➜
+                                        Sign out ➜
                                     </div>
                                 )}
                             </Link>
