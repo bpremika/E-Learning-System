@@ -103,7 +103,7 @@ export const instructorLogin = async (req: Request, res: Response) => {
     const result = loginSchema.safeParse(req.body);
     if (result.success) {
         const username = result.data.username;
-        const user = await prisma.studentUser.findUnique({
+        const user = await prisma.instructorUser.findUnique({
             where: { username },
         });
         if (user == null) {
