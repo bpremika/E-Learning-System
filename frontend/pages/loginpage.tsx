@@ -1,4 +1,4 @@
-import Login from "../components/login";
+import Login from "../components/Login";
 import { SegmentedControl } from "@mantine/core";
 import { useState } from "react";
 import { useEffect } from "react";
