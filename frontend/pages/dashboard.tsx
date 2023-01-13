@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { client } from "../common/axios/axios";
 import { countReset } from "console";
 import CreateCourse from "../components/dashboard/CreateCourse";
+import { useUser } from "../common/contexts/UserContext";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   label: {
@@ -70,26 +71,14 @@ export default function Dashboard(props: DashboardProp) {
     
     const { classes } = useStyles();
 
-    const [subjectShow, setSubjectShow] = useState(props.ActiveSubjects);
-    const [subjectState, setSubjectState] = useState('Active');
-    useEffect(()=> {
-        if (subjectState=="Active") {
-            setSubjectShow(props.ActiveSubjects);
-        }
-        else if (subjectState=="Inactive") {
-            setSubjectShow(props.InactiveSubjects);
-        }
-        else if (subjectState=="completed") {
-            setSubjectShow(props.CompletedSubjects);
-        }
-        console.log(`Subjects state: ${subjectState}`);
-        console.log(subjectShow);
-    }, [subjectState]);
+    
 
     const [coursePerformance, setCoursePerformance] = useState('');
     useEffect(()=> {
         console.log(`Course performance: ${coursePerformance}`);
     })
+
+    const {user} = useUser();
 
     return (
         <>
@@ -97,7 +86,7 @@ export default function Dashboard(props: DashboardProp) {
             <div style={{margin: 30, marginLeft: 50, marginRight: 80}}>
                 <div style={{display: 'flex'}}>
                     <h1 className="text-2xl font-bold font-['Montserrat']">
-                        {`Aj.${props.teacher} Dashboard`}
+                        {`Aj.${user?.username} Dashboard`}
                     </h1>
                 </div>
                 

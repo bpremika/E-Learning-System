@@ -56,18 +56,9 @@ export default function TestComponent() {
         imgurl=""
         description=""></CourseCard> */}
 
-            {/* <DashboardTotalCard
-        title="total course"
-        amount={23}></DashboardTotalCard> */}
+            {/* <VideoTable elememts={videos}></VideoTable> */}
 
-            {/* <DashboardCourseCard
-        subject="Calculus I"
-        students={10}
-        allStudents={20}></DashboardCourseCard> */}
-
-            <VideoTable elememts={videos}></VideoTable>
-
-            {/* <StudentList elememts={students}></StudentList> */}
+            <StudentList elememts={students}></StudentList>
         </>
     );
 }
