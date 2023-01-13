@@ -62,12 +62,12 @@ function uploadFile(req, res) {
             (_a = req.files) === null || _a === void 0
                 ? void 0
                 : _a.selected_file;
-        if (!files || files.length == 0) {
+        if (!files) {
             res.status(400).send("Invalid file");
             return;
         }
         console.log(files);
-        const file = files[files.length - 1];
+        const file = Array.isArray(files) ? files[files.length - 1] : files;
         try {
             s3Client.putObject(
                 {
