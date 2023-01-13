@@ -17,6 +17,10 @@ const getInstructorUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(404).send({ message: "invalid ID" });
         return;
     }
+    if (req.session.role == "student") {
+        res.status(404).send({ message: "invalid Role" });
+        return;
+    }
     const instructorUser = yield prisma_1.prisma.instructorUser.findUnique({
         where: { id },
         include: {
@@ -27,10 +31,14 @@ const getInstructorUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(404).send({ message: "not found" });
         return;
     }
+    if (instructorUser.id != req.session.userID) {
+        res.status(404).send({ message: "Invalid ID" });
+        return;
+    }
     const courses = instructorUser.course;
     let total_all_student = 0;
-    for (let i = 0; i < courses.length; i++) {
-        total_all_student += courses[i].curr_student;
+    for (const element of courses) {
+        total_all_student += element.curr_student;
     }
     const instructorDashboardDto = {
         total_course: courses.length,
