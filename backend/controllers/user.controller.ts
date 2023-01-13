@@ -169,8 +169,9 @@ export const enrollCourse = async (req: Request, res: Response) => {
     }
     try {
         const session = req.session;
-        if (session == null || session == undefined) {
-            res.status(401).json({ message: "session error" });
+        console.log(session)
+        if (session.username == "") {
+            res.status(401).json({ message: "Student need to login before enroll course." });
             return;
         }
         const course = await prisma.course.findUnique({

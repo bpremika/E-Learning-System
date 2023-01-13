@@ -11,7 +11,10 @@ import {
 import { getCourse } from "../controllers/courseEnroll.controller";
 import { getMyCourse } from "../controllers/myCourse.controller";
 import { getCourseStudentAssignment } from "../controllers/courseStudentAssignmentDto.controller";
-import { getDetailedCourse } from "../controllers/courseStudentInfo.controller";
+import {
+    getCourseVideo,
+    getDetailedCourse,
+} from "../controllers/courseStudentInfo.controller";
 import { getInstructorUser } from "../controllers/InstructorDashboard.controller";
 import {
     getDetailedDashboard,
@@ -37,6 +40,7 @@ courseRouter.get("/getCourseStudentAssignment/:id", getCourseStudentAssignment);
 courseRouter.get("/enroll/:id", getCourse);
 courseRouter.get("/studentInfo/:id", getDetailedCourse);
 courseRouter.get("/instructorDashboard/:id", getInstructorUser);
+courseRouter.get("/getCourseVideo/:id", getCourseVideo);
 
 courseRouter.get("/instructorDetailedDashboard/:id", getDetailedDashboard);
 courseRouter.patch("/updateDescCourse/:id", updateDescCourse);

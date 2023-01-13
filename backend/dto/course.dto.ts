@@ -61,3 +61,12 @@ export interface CreateAssignmentDto {
     max_score: number;
     course_id: number;
 }
+
+export interface CourseVideo{
+    name : string;
+    video_url : string;
+}
+export interface GetCourseVideoDTO{
+    totalVideo : number;
+    courseVideo : CourseVideo[]
+}

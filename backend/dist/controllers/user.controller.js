@@ -173,8 +173,9 @@ const enrollCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     try {
         const session = req.session;
-        if (session == null || session == undefined) {
-            res.status(401).json({ message: "session error" });
+        console.log(session);
+        if (session.username == "") {
+            res.status(401).json({ message: "Student need to login before enroll course." });
             return;
         }
         const course = yield prisma_1.prisma.course.findUnique({

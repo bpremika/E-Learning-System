@@ -168,6 +168,13 @@ const createAssignment = async (req: Request, res: Response) => {
     }
 };
 
+
+// const createCourseMaterial = async (req:Request,res:Response)=>{
+//     const courseID = parseInt(req.params.id);
+//     const result = await prisma.course.findUnique({
+//         where:courseID,
+//     })
+// }
 export {
     getDetailedDashboard,
     updateDescCourse,
