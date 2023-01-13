@@ -1,5 +1,4 @@
-import { nullable } from "zod";
-import { CourseHomeDto, PartCourseHomeDto } from "./common.dto";
+import { PartCourseHomeDto } from "./common.dto";
 
 export interface CoursesDto {
     total: number;

@@ -95,3 +95,7 @@ export interface AssignmentInInstructorDetailedDashboardDto {
     aj_file_url: string;
     max_score: number;
 }
+
+export interface MyCourseDto {
+    courses: PartCourseHomeDto[];
+}
