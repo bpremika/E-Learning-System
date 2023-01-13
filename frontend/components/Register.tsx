@@ -11,7 +11,7 @@ import {
     PasswordInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { client } from "../../common/axios/axios";
+import { client } from "../common/axios/axios";
 import { showNotification } from "@mantine/notifications";
 interface prop {
     isStudent: boolean;

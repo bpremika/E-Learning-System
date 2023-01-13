@@ -1,7 +1,7 @@
 import { PasswordInput, TextInput } from "@mantine/core";
 import React, { useRef } from "react";
 import { useUser } from "../common/contexts/UserContext";
-import Register from "./register/Register";
+import Register from "./Register";
 
 interface props {
     isStudent: boolean;
