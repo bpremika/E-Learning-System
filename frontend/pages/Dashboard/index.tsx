@@ -167,6 +167,7 @@ export default function Dashboard(props: DashboardProp) {
                                 subject={course.name ?? ""}
                                 students={course.curr_student ?? 0}
                                 allStudents={data?.total_all_student ?? 0}
+                                key={course.name}
                             ></DashboardCourseCard>
                         ))}
                         {/* <DashboardCourseCard
