@@ -120,7 +120,7 @@ export default function DashboardDetail() {
                             elememts={
                                 data?.students_in_course.map((student) => {
                                     return student.username;
-                                }) ?? [""]
+                                }) ?? []
                             }
                         />
                     </div>

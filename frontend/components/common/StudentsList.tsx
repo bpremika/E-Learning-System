@@ -5,6 +5,8 @@ interface Students {
 }
 
 export default function StudentsList(props: Students) {
+    console.log(props.elememts);
+
     return (
         <>
             <div className={styles.table1_1}>
@@ -14,7 +16,9 @@ export default function StudentsList(props: Students) {
                     </div>
                 </div>
 
-                <div className={styles.table1_3}>
+                <div
+                    className={`bg-[#efefef] h-[495px] items-center flex flex-col mt-0`}
+                >
                     {props.elememts.map((student) => (
                         <div key={student}>{student}</div>
                     ))}
