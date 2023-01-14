@@ -4,26 +4,25 @@ import SearchBar from "../../components/common/SearchBar";
 import NavBar from "../../components/NavBar";
 import CourseCard from "../../components/common/CourseCard";
 import { useEffect, useState } from "react";
-import { Chip, FocusTrap, Pagination } from "@mantine/core";
+import { Chip, FocusTrap, Pagination, Input } from "@mantine/core";
 import { AxiosResponse } from "axios";
-import { useDebouncedState } from "@mantine/hooks";
+import { useDebouncedState, useDebouncedValue } from "@mantine/hooks";
 import Footer from "../../components/Footer";
 
 // interface props {
 //     course: CourseResultDTO;
 // }
 const Courses = () => {
-    const [search, setSearch] = useDebouncedState("", 300);
+    const [search, setSearch] = useState("");
+    const [debounced] = useDebouncedValue(search, 200, { leading: true });
     const [courses, setCourses] = useState<CourseInfo[]>([]);
     const [value, setValue] = useState("all");
 
     const [activePage, setPage] = useState(1);
-    function setDebound(e: string) {
-        setSearch(e);
-    }
+
     useEffect(() => {
-        getCourseSearch(search);
-    }, [search]);
+        getCourseSearch(debounced);
+    }, [debounced]);
     async function getCourses() {
         try {
             let res: AxiosResponse;
@@ -56,22 +55,27 @@ const Courses = () => {
 
     async function getCourseSearch(e: string) {
         try {
-            let res: AxiosResponse;
-            const newe = e.replace(" ", "_");
-            res = await client.get(`/course/home/${activePage}?search=${newe}`);
-            const newcourse = res.data as CourseResultDTO;
-            const newcoursewI = newcourse.courses.map((course) => {
-                if (course.course_cover_url.startsWith("http")) {
-                    return course;
-                }
-                return {
-                    ...course,
-                    course_cover_url:
-                        "https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/" +
-                        course.course_cover_url,
-                };
-            });
-            setCourses(newcoursewI);
+            if (e === "") {
+                setValue("all");
+            } else {
+                let res: AxiosResponse;
+                const newe = e.replace(" ", "+");
+                res = await client.get(
+                    `/course/home/${activePage}?search=${newe}`
+                );
+                const newcourse = res.data as CourseResultDTO;
+                const newcoursewI = newcourse.courses.map((course) => {
+                    if (course.course_cover_url.startsWith("http")) {
+                        return course;
+                    }
+                    return {
+                        ...course,
+                        course_cover_url:
+                            "https://hacktoschool.sgp1.cdn.digitaloceanspaces.com/" +
+                            course.course_cover_url,
+                    };
+                });
+            }
         } catch (e) {
             console.log(e);
         }
@@ -102,7 +106,29 @@ const Courses = () => {
                             <Chip value="English">Eng</Chip>
                         </Chip.Group>
                     </div>
-                    <SearchBar onSearchValueChange={setDebound} />
+                    <Input
+                        icon={
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-4 h-4"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                />
+                            </svg>
+                        }
+                        placeholder="Search..."
+                        onChange={(event: any) => {
+                            setSearch(event.currentTarget.value);
+                        }}
+                        value={search}
+                    />
                 </div>
                 <div className="flex flex-row flex-wrap w-[80vw] justify-center ">
                     {courses.map((d) => {
