@@ -64,13 +64,13 @@ export function UserContextProvider({
             isStudent ? router.push("/") : router.push(`/Dashboard/`);
             return true;
         } catch (e) {
-            console.log(e);
             return false;
         }
 
         //login
     };
     const refresh = useCallback(async () => {
+        if (!isAuth) return;
         try {
             const userJSON = await client.get("/user/me");
 
