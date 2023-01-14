@@ -18,10 +18,10 @@ const CourseNamepage = () => {
         name: "This course does not exist",
     });
     const router = useRouter();
-    const { coursesname } = router?.query;
+    const { courseid } = router?.query;
     async function getProps() {
         try {
-            const res = await client.get(`/course/enroll/${coursesname}`);
+            const res = await client.get(`/course/enroll/${courseid}`);
             setData(res.data);
         } catch (e) {
             console.log("error");

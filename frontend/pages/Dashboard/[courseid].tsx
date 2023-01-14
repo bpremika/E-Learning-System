@@ -7,6 +7,7 @@ import AssignmentTable from "../../components/dashboard/AssignmentTable";
 import NavBar from "../../components/NavBar";
 import { Textarea } from "@mantine/core";
 import CourseMaterialUpload from "../../components/dashboard/CoureMaterialUpload";
+import { useRouter } from "next/router";
 
 interface DashboardDetailProps {
     students_in_course: Array<Student>;
@@ -61,11 +62,14 @@ interface AssignmentDTO {
 }
 
 export default function DashboardDetail() {
+    const router = useRouter();
     const { user } = useUser();
+    const { courseid } = router?.query;
+
     async function getData() {
         try {
             const res = await client.get(
-                `/course/instructorDetailedDashboard/${user?.userID}`
+                `/course/instructorDetailedDashboard/${courseid}`
             );
             console.log(res.data);
             setData(res.data);

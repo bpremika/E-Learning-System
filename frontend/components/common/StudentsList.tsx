@@ -16,7 +16,7 @@ export default function StudentsList(props: Students) {
 
                 <div className={styles.table1_3}>
                     {props.elememts.map((student) => (
-                        <div>{student}</div>
+                        <div key={student}>{student}</div>
                     ))}
                 </div>
             </div>

@@ -13,7 +13,7 @@ interface Video {
     video_url: string;
 }
 
-const videoPage = () => {
+const VideoPage = () => {
     const router = useRouter();
     const { videopage } = router?.query;
     const [datat, setDatat] = useState([
@@ -68,4 +68,4 @@ const videoPage = () => {
         </>
     );
 };
-export default videoPage;
+export default VideoPage;

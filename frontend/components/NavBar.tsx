@@ -54,7 +54,7 @@ const NavBar = () => {
                                 ) : (
                                     <Link
                                         className="hover:font-semibold text-smoothgrey"
-                                        href={`/Dashboard/${user?.userID}`}
+                                        href={`/Dashboard`}
                                     >
                                         <div>DashBoard</div>
                                     </Link>
@@ -139,7 +139,7 @@ const NavBar = () => {
                                 href={`/${
                                     isAuth
                                         ? user?.role === "instructor"
-                                            ? `/Dashboard/${user.userID}`
+                                            ? `/Dashboard`
                                             : "Mycourses"
                                         : "Courses"
                                 }`}

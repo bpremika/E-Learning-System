@@ -61,9 +61,7 @@ export function UserContextProvider({
             const nuser = userJSON.data as IUser;
             setUser(nuser);
             console.log();
-            isStudent
-                ? router.push("/")
-                : router.push(`/Dashboard/${nuser.userID}`);
+            isStudent ? router.push("/") : router.push(`/Dashboard/`);
             return true;
         } catch (e) {
             console.log(e);

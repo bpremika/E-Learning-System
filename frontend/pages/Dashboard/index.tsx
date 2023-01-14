@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { client } from "../../common/axios/axios";
 import { countReset } from "console";
 import CreateCourse from "../../components/dashboard/CreateCourse";
+import { useUser } from "../../common/contexts/UserContext";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
     label: {
@@ -42,6 +44,7 @@ interface DashboardProp {
 }
 
 interface CourseDTO {
+    id: number;
     name: string;
     course_cover_url: string;
     curr_student: number;
@@ -54,8 +57,12 @@ interface DashboardDTO {
 }
 
 export default function Dashboard(props: DashboardProp) {
+    const router = useRouter();
+    const { user } = useUser();
     async function getData() {
-        const res = await client.get("/course/instructorDashboard/1");
+        const res = await client.get(
+            `/course/instructorDashboard/${user?.userID}`
+        );
         console.log(res.data);
         setData(res.data);
     }
@@ -167,6 +174,10 @@ export default function Dashboard(props: DashboardProp) {
                                 subject={course.name ?? ""}
                                 students={course.curr_student ?? 0}
                                 allStudents={data?.total_all_student ?? 0}
+                                key={course.name}
+                                onClick={() => {
+                                    router.push(`/Dashboard/${course.id}`);
+                                }}
                             ></DashboardCourseCard>
                         ))}
                         {/* <DashboardCourseCard

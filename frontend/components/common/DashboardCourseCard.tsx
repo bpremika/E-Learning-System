@@ -6,16 +6,30 @@ interface Props {
     subject: string;
     students: number;
     allStudents: number;
+    onClick?: () => void;
 }
 
 export default function DashboardCourseCard(data: Props) {
     return (
-        
-        <div className={styles.card2} style={{margin: 10}}>
-            
+        <div
+            onClick={data.onClick}
+            className={styles.card2}
+            style={{ margin: 10 }}
+        >
             <div className={styles.card2_1}>
                 <div className="text-2xl font-bold font-['Montserrat']">
-                    <div style={{overflow: 'hidden', textOverflow: 'ellipsis', width: 105, height: 60, bottom: 55}} className={styles.text2_1}>{data.subject}</div>
+                    <div
+                        style={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            width: 105,
+                            height: 60,
+                            bottom: 55,
+                        }}
+                        className={styles.text2_1}
+                    >
+                        {data.subject}
+                    </div>
                 </div>
                 <div className={styles.text2_2}>
                     <Image
@@ -28,9 +42,6 @@ export default function DashboardCourseCard(data: Props) {
                     {`${data.students}/${data.allStudents}`}
                 </div>
             </div>
-
-            
         </div>
-        
     );
 }
