@@ -16,7 +16,7 @@ import CourseMaterialUpload from "../components/dashboard/CoureMaterialUpload";
 import AssignmentTable from "../components/dashboard/AssignmentTable";
 import CreateAssignment from "../components/modals/CreateAssignment";
 
-export default function bolonatest() {
+export default function Bolonatest() {
     const [selectedFile, setFiles] = useState<File | null>(null);
 
     const formData = new FormData();
@@ -44,9 +44,9 @@ export default function bolonatest() {
                 </form>
                 <FileName />
                 <CreateCourse />
-                <CourseMaterialUpload />
+                {/* <CourseMaterialUpload />
                 <AssignmentTable />
-                <CreateAssignment/>
+                <CreateAssignment/> */}
             </div>
         </div>
     );

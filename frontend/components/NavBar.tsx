@@ -43,20 +43,32 @@ const NavBar = () => {
                             <div>Home</div>
                         </Link>
                         {isAuth ? (
-                            <Link
-                                className="hover:font-semibold text-smoothgrey"
-                                href="/"
-                            >
-                                <div>My Courses</div>
-                            </Link>
+                            <>
+                                {user?.role === "student" ? (
+                                    <Link
+                                        className="hover:font-semibold text-smoothgrey"
+                                        href="/Mycourses"
+                                    >
+                                        <div>My Courses</div>
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        className="hover:font-semibold text-smoothgrey"
+                                        href={`/Dashboard/${user?.userID}`}
+                                    >
+                                        <div>DashBoard</div>
+                                    </Link>
+                                )}
+                            </>
                         ) : (
-                            <Link
-                                className="hover:font-semibold  text-smoothgrey"
-                                href="/Courses"
-                            >
-                                <div>Courses</div>
-                            </Link>
+                            <></>
                         )}
+                        <Link
+                            className="hover:font-semibold  text-smoothgrey"
+                            href="/Courses"
+                        >
+                            <div>Courses</div>
+                        </Link>
                     </div>
                 </div>
 
@@ -105,12 +117,12 @@ const NavBar = () => {
                         opened={opened}
                         onClose={() => setOpened(false)}
                         padding="xl"
-                        size={230}
+                        size={280}
                         position="top"
                         overlayBlur={3}
                         overlayOpacity={0.5}
                     >
-                        <div className="flex flex-col  items-center h-[150px]">
+                        <div className="flex flex-col  items-center h-[200px]">
                             <Link
                                 className="hover:font-semibold"
                                 href="/"
@@ -124,15 +136,40 @@ const NavBar = () => {
                             </Link>
                             <Link
                                 className="hover:font-semibold"
-                                href={`/${isAuth ? "Mycourses" : "Courses"}`}
+                                href={`/${
+                                    isAuth
+                                        ? user?.role === "instructor"
+                                            ? `/Dashboard/${user.userID}`
+                                            : "Mycourses"
+                                        : "Courses"
+                                }`}
                                 onClick={() => {
                                     setOpened(false);
                                 }}
                             >
                                 <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                    {isAuth ? "Mycourses" : "Courses"}
+                                    {isAuth
+                                        ? user?.role === "instructor"
+                                            ? "DashBoard"
+                                            : "My courses"
+                                        : "Courses"}
                                 </div>
                             </Link>
+                            {isAuth ? (
+                                <Link
+                                    className="hover:font-semibold"
+                                    href={`/Courses`}
+                                    onClick={() => {
+                                        setOpened(false);
+                                    }}
+                                >
+                                    <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
+                                        Courses
+                                    </div>
+                                </Link>
+                            ) : (
+                                <></>
+                            )}
                             <Link
                                 className="hover:font-semibold"
                                 href="/"
@@ -143,7 +180,7 @@ const NavBar = () => {
                             >
                                 {isAuth && (
                                     <div className="w-[100vw] h-[50px] flex items-center justify-center hover:bg-offwhite ">
-                                        Sign Out ➜
+                                        Sign out ➜
                                     </div>
                                 )}
                             </Link>

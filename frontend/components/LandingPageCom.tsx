@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { Inter } from "@next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 import useMediaQuery from "../common/hook/mediaHook";
 import Link from "next/link";
 
@@ -91,42 +89,25 @@ export default function LandingPageCom() {
                 </div>
 
                 <div className="w-fit h-fit">
-                    {isBiggerThanMd ? (
-                        <Image
-                            src="/landingImage/casualBoy.png"
-                            width={722}
-                            height={601}
-                            alt="casualBoy"
-                        />
-                    ) : (
-                        <Image
-                            src="/landingImage/casualBoy.png"
-                            width={300}
-                            height={601}
-                            alt="casualBoy"
-                        />
-                    )}
+                    <Image
+                        src="/landingImage/casualBoy.png"
+                        width={isBiggerThanMd ? 722 : 300}
+                        height={601}
+                        alt="casualBoy"
+                        priority
+                    />
                 </div>
             </div>
             <div
                 className={`md:h-[600px]   w-[100vw] flex bg-white ${flexDirection} justify-center  items-center pt-[20px]`}
             >
                 <div>
-                    {isBiggerThanMd ? (
-                        <Image
-                            alt="sitgirl"
-                            src="./landingImage/sitgirl.svg"
-                            width={580}
-                            height={445}
-                        ></Image>
-                    ) : (
-                        <Image
-                            alt="sitgirl"
-                            src="./landingImage/sitgirl.svg"
-                            width={270}
-                            height={445}
-                        ></Image>
-                    )}
+                    <Image
+                        alt="sitgirl"
+                        src="/landingImage/minisitgirl.png"
+                        width={isBiggerThanMd ? 580 : 270}
+                        height={445}
+                    ></Image>
                 </div>
                 <div
                     className={`md:w-[500px] w-[335px] h-fit flex flex-col gap-5 ${justifyItem} p-[20px]`}
@@ -170,42 +151,24 @@ export default function LandingPageCom() {
                     </div>
                 </div>
                 <div>
-                    {isBiggerThanMd ? (
-                        <Image
-                            alt="sitgirl"
-                            src="./landingImage/holdbookgirl.svg"
-                            width={580}
-                            height={473}
-                        ></Image>
-                    ) : (
-                        <Image
-                            alt="sitgirl"
-                            src="./landingImage/holdbookgirl.svg"
-                            width={290}
-                            height={473}
-                        ></Image>
-                    )}
+                    <Image
+                        alt="sitgirl"
+                        src="/landingImage/miniholdbook.png"
+                        width={isBiggerThanMd ? 580 : 290}
+                        height={473}
+                    ></Image>
                 </div>
             </div>
             <div
                 className={`md:h-[600px]   w-[100vw] flex bg-white ${flexDirection} justify-center  items-center pt-[20px]`}
             >
                 <div>
-                    {isBiggerThanMd ? (
-                        <Image
-                            alt="sitgirl"
-                            src="./landingImage/girlnboy.svg"
-                            width={680}
-                            height={479}
-                        ></Image>
-                    ) : (
-                        <Image
-                            alt="sitgirl"
-                            src="./landingImage/girlnboy.svg"
-                            width={340}
-                            height={479}
-                        ></Image>
-                    )}
+                    <Image
+                        alt="sitgirl"
+                        src="/landingImage/sitfriend.png"
+                        width={isBiggerThanMd ? 680 : 340}
+                        height={479}
+                    ></Image>
                 </div>
                 <div
                     className={`md:w-[500px] w-[335px] h-fit flex flex-col gap-5 ${justifyItem} p-[20px]`}

@@ -4,7 +4,6 @@ import EditText from "./EditText";
 
 interface Element {
     id: number;
-    categoryVideo: string;
     name: string;
     videoUrl: string;
     // edit: boolean
@@ -23,17 +22,6 @@ export default function VideoTable(props: Elements) {
     const rows = props.elememts.map((element: any) => (
         <tr key={element.name}>
             <td>{element.id}</td>
-            <td style={{ textOverflow: "ellipsis" }}>
-                <div
-                    style={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        width: 110,
-                    }}
-                >
-                    {element.categoryVideo}
-                </div>
-            </td>
             <td>
                 <div
                     style={{
@@ -59,7 +47,6 @@ export default function VideoTable(props: Elements) {
             <td>
                 <EditText
                     id={element.id}
-                    categoryVideo={element.categoryVideo}
                     name={element.name}
                     videoUrl={element.videoUrl}
                 ></EditText>
@@ -80,7 +67,6 @@ export default function VideoTable(props: Elements) {
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Category Video</th>
                         <th>Name</th>
                         <th>Video URL</th>
                         <th>Edit</th>
