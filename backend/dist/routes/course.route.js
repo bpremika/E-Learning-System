@@ -10,6 +10,7 @@ const allCategory_controller_1 = require("../controllers/allCategory.controller"
 const courseStudentAssignment_controller_1 = require("../controllers/courseStudentAssignment.controller");
 const InstructorDashboard_controller_1 = require("../controllers/InstructorDashboard.controller");
 const instructorDetailedDashboard_controller_1 = require("../controllers/instructorDetailedDashboard.controller");
+const studentDetailedDashboard_controller_1 = require("../controllers/studentDetailedDashboard.controller");
 const activeUser_controller_1 = require("../controllers/activeUser.controller");
 exports.courseRouter = (0, express_1.Router)();
 // courseRouter.get("/getOne/:id", getOneCourse);
@@ -35,4 +36,13 @@ exports.courseRouter.patch("/updateScoreCheckHomework/:id", instructorDetailedDa
 exports.courseRouter.post("/createAssignment/:id", instructorDetailedDashboard_controller_1.createAssignment);
 exports.courseRouter.post("/createCourseVideo/:id", instructorDetailedDashboard_controller_1.createCourseVideo);
 exports.courseRouter.post("/createCourseMaterial/:id", instructorDetailedDashboard_controller_1.createCourseMaterial);
+exports.courseRouter.get("/instructorDetailedDashboard2/:id", studentDetailedDashboard_controller_1.getDetailedDashboard2);
+exports.courseRouter.get("/checkHomework2/:id", studentDetailedDashboard_controller_1.checkHomework2);
+exports.courseRouter.patch("/updateDescCourse2/:id", studentDetailedDashboard_controller_1.updateDescCourse2);
+exports.courseRouter.patch("/updateCourseVideo2/:id", studentDetailedDashboard_controller_1.updateCourseVideo2);
+exports.courseRouter.patch("/updateAssignment2/:id", studentDetailedDashboard_controller_1.updateAssignment2);
+exports.courseRouter.patch("/updateScoreCheckHomework2/:id", studentDetailedDashboard_controller_1.updateScoreCheckHomework2);
+exports.courseRouter.post("/createAssignment2/:id", studentDetailedDashboard_controller_1.createAssignment2);
+exports.courseRouter.post("/createCourseVideo2/:id", studentDetailedDashboard_controller_1.createCourseVideo2);
+exports.courseRouter.post("/createCourseMaterial2/:id", studentDetailedDashboard_controller_1.createCourseMaterial2);
 exports.courseRouter.get("/getActiveUserDto/", activeUser_controller_1.getActiveUserDto);
