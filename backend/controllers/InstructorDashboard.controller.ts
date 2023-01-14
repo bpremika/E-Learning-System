@@ -42,6 +42,7 @@ const getInstructorUser = async (req: Request, res: Response) => {
         total_course: courses.length,
         total_all_student,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_cover_url: course.course_cover_url,
             max_student: course.max_student,
