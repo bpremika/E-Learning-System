@@ -28,6 +28,18 @@ import {
     updateScoreCheckHomework,
     checkHomework,
 } from "../controllers/instructorDetailedDashboard.controller";
+import {
+    getDetailedDashboard2,
+    updateDescCourse2,
+    updateCourseVideo2,
+    updateAssignment2,
+    createAssignment2,
+    createCourseVideo2,
+    createCourseMaterial2,
+    updateScoreCheckHomework2,
+    checkHomework2,
+} from "../controllers/studentDetailedDashboard.controller";
+
 import { getActiveUserDto } from "../controllers/activeUser.controller";
 
 export const courseRouter = Router();
@@ -58,5 +70,15 @@ courseRouter.patch("/updateScoreCheckHomework/:id", updateScoreCheckHomework);
 courseRouter.post("/createAssignment/:id", createAssignment);
 courseRouter.post("/createCourseVideo/:id", createCourseVideo);
 courseRouter.post("/createCourseMaterial/:id", createCourseMaterial);
+
+courseRouter.get("/instructorDetailedDashboard2/:id", getDetailedDashboard2);
+courseRouter.get("/checkHomework2/:id", checkHomework2);
+courseRouter.patch("/updateDescCourse2/:id", updateDescCourse2);
+courseRouter.patch("/updateCourseVideo2/:id", updateCourseVideo2);
+courseRouter.patch("/updateAssignment2/:id", updateAssignment2);
+courseRouter.patch("/updateScoreCheckHomework2/:id", updateScoreCheckHomework2);
+courseRouter.post("/createAssignment2/:id", createAssignment2);
+courseRouter.post("/createCourseVideo2/:id", createCourseVideo2);
+courseRouter.post("/createCourseMaterial2/:id", createCourseMaterial2);
 
 courseRouter.get("/getActiveUserDto/", getActiveUserDto);
