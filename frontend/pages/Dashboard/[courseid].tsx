@@ -8,6 +8,7 @@ import NavBar from "../../components/NavBar";
 import { Textarea } from "@mantine/core";
 import CourseMaterialUpload from "../../components/dashboard/CoureMaterialUpload";
 import { useRouter } from "next/router";
+import CreateNewVideo from "../../components/modals/CreateNewVideo";
 
 interface DashboardDetailProps {
     students_in_course: Array<Student>;
@@ -65,6 +66,8 @@ export default function DashboardDetail() {
     const router = useRouter();
     const { user } = useUser();
     const { courseid } = router?.query;
+    const courseidString = courseid as string;
+    const courseidNumber = parseInt(courseidString);
 
     async function getData() {
         try {
@@ -80,8 +83,9 @@ export default function DashboardDetail() {
 
     const [data, setData] = useState<DashboardDetailProps | null>(null);
     useEffect(() => {
+        if (!router.isReady) return;
         getData();
-    }, []);
+    }, [router.isReady]);
 
     const [value, setValue] = useState<string | undefined>(data?.course_desc);
 
@@ -185,6 +189,7 @@ export default function DashboardDetail() {
                                     ]
                                 }
                             />
+                            <CreateNewVideo courseID={courseidNumber} />
                         </div>
                     </div>
                 </div>
