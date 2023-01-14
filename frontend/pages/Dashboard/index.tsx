@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { client } from "../../common/axios/axios";
 import { countReset } from "console";
 import CreateCourse from "../../components/dashboard/CreateCourse";
+import { useUser } from "../../common/contexts/UserContext";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
     label: {
@@ -55,7 +56,10 @@ interface DashboardDTO {
 
 export default function Dashboard(props: DashboardProp) {
     async function getData() {
-        const res = await client.get("/course/instructorDashboard/1");
+        const { user } = useUser();
+        const res = await client.get(
+            `/course/instructorDashboard/${user?.userID}`
+        );
         console.log(res.data);
         setData(res.data);
     }
