@@ -44,6 +44,7 @@ const getInstructorUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
         total_course: courses.length,
         total_all_student,
         courses: courses.map((course) => ({
+            id: course.id,
             name: course.name,
             course_cover_url: course.course_cover_url,
             max_student: course.max_student,
