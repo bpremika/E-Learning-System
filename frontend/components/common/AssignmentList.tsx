@@ -37,12 +37,12 @@ const AssignmentList = ({ courseid }: Props) => {
     async function getData() {
         try {
             const res = await client.get(
-                `/course/instructorDetailedDashboard/${courseid}`
+                `/course/instructorDetailedDashboard2/${courseid}`
             );
             console.log(res.data);
             setData(res.data);
         } catch (e) {
-            console.log("Error");
+            console.log(e);
         }
     }
 
