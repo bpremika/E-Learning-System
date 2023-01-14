@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Modal, Button, Group } from "@mantine/core";
 import MyTextInput from "./MyTextInput";
+import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
+import { client } from "../../common/axios/axios";
 
 interface Element {
     id: number;
