@@ -20,9 +20,6 @@ const Courses = () => {
 
     const [activePage, setPage] = useState(1);
 
-    useEffect(() => {
-        getCourseSearch(debounced);
-    }, [debounced]);
     async function getCourses() {
         try {
             let res: AxiosResponse;
@@ -52,6 +49,9 @@ const Courses = () => {
             console.log(err);
         }
     }
+    useEffect(() => {
+        getCourseSearch(debounced);
+    }, [debounced]);
 
     async function getCourseSearch(e: string) {
         try {
@@ -63,6 +63,7 @@ const Courses = () => {
                 res = await client.get(
                     `/course/home/${activePage}?search=${newe}`
                 );
+
                 const newcourse = res.data as CourseResultDTO;
                 const newcoursewI = newcourse.courses.map((course) => {
                     if (course.course_cover_url.startsWith("http")) {
@@ -75,6 +76,7 @@ const Courses = () => {
                             course.course_cover_url,
                     };
                 });
+                setCourses(newcoursewI);
             }
         } catch (e) {
             console.log(e);
