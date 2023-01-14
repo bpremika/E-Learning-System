@@ -21,15 +21,10 @@ import {
 } from "../common/CourseValidator";
 import { CourseMaterial } from "../dto/user.dto";
 
-const getDetailedDashboard = async (req: Request, res: Response) => {
+const getDetailedDashboard2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
-        return;
-    }
-
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
         return;
     }
 
@@ -48,11 +43,6 @@ const getDetailedDashboard = async (req: Request, res: Response) => {
 
     if (course === null) {
         res.status(404).send({ message: "not found" });
-        return;
-    }
-
-    if (course.instructor_id != req.session.userID) {
-        res.status(404).send({ message: "This course not contain this ID" });
         return;
     }
 
@@ -92,15 +82,10 @@ const getDetailedDashboard = async (req: Request, res: Response) => {
     res.status(200).json(instructorDetailedDashboardDto);
 };
 
-const updateDescCourse = async (req: Request, res: Response) => {
+const updateDescCourse2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
-        return;
-    }
-
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
         return;
     }
 
@@ -108,20 +93,6 @@ const updateDescCourse = async (req: Request, res: Response) => {
     const check = updateDescCourseSchema.safeParse(newCourseDto);
 
     if (check.success) {
-        const course_check_id = await prisma.course.findUnique({
-            where: { id },
-        });
-
-        if (course_check_id == null) {
-            res.status(404).send({ message: "not found" });
-            return;
-        }
-
-        if (course_check_id.instructor_id != req.session.userID) {
-            res.status(404).send({ message: "invalid ID" });
-            return;
-        }
-
         const course = await prisma.course.update({
             where: { id },
             data: {
@@ -135,35 +106,16 @@ const updateDescCourse = async (req: Request, res: Response) => {
     }
 };
 
-const updateCourseVideo = async (req: Request, res: Response) => {
+const updateCourseVideo2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
 
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
-        return;
-    }
-
     const newVideoDto: UpdateCourseVideoInInstructorDto = req.body;
     const check = updateCourseVideoSchema.safeParse(newVideoDto);
     if (check.success) {
-        // const course_check_id = await prisma.course.findUnique({
-        //     where: { id },
-        // });
-
-        // if (course_check_id == null) {
-        //     res.status(404).send({ message: "not found" });
-        //     return;
-        // }
-
-        // if (course_check_id.instructor_id != req.session.userID) {
-        //     res.status(404).send({ message: "invalid ID" });
-        //     return;
-        // }
-
         const courseVideo = await prisma.courseVideo.update({
             where: {
                 id,
@@ -179,35 +131,16 @@ const updateCourseVideo = async (req: Request, res: Response) => {
     }
 };
 
-const updateAssignment = async (req: Request, res: Response) => {
+const updateAssignment2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
 
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
-        return;
-    }
-
     const newAssignment: UpdateAssignmentInInstructorDto = req.body;
     const check = updateAssignmentSchema.safeParse(newAssignment);
     if (check.success) {
-        // const course_check_id = await prisma.course.findUnique({
-        //     where: { id },
-        // });
-
-        // if (course_check_id == null) {
-        //     res.status(404).send({ message: "not found" });
-        //     return;
-        // }
-
-        // if (course_check_id.instructor_id != req.session.userID) {
-        //     res.status(404).send({ message: "invalid ID" });
-        //     return;
-        // }
-
         const assignment = await prisma.assignment.update({
             where: { id },
             data: {
@@ -223,35 +156,15 @@ const updateAssignment = async (req: Request, res: Response) => {
     }
 };
 
-const createCourseVideo = async (req: Request, res: Response) => {
+const createCourseVideo2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
-
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
-        return;
-    }
-
     const courseVideo: CreateCourseVideoDto = req.body;
     const check = createCourseVideoSchema.safeParse(courseVideo);
     if (check.success) {
-        const course_check_id = await prisma.course.findUnique({
-            where: { id },
-        });
-
-        if (course_check_id == null) {
-            res.status(404).send({ message: "not found" });
-            return;
-        }
-
-        if (course_check_id.instructor_id != req.session.userID) {
-            res.status(404).send({ message: "invalid ID" });
-            return;
-        }
-
         try {
             const result = await prisma.courseVideo.create({
                 data: {
@@ -273,35 +186,16 @@ const createCourseVideo = async (req: Request, res: Response) => {
     }
 };
 
-const createAssignment = async (req: Request, res: Response) => {
+const createAssignment2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); //course id
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
 
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
-        return;
-    }
-
     const assignment: CreateAssignmentDto = req.body;
     const check = createAssignmentSchema.safeParse(assignment);
     if (check.success) {
-        const course_check_id = await prisma.course.findUnique({
-            where: { id },
-        });
-
-        if (course_check_id == null) {
-            res.status(404).send({ message: "not found" });
-            return;
-        }
-
-        if (course_check_id.instructor_id != req.session.userID) {
-            res.status(404).send({ message: "invalid ID" });
-            return;
-        }
-
         try {
             const result = await prisma.assignment.create({
                 data: {
@@ -345,7 +239,7 @@ const createAssignment = async (req: Request, res: Response) => {
     }
 };
 
-const createCourseMaterial = async (req: Request, res: Response) => {
+const createCourseMaterial2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
 
     if (isNaN(id)) {
@@ -353,28 +247,9 @@ const createCourseMaterial = async (req: Request, res: Response) => {
         return;
     }
 
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
-        return;
-    }
-
     const material: CourseMaterial = req.body;
     const result = courseMaterialSchema.safeParse(material);
     if (result.success) {
-        const course_check_id = await prisma.course.findUnique({
-            where: { id },
-        });
-
-        if (course_check_id == null) {
-            res.status(404).send({ message: "not found" });
-            return;
-        }
-
-        if (course_check_id.instructor_id != req.session.userID) {
-            res.status(404).send({ message: "invalid ID" });
-            return;
-        }
-
         try {
             if (material == null || undefined) {
                 res.status(401).send({ message: "file name is undefined" });
@@ -400,28 +275,9 @@ const createCourseMaterial = async (req: Request, res: Response) => {
     }
 };
 
-const checkHomework = async (req: Request, res: Response) => {
+const checkHomework2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); //id of assignment
     if (isNaN(id)) {
-        res.status(404).send({ message: "invalid ID" });
-        return;
-    }
-
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
-        return;
-    }
-
-    const course_check_id = await prisma.course.findUnique({
-        where: { id },
-    });
-
-    if (course_check_id == null) {
-        res.status(404).send({ message: "not found" });
-        return;
-    }
-
-    if (course_check_id.instructor_id != req.session.userID) {
         res.status(404).send({ message: "invalid ID" });
         return;
     }
@@ -447,15 +303,10 @@ const checkHomework = async (req: Request, res: Response) => {
     res.status(200).json(checkHomeworkDto);
 };
 
-const updateScoreCheckHomework = async (req: Request, res: Response) => {
+const updateScoreCheckHomework2 = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); //id of assignment_student
     if (isNaN(id)) {
         res.status(404).send({ message: "invalid ID" });
-        return;
-    }
-
-    if (req.session.role == "student") {
-        res.status(404).send({ message: "invalid Role" });
         return;
     }
 
@@ -464,20 +315,6 @@ const updateScoreCheckHomework = async (req: Request, res: Response) => {
         updateScoreCheckHomeworkDto
     );
     if (check.success) {
-        const course_check_id = await prisma.course.findUnique({
-            where: { id },
-        });
-
-        if (course_check_id == null) {
-            res.status(404).send({ message: "not found" });
-            return;
-        }
-
-        if (course_check_id.instructor_id != req.session.userID) {
-            res.status(404).send({ message: "invalid ID" });
-            return;
-        }
-
         const assignment_Student = await prisma.assignment_Student.update({
             where: { id },
             data: check.data,
@@ -489,13 +326,13 @@ const updateScoreCheckHomework = async (req: Request, res: Response) => {
 };
 
 export {
-    getDetailedDashboard,
-    updateDescCourse,
-    updateCourseVideo,
-    updateAssignment,
-    createCourseVideo,
-    createAssignment,
-    createCourseMaterial,
-    checkHomework,
-    updateScoreCheckHomework,
+    getDetailedDashboard2,
+    updateDescCourse2,
+    updateCourseVideo2,
+    updateAssignment2,
+    createCourseVideo2,
+    createAssignment2,
+    createCourseMaterial2,
+    checkHomework2,
+    updateScoreCheckHomework2,
 };

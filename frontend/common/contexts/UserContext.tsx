@@ -13,6 +13,7 @@ import { client } from "../axios/axios";
 interface IUser {
     username: string;
     role: "student" | "instructor";
+    userID: number;
 }
 interface unp {
     username: string;
@@ -57,11 +58,12 @@ export function UserContextProvider({
         try {
             const res = await client.post(`/user/${userType}Login`, unp);
             const userJSON = await client.get("/user/me");
-
-            const user = userJSON.data as IUser;
-
-            setUser(user);
-            router.push("/");
+            const nuser = userJSON.data as IUser;
+            setUser(nuser);
+            console.log();
+            isStudent
+                ? router.push("/")
+                : router.push(`/Dashboard/${nuser.userID}`);
             return true;
         } catch (e) {
             console.log(e);

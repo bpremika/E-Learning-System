@@ -2,13 +2,22 @@ import { useEffect, useState } from "react";
 import YoutubeVideo from "../common/YoutubeVideo";
 import CourseVideoTitle from "./CourseVideoTitle";
 import { videoData } from "../../common/mock/video";
-
-export default function CourseVideoPreview() {
+interface video {
+    id: number;
+    name: string;
+    video_url: string;
+}
+interface CourseVideoPreviewProps {
+    videoData: video[];
+}
+export default function CourseVideoPreview({
+    videoData,
+}: CourseVideoPreviewProps) {
     const [activeVideo, setActiveVideo] = useState(0);
     const videoList = videoData.map((data, index) => {
         return (
             <CourseVideoTitle
-                key={index}
+                key={data.id}
                 activeVideo={activeVideo}
                 index={index + 1}
                 courseTitle={data.name}

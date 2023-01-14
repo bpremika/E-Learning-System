@@ -61,10 +61,11 @@ interface AssignmentDTO {
 }
 
 export default function DashboardDetail() {
+    const { user } = useUser();
     async function getData() {
         try {
             const res = await client.get(
-                "/course/instructorDetailedDashboard/1"
+                `/course/instructorDetailedDashboard/${user?.userID}`
             );
             console.log(res.data);
             setData(res.data);
@@ -77,8 +78,6 @@ export default function DashboardDetail() {
     useEffect(() => {
         getData();
     }, []);
-
-    const { user } = useUser();
 
     const [value, setValue] = useState<string | undefined>(data?.course_desc);
 
@@ -219,7 +218,7 @@ export default function DashboardDetail() {
                 >
                     Upload Course Material
                 </h1>
-                <CourseMaterialUpload courseID={1}/>
+                <CourseMaterialUpload courseID={1} />
             </div>
         </>
     );

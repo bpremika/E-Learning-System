@@ -30,17 +30,14 @@ interface AssignmentsDTO {
 }
 
 interface Props {
-    courseid: number;
-}
-interface AssignmentDTO {
-    name: string;
+    courseid: string | string[] | undefined;
 }
 
-const AssignmentList = (prop: Props) => {
+const AssignmentList = ({ courseid }: Props) => {
     async function getData() {
         try {
             const res = await client.get(
-                "/course/instructorDetailedDashboard/1"
+                `/course/instructorDetailedDashboard/${courseid}`
             );
             console.log(res.data);
             setData(res.data);

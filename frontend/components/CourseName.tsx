@@ -87,7 +87,7 @@ const CoursesName = () => {
                         <div className="flex flex-row items-center justify-center">
                             <Link
                                 className="bg-38 w-auto gap-2 h-auto rounded-[10px] text-white font-semibold font-['Montserrat'] flex flex-row p-2"
-                                href={"/"}
+                                href={"/Assignment"}
                             >
                                 <Image
                                     src="/landingImage/Assignment.png"

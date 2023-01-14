@@ -41,9 +41,8 @@ const MyCourses = () => {
             <div className="my-[50px] flex flex-col items-center">
                 <div className="flex flex-col md:flex-row justify-around w-[100vw] m-[30px] items-center">
                     <div className="font-bold text-[30px] font-['Montserrat'] ">
-                        Online Courses
+                        My Courses
                     </div>
-                    <SearchBar />
                 </div>
                 <div className="flex flex-row flex-wrap w-[80vw] justify-center ">
                     {courses.map((d) => {
