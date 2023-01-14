@@ -57,8 +57,8 @@ interface DashboardDTO {
 
 export default function Dashboard(props: DashboardProp) {
     const router = useRouter();
+    const { user } = useUser();
     async function getData() {
-        const { user } = useUser();
         const res = await client.get(
             `/course/instructorDashboard/${user?.userID}`
         );
