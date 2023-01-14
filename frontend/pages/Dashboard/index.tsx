@@ -44,6 +44,7 @@ interface DashboardProp {
 }
 
 interface CourseDTO {
+    id: number;
     name: string;
     course_cover_url: string;
     curr_student: number;
@@ -175,7 +176,7 @@ export default function Dashboard(props: DashboardProp) {
                                 allStudents={data?.total_all_student ?? 0}
                                 key={course.name}
                                 onClick={() => {
-                                    router.push(`/course/${course.name}`);
+                                    router.push(`/Dashboard/${course.id}`);
                                 }}
                             ></DashboardCourseCard>
                         ))}
