@@ -7,6 +7,7 @@ import { client } from "../../common/axios/axios";
 import { countReset } from "console";
 import CreateCourse from "../../components/dashboard/CreateCourse";
 import { useUser } from "../../common/contexts/UserContext";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
     label: {
@@ -55,6 +56,7 @@ interface DashboardDTO {
 }
 
 export default function Dashboard(props: DashboardProp) {
+    const router = useRouter();
     async function getData() {
         const { user } = useUser();
         const res = await client.get(
@@ -172,6 +174,9 @@ export default function Dashboard(props: DashboardProp) {
                                 students={course.curr_student ?? 0}
                                 allStudents={data?.total_all_student ?? 0}
                                 key={course.name}
+                                onClick={() => {
+                                    router.push(`/course/${course.name}`);
+                                }}
                             ></DashboardCourseCard>
                         ))}
                         {/* <DashboardCourseCard
