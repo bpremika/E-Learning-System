@@ -95,6 +95,7 @@ export interface AssignmentInInstructorDetailedDashboardDto {
     description: string;
     aj_file_url: string;
     max_score: number;
+    all_submitted_student: number;
 }
 
 export interface MyCourseDto {
@@ -124,4 +125,8 @@ export interface FinishedAssignmentDto {
 
 export interface AllCategoryDto {
     all_categories: string[];
+}
+
+export interface ActiveUserDto {
+    all_user_amount: number;
 }

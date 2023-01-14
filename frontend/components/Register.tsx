@@ -1,4 +1,5 @@
 import { useState } from "react";
+import InputMask from "react-input-mask";
 import {
     Modal,
     Button,
@@ -9,14 +10,11 @@ import {
     Image,
     Text,
     PasswordInput,
+    InputBase,
 } from "@mantine/core";
-import { useUser } from "../../common/contexts/UserContext";
 import { useForm } from "@mantine/form";
-import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from "@mantine/dropzone";
-import loginpage from "../../pages/loginpage";
-import { client } from "../../common/axios/axios";
+import { client } from "../common/axios/axios";
 import { showNotification } from "@mantine/notifications";
-import { ClassNames } from "@emotion/react";
 interface prop {
     isStudent: boolean;
 }
@@ -124,10 +122,12 @@ export default function Register({ isStudent }: prop) {
                         withAsterisk
                         {...form.getInputProps("password")}
                     />
-                    <TextInput
+                    <InputBase
                         placeholder="phone_number"
                         label="phone_number"
                         withAsterisk
+                        component={InputMask}
+                        mask="+66 99 999 9999"
                         {...form.getInputProps("phone_number")}
                     />
                     <div className="w-[100%] h-[10px] bg-white"></div>

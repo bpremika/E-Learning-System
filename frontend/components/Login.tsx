@@ -1,10 +1,7 @@
-import { TextInput } from "@mantine/core";
+import { PasswordInput, TextInput } from "@mantine/core";
 import React, { useRef } from "react";
-import axios from "axios";
 import { useUser } from "../common/contexts/UserContext";
-import { ClassNames } from "@emotion/react";
-import Link from "next/link";
-import Register from "./register/Register";
+import Register from "./Register";
 
 interface props {
     isStudent: boolean;
@@ -53,9 +50,9 @@ const Login = ({ isStudent }: props) => {
                         ref={userRef}
                     />
                 </div>
-                <div className="pr-[15px] pl-[15px]">
-                    <TextInput
-                        placeholder="password"
+                <div className="pr-[15px] pl-[15px] w-full">
+                    <PasswordInput
+                        placeholder="Password"
                         required
                         radius={20}
                         ref={passwordRef}

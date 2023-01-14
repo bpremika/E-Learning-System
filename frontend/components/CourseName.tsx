@@ -33,8 +33,7 @@ const CoursesName = () => {
 
     return (
         <div>
-            <NavBar />
-            <div className="w-[100vw] h-[100vh] bg-white">
+            <div className="w-[100vw] h-[100%] bg-white">
                 <div
                     className="bg-f654 w-[100vw] h-auto max-h-[337px] flex  flex-col md:flex-row justify-around gap-3 items-center
                 text-center md:text-start p-4 md:p-0"
@@ -43,7 +42,7 @@ const CoursesName = () => {
                         <div className="font-bold text-[max(23px,2.5vw)] font-['Montserrat'] ">
                             {data.name}
                         </div>
-                        <div className=" text-[max(8px,1vw)] font-['Montserrat']">
+                        <div className=" text-[max(8px,1vw)] font-['Montserrat'] w-[30vw]">
                             {data.course_desc}
                         </div>
                     </div>
@@ -52,7 +51,7 @@ const CoursesName = () => {
                             <Image
                                 src="/landingImage/blockchain.png"
                                 alt="blockchain"
-                                width={500}
+                                width={400}
                                 height={300}
                             />
                         ) : (
