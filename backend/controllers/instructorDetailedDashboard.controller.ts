@@ -316,6 +316,26 @@ const createAssignment = async (req: Request, res: Response) => {
             console.log(result);
 
             res.status(201).json(result);
+
+            const course = await prisma.course.findUnique({
+                where: { id },
+                include: {
+                    studentUser: true,
+                },
+            });
+
+            if (course == null) {
+                res.status(400).json({ message: "not have course" });
+                return;
+            }
+            for (const element of course.studentUser) {
+                const result2 = await prisma.assignment_Student.create({
+                    data: {
+                        assignment_id: result.id,
+                        studentUser_id: element.id,
+                    },
+                });
+            }
         } catch (e) {
             console.log(e);
             res.status(400).json({ message: "something wents wrong" });
