@@ -1,23 +1,24 @@
 import styles from "../../styles/card.module.css";
 
-interface Element {
-    name: string;
-    // edit: boolean
+interface Students {
+    elememts: Array<string>;
 }
 
-interface Elements {
-    elememts: Array<Element>;
-}
-
-export default function StudentsList(props: Elements) {
+export default function StudentsList(props: Students) {
     return (
         <>
             <div className={styles.table1_1}>
                 <div className={styles.table1_2}>
-                    {`students(${props.elememts.length})`}
+                    <div className="text-2xs font-bold font-['Montserrat']">
+                        {`students(${props.elememts.length})`}
+                    </div>
                 </div>
 
-                <div className={styles.table1_3}></div>
+                <div className={styles.table1_3}>
+                    {props.elememts.map((student) => (
+                        <div>{student}</div>
+                    ))}
+                </div>
             </div>
         </>
     );
