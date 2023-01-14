@@ -4,12 +4,11 @@ import MyTextInput from "./MyTextInput";
 
 interface Element {
     id: number;
-    categoryVideo: string;
     name: string;
     videoUrl: string;
 }
 
-export default function EditText(Props: Element) {
+export default function EditText(props: Element) {
     const [opened, setOpened] = useState(false);
 
     return (
@@ -20,9 +19,8 @@ export default function EditText(Props: Element) {
                 onClose={() => setOpened(false)}
                 title="Edit"
             >
-                <MyTextInput title="Category Video" draft="" />
-                <MyTextInput title="Name" draft="" />
-                <MyTextInput title="Video URL" draft="" />
+                <MyTextInput title="Name" draft={props.name} />
+                <MyTextInput title="Video URL" draft={props.videoUrl} />
                 <div className="w-full flex flex-row-reverse">
                     <Button
                         style={{ marginTop: "20px" }}

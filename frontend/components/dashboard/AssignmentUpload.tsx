@@ -4,7 +4,7 @@ import { client } from "../../common/axios/axios";
 import FormData from "form-data";
 import { showNotification } from "@mantine/notifications";
 interface Props{
-    courseID : number;
+    assignmentID : number;
 }
 export default function CourseMaterialUpload(prop: Props) {
     const [selectedFile, setFiles] = useState<File | null>(null);
@@ -18,14 +18,14 @@ export default function CourseMaterialUpload(prop: Props) {
             console.log(formData);
             try{
                 const res = await client.post("/upload", formData);
-                const updateCourseMaterial = await client.post(`/createCourseMaterial/${prop.courseID}`,selectedFile.name);
+                const submitAssignment = await client.patch(`/updateAssignment/${prop.assignmentID}`,selectedFile.name);
                 showNotification({
                     title: "Success!!",
                     message: "Hey there, your code is awesome! 🤥",
                 });
             }catch(e){
                 showNotification({
-                    title: "Success!!",
+                    title: "submit assignment fail!!",
                     message: "Hey there, your code is awesome! 🤥",
                 });
                 console.log(e)

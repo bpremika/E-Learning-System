@@ -7,6 +7,6 @@ interface Key {
 
 export default function MyTextInput(props: Key) {
     return (
-        <TextInput placeholder={props.draft} label={props.title} size="xs" />
+        <TextInput defaultValue={props.draft} label={props.title} size="xs" />
     );
 }

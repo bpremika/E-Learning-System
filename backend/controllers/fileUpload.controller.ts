@@ -44,3 +44,4 @@ export default async function uploadFile(req: Request, res: Response) {
         res.status(500).send("Error uploading file");
     }
 }
+

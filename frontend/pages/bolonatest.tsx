@@ -44,9 +44,9 @@ export default function bolonatest() {
                 </form>
                 <FileName />
                 <CreateCourse />
-                <CourseMaterialUpload />
+                {/* <CourseMaterialUpload />
                 <AssignmentTable />
-                <CreateAssignment/>
+                <CreateAssignment/> */}
             </div>
         </div>
     );
