@@ -138,6 +138,7 @@ export default function DashboardDetail() {
                             }}
                         >
                             <Textarea
+                                autosize
                                 style={{
                                     marginLeft: 27,
                                     marginRight: 27,

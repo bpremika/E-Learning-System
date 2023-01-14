@@ -48,17 +48,17 @@ export default function CreateCourse() {
         console.log(form);
         console.log(files);
         const file = files[0] as File;
-
         console.log(file);
         if (file != null) {
             formData.append("selected_file", file);
             console.log(formData);
             const uploadRes = await client.post("/upload", formData);
+            value.course_cover_url = file.name;
             if (uploadRes.status == 201) {
                 try {
                     const res = await client.post(
                         "course/createCourse/",
-                        form.values
+                        value
                     );
                     showNotification({
                         title: "Success Create!!",
@@ -131,13 +131,11 @@ export default function CreateCourse() {
                     <Textarea
                         placeholder="description"
                         label="Description"
-                        withAsterisk
                         {...form.getInputProps("course_desc")}
                     />
                     <Textarea
                         placeholder="detail"
                         label="Course Detail"
-                        withAsterisk
                         {...form.getInputProps("course_detail")}
                     />
                     <TextInput
