@@ -10,6 +10,7 @@ const allCategory_controller_1 = require("../controllers/allCategory.controller"
 const courseStudentAssignment_controller_1 = require("../controllers/courseStudentAssignment.controller");
 const InstructorDashboard_controller_1 = require("../controllers/InstructorDashboard.controller");
 const instructorDetailedDashboard_controller_1 = require("../controllers/instructorDetailedDashboard.controller");
+const activeUser_controller_1 = require("../controllers/activeUser.controller");
 exports.courseRouter = (0, express_1.Router)();
 // courseRouter.get("/getOne/:id", getOneCourse);
 // courseRouter.get("/search/:pages", searchCourse);
@@ -26,9 +27,12 @@ exports.courseRouter.get("/studentInfo/:id", courseStudentInfo_controller_1.getD
 exports.courseRouter.get("/instructorDashboard/:id", InstructorDashboard_controller_1.getInstructorUser);
 exports.courseRouter.get("/getCourseVideo/:id", courseStudentInfo_controller_1.getCourseVideo);
 exports.courseRouter.get("/instructorDetailedDashboard/:id", instructorDetailedDashboard_controller_1.getDetailedDashboard);
+exports.courseRouter.get("/checkHomework/:id", instructorDetailedDashboard_controller_1.checkHomework);
 exports.courseRouter.patch("/updateDescCourse/:id", instructorDetailedDashboard_controller_1.updateDescCourse);
 exports.courseRouter.patch("/updateCourseVideo/:id", instructorDetailedDashboard_controller_1.updateCourseVideo);
 exports.courseRouter.patch("/updateAssignment/:id", instructorDetailedDashboard_controller_1.updateAssignment);
+exports.courseRouter.patch("/updateScoreCheckHomework/:id", instructorDetailedDashboard_controller_1.updateScoreCheckHomework);
 exports.courseRouter.post("/createAssignment/:id", instructorDetailedDashboard_controller_1.createAssignment);
 exports.courseRouter.post("/createCourseVideo/:id", instructorDetailedDashboard_controller_1.createCourseVideo);
 exports.courseRouter.post("/createCourseMaterial/:id", instructorDetailedDashboard_controller_1.createCourseMaterial);
+exports.courseRouter.get("/getActiveUserDto/", activeUser_controller_1.getActiveUserDto);
