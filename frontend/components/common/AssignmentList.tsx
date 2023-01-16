@@ -72,7 +72,7 @@ const AssignmentList = ({ courseid }: Props) => {
             <td>{element.name}</td>
             <td>
                 <AssignmentDetail
-                    courseID={element.id}
+                    assignmentID={element.id}
                     name={element.name}
                     description={element.description}
                     file_url={element.aj_file_url}
